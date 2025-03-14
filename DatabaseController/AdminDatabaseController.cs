@@ -7,19 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Data
 {
-    public class AdminDatabaseController
+    public class AdminDatabaseController(EfContext context)
     {
-        private readonly EfContext _context;
-
-        public AdminDatabaseController(EfContext context)
-        {
-            _context = _context;
-        }
-
         public async Task SaveJWT(JwtToken jwtToken)
         {
-            await _context.JwtTokens.AddAsync(jwtToken);
-            await _context.SaveChangesAsync();
+            await context.JwtTokens.AddAsync(jwtToken);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -7,26 +7,20 @@ using WebApi.Data;
 
 namespace WebApi.Data
 {
-    public class JWTTokenSystem
+    public class JWTTokenSystem(AdminDatabaseController databaseService, JwtConfiguration jwtConfiguration)
     {
-        private readonly AdminDatabaseController _databaseService;
-        private readonly JwtConfiguration _jwtConfiguration;
-        
-        public JWTTokenSystem(AdminDatabaseController _databaseService, JwtConfiguration _jwtConfiguration)
-        {
-            this._jwtConfiguration = _jwtConfiguration;
-            this._databaseService = _databaseService;
-        }
-
         private string GenerateJwt(IEnumerable<Claim> claims, DateTime expires)
         {
+            jwtConfiguration.Key = "oO/ZleCqiBCzLuGjEihhiVd24y6Tuwq9GVrwYJ8QZa8=";
+            jwtConfiguration.Issuer = "WebApi";
+            jwtConfiguration.Audience = "WebApi-User";
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtConfiguration.Key);
-
+            var key = Encoding.ASCII.GetBytes(jwtConfiguration.Key);
+            
             var token = new JwtSecurityToken
             (
-                _jwtConfiguration.Issuer,
-                _jwtConfiguration.Audience,
+                jwtConfiguration.Issuer,
+                jwtConfiguration.Audience,
                 claims,
                 DateTime.UtcNow,
                 expires,
@@ -48,10 +42,9 @@ namespace WebApi.Data
                 new("sid", userId),
                 new("rol", "RefreshToken")
             };
-
             var token = GenerateJwt(claims, validUntil);
-
-            await _databaseService.SaveJWT(new JwtToken
+            
+            await databaseService.SaveJWT(new JwtToken
             { TokenJti = tokenJti, UserId = userId, ValidUntil = validUntil });
 
             return token;
@@ -68,6 +61,13 @@ namespace WebApi.Data
                 new("sid", userId),
                 // new("rol", roleName),
             };
+            
+            Console.WriteLine("=========asdasd=========================");
+            Console.WriteLine(claims.Count);
+            Console.WriteLine(userId);
+            Console.WriteLine(validUntil);
+            Console.WriteLine(roleName);
+            Console.WriteLine("==========asdasdasd========================");
             
             var roles = roleName.Split(',');
             foreach (var role in roles)

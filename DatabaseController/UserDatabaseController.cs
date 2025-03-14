@@ -11,20 +11,11 @@ using WebApi.Dto;
 
 namespace WebApi.Data
 {
-    public class UserDatabaseController
+    public class UserDatabaseController(EfContext context, JWTTokenSystem jWtTokenSystem, IHubContext<NotificationHub> hubContext)
     {
-        private readonly EfContext _context;
-        private readonly JWTTokenSystem _jWTTokenSystem;
-        private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly IHubContext<NotificationHub> _hubContext = hubContext;
 
-        public UserDatabaseController(EfContext context, JWTTokenSystem jWTTokenSystem, IHubContext<NotificationHub> hubContext)
-        {
-            _context = context;
-            _jWTTokenSystem = jWTTokenSystem;
-            _hubContext = hubContext;
-        }
-        
-        
+
         public async Task Register(RegisterDto _us)
         {
             var user = new User
@@ -33,22 +24,23 @@ namespace WebApi.Data
                 Password = ComputeSha256Hash(_us.Password),
                 Email = _us.Email,
                 Number = _us.Number,
-                Roles = "User",
+                Roles = _us.Role,
             };
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
         }
         
         public async Task<LoginResponseDto?> Login(LoginDto _us)
         {
-            var entity = await _context.Users.FirstOrDefaultAsync(User => User.Username == _us.Username && User.Password == _us.Password);
+            var entity = await context.Users.FirstOrDefaultAsync(User => User.Username == _us.Username && User.Password == ComputeSha256Hash(_us.Password));
             if (entity != null) return new LoginResponseDto
             {
                 Id = entity.Id,
                 Username = entity.Username,
                 Roles = entity.Roles,
-                RefreshToken = await _jWTTokenSystem.GenerateRefreshTokenAsync(entity.Id)
+                RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id),
+                AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles)
             }; 
             return null;
         }
@@ -58,14 +50,14 @@ namespace WebApi.Data
 
         public async Task<Response> GetAccessToken(string tokenJti, string userId)
         {
-            JwtToken jwt = await _context.JwtTokens.FirstOrDefaultAsync(t => tokenJti == t.TokenJti);
+            JwtToken jwt = await context.JwtTokens.FirstOrDefaultAsync(t => tokenJti == t.TokenJti);
             if (jwt == null) return new Response("logged_out", 400);
 
-            var entity = await _context.Users.FirstOrDefaultAsync(User => User.Id == userId);
+            var entity = await context.Users.FirstOrDefaultAsync(User => User.Id == userId);
 
             if (entity != null)
             {
-                var AccessToken = await _jWTTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles);
+                var AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles);
 
                 var loginResponse = new LoginResponseDto {  Id = entity.Id,
                     Roles = entity.Roles,
