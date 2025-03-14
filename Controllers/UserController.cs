@@ -5,16 +5,14 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class UserController(UserDatabaseController _userDatabaseController) : Controller
+    public class UserController(UserDatabaseController _userDatabaseController, EfContext _context) : Controller
     {
-        private readonly EfContext _context;
-        
         [HttpPost]
         [Route("/User/Register")]
-        public IActionResult RegisterGET(RegisterDto registerDto)
+        public IActionResult RegisterPOST(RegisterDto registerDto)
         {
-            _userDatabaseController.Register(registerDto);
-            return new JsonResult(new { message = "Register successful." });
+            var registerResult = _userDatabaseController.Register(registerDto);
+            return new JsonResult(new { message = registerResult });
         }
         
         [HttpPost]
@@ -22,6 +20,7 @@ namespace WebApi.Controllers
         public IActionResult LoginPOST(LoginDto loginDto)
         {
             var User = _userDatabaseController.Login(loginDto);
+            if (User == null) return new Response("Invalid username or password.", 400);
             return new Response(User);
         }
     }

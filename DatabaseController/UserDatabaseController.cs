@@ -16,19 +16,26 @@ namespace WebApi.Data
         private readonly IHubContext<NotificationHub> _hubContext = hubContext;
 
 
-        public async Task Register(RegisterDto _us)
+        public async Task<Response> Register(RegisterDto _us)
         {
-            var user = new User
-            {
-                Username = _us.Username,
-                Password = ComputeSha256Hash(_us.Password),
-                Email = _us.Email,
-                Number = _us.Number,
-                Roles = _us.Role,
-            };
+            try {
+                var user = new User
+                {
+                    Username = _us.Username,
+                    Password = ComputeSha256Hash(_us.Password),
+                    Email = _us.Email,
+                    Number = _us.Number,
+                    Roles = _us.Role,
+                };
+                await context.Users.AddAsync(user);
+                await context.SaveChangesAsync();
 
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
+                return new Response("User registered successfully!");
+            }
+
+            catch {
+                return new Response("User registration failed!", 400);
+            }
         }
         
         public async Task<LoginResponseDto?> Login(LoginDto _us)
@@ -40,13 +47,10 @@ namespace WebApi.Data
                 Username = entity.Username,
                 Roles = entity.Roles,
                 RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id),
-                AccessToken = jWtTokenSystem.GenerateAccessToken(entity.Id, entity.Roles)
+                AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles)
             }; 
             return null;
         }
-
-        
-        #region GetAccessToken
 
         public async Task<Response> GetAccessToken(string tokenJti, string userId)
         {
@@ -57,7 +61,7 @@ namespace WebApi.Data
 
             if (entity != null)
             {
-                var AccessToken = jWtTokenSystem.GenerateAccessToken(entity.Id, entity.Roles);
+                var AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles);
 
                 var loginResponse = new LoginResponseDto {  Id = entity.Id,
                     Roles = entity.Roles,
@@ -70,8 +74,6 @@ namespace WebApi.Data
             else return new Response("Couln't get access token!", 400);
         }
 
-        #endregion
-        
         private string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
