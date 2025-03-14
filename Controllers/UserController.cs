@@ -5,14 +5,34 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class UserController(UserDatabaseController _userDatabaseController, EfContext _context) : Controller
+    public class UserController(UserDatabaseController _userDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
     {
+        [HttpGet]
+        [Route("/User/Register")]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("/User/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         [Route("/User/Register")]
         public IActionResult RegisterPOST(RegisterDto registerDto)
         {
             var registerResult = _userDatabaseController.Register(registerDto);
-            return new JsonResult(new { message = registerResult });
+
+            // Failed
+            if (registerResult.Result.Code == 400) return new JsonResult(new { message = registerResult }); 
+
+            // Success
+            return new JsonResult(new { message = "User Registered Successfuly!" });
         }
         
         [HttpPost]
@@ -20,7 +40,11 @@ namespace WebApi.Controllers
         public IActionResult LoginPOST(LoginDto loginDto)
         {
             var User = _userDatabaseController.Login(loginDto);
-            if (User == null) return new Response("Invalid username or password.", 400);
+
+            // Failed
+            if (User == null) return new JsonResult(new { message = "Invalid Username or Password!" });
+
+            // Success
             return new Response(User);
         }
     }

@@ -5,10 +5,10 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class HomeController(UserDatabaseController _userDatabaseController, EfContext _context) : Controller
+    public class Controller(UserDatabaseController _userDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
     {
         [HttpGet]
-        [Route("/Home/Index")]
+        [Route("/")]
         public IActionResult Index()
         {
             return View();

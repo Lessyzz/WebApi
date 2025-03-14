@@ -89,11 +89,10 @@ app.UseCors("cors");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=User}/{action=Index}/{id?}");
+// app.UseStatusCodePagesWithRedirects("/"); // This will be activated later!!!
 
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+
+app.UseRouting();
 
 app.Run();
