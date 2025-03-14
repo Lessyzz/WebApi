@@ -1,0 +1,893 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ABDULLAH GÜL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ABDULLAH GÜL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ACIBADEM MEHMET ALİ AYDINLAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ACIBADEM MEHMET ALİ AYDINLAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ADANA ALPARSLAN TÜRKEŞ BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ADANA ALPARSLAN TÜRKEŞ BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ADIYAMAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ADIYAMAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AFYON KOCATEPE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AFYON KOCATEPE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AFYONKARAHİSAR SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AFYONKARAHİSAR SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AKDENİZ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AKDENİZ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AKSARAY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AKSARAY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ALANYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ALANYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ALTINBAŞ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ALTINBAŞ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AMASYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AMASYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANADOLU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANADOLU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA BİLİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA BİLİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA HACI BAYRAM VELİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA HACI BAYRAM VELİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA MEDİPOL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA MEDİPOL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA MÜZİK VE GÜZEL SANATLAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA MÜZİK VE GÜZEL SANATLAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA SOSYAL BİLİMLER ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA SOSYAL BİLİMLER ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANKARA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANKARA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANTALYA BELEK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANTALYA BELEK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ANTALYA BİLİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ANTALYA BİLİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ARDAHAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ARDAHAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ARKIN YARATICI SANATLAR VE TASARIM ÜNİVERSİTESİ.jpg",
+      "PackagePath": "staticwebassets\\logos\\ARKIN YARATICI SANATLAR VE TASARIM ÜNİVERSİTESİ.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ARTVİN ÇORUH ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ARTVİN ÇORUH ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ATATÜRK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ATATÜRK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ATAŞEHİR ADIGÜZEL MESLEK YÜKSEKOKULU.png",
+      "PackagePath": "staticwebassets\\logos\\ATAŞEHİR ADIGÜZEL MESLEK YÜKSEKOKULU.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ATILIM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ATILIM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AVRASYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AVRASYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AYDIN ADNAN MENDERES ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AYDIN ADNAN MENDERES ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\AĞRI İBRAHİM ÇEÇEN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\AĞRI İBRAHİM ÇEÇEN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BAHÇEŞEHİR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BAHÇEŞEHİR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BALIKESİR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BALIKESİR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BANDIRMA ONYEDİ EYLÜL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BANDIRMA ONYEDİ EYLÜL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BARTIN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BARTIN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BATMAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BATMAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BAYBURT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BAYBURT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BAŞKENT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BAŞKENT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BEYKOZ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BEYKOZ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BEZM-İ ÂLEM VAKIF ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BEZM-İ ÂLEM VAKIF ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BOLU ABANT İZZET BAYSAL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BOLU ABANT İZZET BAYSAL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BOĞAZİÇİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BOĞAZİÇİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BURSA TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BURSA TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BURSA ULUDAĞ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BURSA ULUDAĞ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BİLECİK ŞEYH EDEBALİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BİLECİK ŞEYH EDEBALİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BİNGÖL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BİNGÖL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BİRUNİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BİRUNİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\BİTLİS EREN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\BİTLİS EREN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DEMİROĞLU BİLİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DEMİROĞLU BİLİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DOKUZ EYLÜL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DOKUZ EYLÜL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DOĞU AKDENİZ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DOĞU AKDENİZ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DOĞUŞ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DOĞUŞ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DÜZCE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DÜZCE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\DİCLE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\DİCLE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\EGE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\EGE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ERCİYES ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ERCİYES ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ERZURUM TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ERZURUM TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ERZİNCAN BİNALİ YILDIRIM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ERZİNCAN BİNALİ YILDIRIM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ESKİŞEHİR OSMANGAZİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ESKİŞEHİR OSMANGAZİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ESKİŞEHİR TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ESKİŞEHİR TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\FATİH SULTAN MEHMET VAKIF ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\FATİH SULTAN MEHMET VAKIF ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\FENERBAHÇE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\FENERBAHÇE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\FIRAT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\FIRAT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GALATASARAY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GALATASARAY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GAZİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GAZİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GAZİANTEP ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GAZİANTEP ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GAZİANTEP İSLAM BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GAZİANTEP İSLAM BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GEBZE TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GEBZE TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GÜMÜŞHANE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GÜMÜŞHANE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GİRESUN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GİRESUN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GİRNE AMERİKAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GİRNE AMERİKAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\GİRNE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\GİRNE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HACETTEPE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HACETTEPE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HAKKARİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HAKKARİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HALİÇ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HALİÇ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HARRAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HARRAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HASAN KALYONCU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HASAN KALYONCU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HATAY MUSTAFA KEMAL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HATAY MUSTAFA KEMAL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\HİTİT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\HİTİT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\IĞDIR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\IĞDIR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\IŞIK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\IŞIK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KADİR HAS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KADİR HAS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KAFKAS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KAFKAS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KAHRAMANMARAŞ SÜTÇÜ İMAM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KAHRAMANMARAŞ SÜTÇÜ İMAM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KAHRAMANMARAŞ İSTİKLAL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KAHRAMANMARAŞ İSTİKLAL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KAPADOKYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KAPADOKYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KARABÜK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KARABÜK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KARADENİZ TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KARADENİZ TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KARAMANOĞLU MEHMETBEY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KARAMANOĞLU MEHMETBEY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KASTAMONU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KASTAMONU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KAYSERİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KAYSERİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KIBRIS AMERİKAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KIBRIS AMERİKAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KIBRIS SAĞLIK VE TOPLUM BİLİMLERİ ÜNİVERSİTESİ.jpg",
+      "PackagePath": "staticwebassets\\logos\\KIBRIS SAĞLIK VE TOPLUM BİLİMLERİ ÜNİVERSİTESİ.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KIRIKKALE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KIRIKKALE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KIRKLARELİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KIRKLARELİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KOCAELİ SAĞLIK VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KOCAELİ SAĞLIK VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KOCAELİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KOCAELİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KONYA GIDA VE TARIM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KONYA GIDA VE TARIM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KONYA TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KONYA TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KOÇ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KOÇ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KTO KARATAY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KTO KARATAY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KÜTAHYA SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KÜTAHYA SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\KİLİS 7 ARALIK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\KİLİS 7 ARALIK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\LEFKE AVRUPA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\LEFKE AVRUPA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\LOKMAN HEKİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\LOKMAN HEKİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MALATYA TURGUT ÖZAL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MALATYA TURGUT ÖZAL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MALTEPE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MALTEPE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MANİSA CELÂL BAYAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MANİSA CELÂL BAYAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MARDİN ARTUKLU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MARDİN ARTUKLU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MARMARA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MARMARA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MEF ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MEF ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MERSİN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MERSİN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MUDANYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MUDANYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MUNZUR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MUNZUR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MUĞLA SITKI KOÇMAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MUĞLA SITKI KOÇMAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MUŞ ALPARSLAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MUŞ ALPARSLAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\NECMETTİN ERBAKAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\NECMETTİN ERBAKAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\NEVŞEHİR HACI BEKTAŞ VELİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\NEVŞEHİR HACI BEKTAŞ VELİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\NUH NACİ YAZGAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\NUH NACİ YAZGAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\NİĞDE ÖMER HALİSDEMİR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\NİĞDE ÖMER HALİSDEMİR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ONDOKUZ MAYIS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ONDOKUZ MAYIS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ORDU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ORDU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ORTA DOĞU TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ORTA DOĞU TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\OSMANİYE KORKUT ATA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\OSMANİYE KORKUT ATA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\OSTİM TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\OSTİM TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\PAMUKKALE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\PAMUKKALE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\PİRİ REİS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\PİRİ REİS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SABANCI ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SABANCI ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SAKARYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SAKARYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SAMSUN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SAMSUN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SANKO ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SANKO ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SAĞLIK BİLİMLERİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SELÇUK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SELÇUK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SÜLEYMAN DEMİREL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SÜLEYMAN DEMİREL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SİNOP ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SİNOP ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SİVAS BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SİVAS BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SİVAS CUMHURİYET ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SİVAS CUMHURİYET ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\SİİRT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\SİİRT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TARSUS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TARSUS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TED ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TED ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TEKİRDAĞ NAMIK KEMAL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TEKİRDAĞ NAMIK KEMAL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TOBB EKONOMİ VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TOBB EKONOMİ VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TOROS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TOROS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TRABZON ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TRABZON ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TRAKYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TRAKYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TÜRK HAVA KURUMU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TÜRK HAVA KURUMU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\TÜRK-ALMAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\TÜRK-ALMAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\UFUK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\UFUK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ULUSLARARASI BALKAN ÜNİVERSİTESİ.jpg",
+      "PackagePath": "staticwebassets\\logos\\ULUSLARARASI BALKAN ÜNİVERSİTESİ.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ULUSLARARASI FİNAL ÜNİVERSİTESİ.jpg",
+      "PackagePath": "staticwebassets\\logos\\ULUSLARARASI FİNAL ÜNİVERSİTESİ.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ULUSLARARASI KIBRIS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ULUSLARARASI KIBRIS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\UŞAK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\UŞAK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\VAN YÜZÜNCÜ YIL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\VAN YÜZÜNCÜ YIL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YAKIN DOĞU ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YAKIN DOĞU ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YALOVA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YALOVA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YAŞAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YAŞAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YEDİTEPE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YEDİTEPE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YILDIZ TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YILDIZ TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YOZGAT BOZOK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YOZGAT BOZOK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\YÜKSEK İHTİSAS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\YÜKSEK İHTİSAS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ZONGULDAK BÜLENT ECEVİT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ZONGULDAK BÜLENT ECEVİT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÇANKAYA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÇANKAYA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÇANKIRI KARATEKİN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÇANKIRI KARATEKİN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÇAĞ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÇAĞ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÇUKUROVA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÇUKUROVA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÖZYEĞİN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÖZYEĞİN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ÜSKÜDAR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ÜSKÜDAR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İBN HALDUN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İBN HALDUN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İHSAN DOĞRAMACI BİLKENT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İHSAN DOĞRAMACI BİLKENT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İNÖNÜ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İNÖNÜ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSKENDERUN TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSKENDERUN TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL 29 MAYIS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL 29 MAYIS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL AREL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL AREL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL ATLAS ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL ATLAS ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL AYDIN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL AYDIN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL BEYKENT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL BEYKENT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL BİLGİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL BİLGİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL ESENYURT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL ESENYURT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL GALATA ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL GALATA ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL GEDİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL GEDİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL GELİŞİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL GELİŞİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL KENT ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL KENT ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL KÜLTÜR ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL KÜLTÜR ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL MEDENİYET ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL MEDENİYET ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL MEDİPOL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL MEDİPOL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL NİŞANTAŞI ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL NİŞANTAŞI ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL OKAN ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL OKAN ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL RUMELİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL RUMELİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL SABAHATTİN ZAİM ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL SABAHATTİN ZAİM ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL SAĞLIK VE SOSYAL BİLİMLER MESLEK YÜKSEKOKULU.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL SAĞLIK VE SOSYAL BİLİMLER MESLEK YÜKSEKOKULU.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL SAĞLIK VE TEKNOLOJİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL SAĞLIK VE TEKNOLOJİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL TEKNİK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL TEKNİK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL TOPKAPI ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL TOPKAPI ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL TİCARET ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL TİCARET ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL YENİ YÜZYIL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL YENİ YÜZYIL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL ÜNİVERSİTESİ-CERRAHPAŞA.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL ÜNİVERSİTESİ-CERRAHPAŞA.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTANBUL ŞİŞLİ MESLEK YÜKSEKOKULU.png",
+      "PackagePath": "staticwebassets\\logos\\İSTANBUL ŞİŞLİ MESLEK YÜKSEKOKULU.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İSTİNYE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İSTİNYE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR BAKIRÇAY ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR BAKIRÇAY ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR DEMOKRASİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR DEMOKRASİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR EKONOMİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR EKONOMİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR KATİP ÇELEBİ ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR KATİP ÇELEBİ ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR KAVRAM MESLEK YÜKSEKOKULU.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR KAVRAM MESLEK YÜKSEKOKULU.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR TINAZTEPE ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR TINAZTEPE ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\İZMİR YÜKSEK TEKNOLOJİ ENSTİTÜSÜ.png",
+      "PackagePath": "staticwebassets\\logos\\İZMİR YÜKSEK TEKNOLOJİ ENSTİTÜSÜ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\logos\\ŞIRNAK ÜNİVERSİTESİ.png",
+      "PackagePath": "staticwebassets\\logos\\ŞIRNAK ÜNİVERSİTESİ.png"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\uniwithcoor.json",
+      "PackagePath": "staticwebassets\\uniwithcoor.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebApi.props",
+      "PackagePath": "build\\WebApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebApi.props",
+      "PackagePath": "buildMultiTargeting\\WebApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebApi.props",
+      "PackagePath": "buildTransitive\\WebApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

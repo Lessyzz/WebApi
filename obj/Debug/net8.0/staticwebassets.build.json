@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "5sj9bnRopDVtFSFtGx3p4I93Y1RYToGmaLvEr3NtQ74=",
+  "Source": "WebApi",
+  "BasePath": "_content/WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "WebApi\\wwwroot",
+      "Source": "WebApi",
+      "ContentRoot": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\",
+      "BasePath": "_content/WebApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
