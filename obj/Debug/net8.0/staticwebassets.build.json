@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5sj9bnRopDVtFSFtGx3p4I93Y1RYToGmaLvEr3NtQ74=",
+  "Hash": "FTkFGl4+x2gP0ztj4EbiPEj3yg48ZCOw7p7HjG65JKE=",
   "Source": "WebApi",
   "BasePath": "_content/WebApi",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "WebApi\\wwwroot",
       "Source": "WebApi",
-      "ContentRoot": "C:\\Users\\Administrator\\Desktop\\yokmap-backend-main\\WebApi\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Administrator\\Desktop\\WebApi\\WebApi\\wwwroot\\",
       "BasePath": "_content/WebApi",
       "Pattern": "**"
     }

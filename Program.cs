@@ -10,7 +10,18 @@ builder.Logging.AddConsole();
 
 builder.Services.ApplySwaggerSetup();
 
+builder.Services.AddSignalR();
+
+builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("JwtConfiguration"));
+builder.Services.AddSingleton<JwtConfiguration>();
+
+builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddSingleton<JwtConfiguration>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<AdminDatabaseController>();
+builder.Services.AddScoped<JWTTokenSystem>();
+builder.Services.AddScoped<UserDatabaseController>();
 
 builder.Services.AddDbContext<EfContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

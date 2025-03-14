@@ -11,7 +11,7 @@ using WebApi.Data;
 namespace WebApi.Data.migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20250312102453_Initial")]
+    [Migration("20250314124859_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -212,29 +212,52 @@ namespace WebApi.Data.migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Models.University", b =>
+            modelBuilder.Entity("WebApi.Data.JwtToken", b =>
+                {
+                    b.Property<string>("TokenJti")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TokenJti");
+
+                    b.ToTable("JwtTokens");
+                });
+
+            modelBuilder.Entity("WebApi.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Latitude")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Longitude")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Website")
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Universities");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
