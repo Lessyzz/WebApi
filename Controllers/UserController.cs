@@ -8,13 +8,6 @@ namespace WebApi.Controllers
     public class UserController(UserDatabaseController _userDatabaseController) : Controller
     {
         private readonly EfContext _context;
-
-        [HttpGet]
-        [Route("/User/Index")]
-        public IActionResult Index()
-        {
-            return View();
-        }
         
         [HttpPost]
         [Route("/User/Register")]

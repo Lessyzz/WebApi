@@ -62,13 +62,6 @@ namespace WebApi.Data
                 // new("rol", roleName),
             };
             
-            Console.WriteLine("=========asdasd=========================");
-            Console.WriteLine(claims.Count);
-            Console.WriteLine(userId);
-            Console.WriteLine(validUntil);
-            Console.WriteLine(roleName);
-            Console.WriteLine("==========asdasdasd========================");
-            
             var roles = roleName.Split(',');
             foreach (var role in roles)
             {

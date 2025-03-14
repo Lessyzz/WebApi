@@ -40,7 +40,7 @@ namespace WebApi.Data
                 Username = entity.Username,
                 Roles = entity.Roles,
                 RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id),
-                AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles)
+                AccessToken = jWtTokenSystem.GenerateAccessToken(entity.Id, entity.Roles)
             }; 
             return null;
         }
@@ -50,14 +50,14 @@ namespace WebApi.Data
 
         public async Task<Response> GetAccessToken(string tokenJti, string userId)
         {
-            JwtToken jwt = await context.JwtTokens.FirstOrDefaultAsync(t => tokenJti == t.TokenJti);
+            JwtToken? jwt = await context.JwtTokens.FirstOrDefaultAsync(t => tokenJti == t.TokenJti);
             if (jwt == null) return new Response("logged_out", 400);
 
             var entity = await context.Users.FirstOrDefaultAsync(User => User.Id == userId);
 
             if (entity != null)
             {
-                var AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles);
+                var AccessToken = jWtTokenSystem.GenerateAccessToken(entity.Id, entity.Roles);
 
                 var loginResponse = new LoginResponseDto {  Id = entity.Id,
                     Roles = entity.Roles,
