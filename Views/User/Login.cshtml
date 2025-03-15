@@ -2,4 +2,35 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-Login Page
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret</title>
+    <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
+    <link rel="stylesheet" href="/assets/beer.min.css">
+    <script type="module" src="/assets/beer.min.js" defer></script>
+</head>
+
+<body>
+<main class="responsive max">
+    <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px;">
+        <i class="extra fill primary-text" style="overflow: visible;">login</i>
+        <h4 class="primary-text">Giriş Yap</h4>
+        <div class="field fill label">
+            <input type="text" v-model="number">
+            <label>Telefon Numarası</label>
+        </div>
+        <div class="field fill label">
+            <input type="password">
+            <label>Şifre</label>
+        </div>
+        <button>Devam Et</button>
+        <!-- <progress class="circle"></progress> -->
+    </article>
+</main>
+</body>
+
+</html>
