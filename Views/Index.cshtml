@@ -2,25 +2,15 @@
 ViewData["Title"] = "Ana Sayfa";
 }
 
-<!DOCTYPE html>
-<html lang="en">
+@{ // Navbarı direkt hazır şablondan çekiyoruz.
+    Layout = "~/Views/Shared/_Navbar.cshtml"; 
+}
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Ticaret</title>
-    <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
-    <link rel="stylesheet" href="/assets/beer.min.css">
-    <script type="module" src="/assets/beer.min.js" defer></script>
 </head>
+
 <header>
-    <nav class="middle-align">
-        <img src="/assets/logo.webp" class="large" alt="">
-        <h4 class="max">KTUNStore</h4>
-        
-        <button class="border"><i>login</i>Giriş Yap</button>
-        <button class="">Kayıt Ol</button>
-    </nav>
     <div class="center-align">
         <main class="responsive">
             <nav class="surface-container-high round padding" style="margin-top: 10px">
@@ -171,4 +161,3 @@ ViewData["Title"] = "Ana Sayfa";
     </div>
 </header>
 
-</html>
