@@ -15,22 +15,23 @@
 </head>
 
 <body>
+<form method="post" action="">
 <main class="responsive max">
     <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px;">
-        <i class="extra fill primary-text" style="overflow: visible;">login</i>
-        <h4 class="primary-text">Giriş Yap</h4>
+        <h4 class="primary-text" style="margin-bottom: 50px;">Giriş Yap</h4>
         <div class="field fill label">
-            <input type="text" v-model="number">
+            <input type="text" name="Number">
             <label>Telefon Numarası</label>
         </div>
         <div class="field fill label">
-            <input type="password">
+            <input type="password" name="Password">
             <label>Şifre</label>
         </div>
-        <button>Devam Et</button>
+        <button>Giriş Yap</button>
         <!-- <progress class="circle"></progress> -->
     </article>
 </main>
+</form>
 </body>
 
 </html>

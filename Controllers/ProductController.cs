@@ -9,9 +9,9 @@ public class ProductController(UserDatabaseController _userDatabaseController, E
 {
     [HttpGet]
     [Route("/User/GetBasketProducts")]
-    public IActionResult GetBasketProducts(string userId)
+    public async Task<IActionResult> GetBasketProducts(string userId)
     {
-        var registerResult = _userDatabaseController.GetBasketProducts(userId);
+        var registerResult = await _userDatabaseController.GetBasketProducts(userId);
 
         if (registerResult == null) return new JsonResult(new { message = "Error" });
         return new JsonResult(new { message = registerResult });
@@ -19,22 +19,18 @@ public class ProductController(UserDatabaseController _userDatabaseController, E
     
     [HttpPost]
     [Route("/User/AddProduct")]
-    public IActionResult AddProduct(AddProductDto addProductDto)
+    public async Task<IActionResult> AddProduct(AddProductDto addProductDto)
     {
-        var registerResult = _userDatabaseController.AddProduct(addProductDto, "asd");
-
-        if (registerResult == null) return new JsonResult(new { message = "Error" });
-        return new JsonResult(new { message = registerResult });
+        await _userDatabaseController.AddProduct(addProductDto, "asd");
+        return new JsonResult(new { message = "Successful!" });
     }
     
     [HttpPost]
     [Route("/User/AddProductToBasketProduct")]
-    public IActionResult AddProductToBasketProduct(string productId, string userId)
+    public async Task<IActionResult> AddProductToBasketProduct(string productId, string userId)
     {
-        var registerResult = _userDatabaseController.AddProductToBasketProduct(productId, userId);
-
-        if (registerResult == null) return new JsonResult(new { message = "Error" });
-        return new JsonResult(new { message = registerResult });
+        await _userDatabaseController.AddProductToBasketProduct(productId, userId);
+        return new JsonResult(new { message = "Succesful!" });
     }
     
     // [HttpPost]

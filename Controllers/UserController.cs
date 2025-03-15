@@ -24,28 +24,28 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Route("/User/Register")]
-        public IActionResult RegisterPOST(RegisterDto registerDto)
+        public async Task<IActionResult> RegisterPOST([FromForm]RegisterDto registerDto)
         {
-            var registerResult = _userDatabaseController.Register(registerDto);
+            var registerResult = await _userDatabaseController.Register(registerDto);
 
             // Failed
-            if (registerResult.Result.Code == 400) return new JsonResult(new { message = registerResult }); 
+            if (registerResult.Code == 400) return new JsonResult(new { message = registerResult });
 
             // Success
-            return new JsonResult(new { message = "User Registered Successfuly!" });
+            return new JsonResult(new { message = "User Registered Successfully!" });
         }
+
         
         [HttpPost]
         [Route("/User/Login")]
-        public IActionResult LoginPOST(LoginDto loginDto)
+        public async Task<IActionResult> LoginPOST([FromForm]LoginDto loginDto)
         {
-            var User = _userDatabaseController.Login(loginDto);
+            var User = await _userDatabaseController.Login(loginDto);
 
-            // Failed
             if (User == null) return new JsonResult(new { message = "Invalid Username or Password!" });
 
-            // Success
-            return new Response(User);
+            // return new Response(User);
+            return new JsonResult(new { message = "Başarılı Giriş!" });
         }
     }
 }

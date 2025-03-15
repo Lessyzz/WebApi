@@ -46,7 +46,7 @@ namespace WebApi.Data
         
         public async Task<LoginResponseDto?> Login(LoginDto _us)
         {
-            var entity = await context.Users.FirstOrDefaultAsync(User => User.Username == _us.Username && User.Password == ComputeSha256Hash(_us.Password));
+            var entity = await context.Users.FirstOrDefaultAsync(User => User.Number == _us.Number && User.Password == ComputeSha256Hash(_us.Password));
             if (entity != null) return new LoginResponseDto
             {
                 Id = entity.Id,
