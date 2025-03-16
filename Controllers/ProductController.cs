@@ -5,13 +5,33 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 
-public class ProductController(UserDatabaseController _userDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
+public class ProductController(ProductDatabaseController _productDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
 {
+
+    [HttpGet]
+    [Route("/User/GetProducts")]
+    public async Task<IActionResult> GetProducts()
+    {
+        var registerResult = await _productDatabaseController.GetProducts();
+        return new JsonResult(new { message = registerResult });
+    }
+
+    [HttpGet]
+    [Route("/User/GetProductById")]
+    public async Task<IActionResult> GetProductById(string productId)
+    {
+        var registerResult = await _productDatabaseController.GetProductById(productId);
+
+        if (registerResult == null) return new JsonResult(new { message = "Error" });
+        return new JsonResult(new { message = registerResult });
+    }
+
+
     [HttpGet]
     [Route("/User/GetBasketProducts")]
     public async Task<IActionResult> GetBasketProducts(string userId)
     {
-        var registerResult = await _userDatabaseController.GetBasketProducts(userId);
+        var registerResult = await _productDatabaseController.GetBasketProducts(userId);
 
         if (registerResult == null) return new JsonResult(new { message = "Error" });
         return new JsonResult(new { message = registerResult });
@@ -21,7 +41,7 @@ public class ProductController(UserDatabaseController _userDatabaseController, E
     [Route("/User/AddProduct")]
     public async Task<IActionResult> AddProduct(AddProductDto addProductDto)
     {
-        await _userDatabaseController.AddProduct(addProductDto, "asd");
+        await _productDatabaseController.AddProduct(addProductDto, "asd");
         return new JsonResult(new { message = "Successful!" });
     }
     
@@ -29,7 +49,7 @@ public class ProductController(UserDatabaseController _userDatabaseController, E
     [Route("/User/AddProductToBasketProduct")]
     public async Task<IActionResult> AddProductToBasketProduct(string productId, string userId)
     {
-        await _userDatabaseController.AddProductToBasketProduct(productId, userId);
+        await _productDatabaseController.AddProductToBasketProduct(productId, userId);
         return new JsonResult(new { message = "Succesful!" });
     }
     

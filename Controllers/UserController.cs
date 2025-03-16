@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         {
             var User = await _userDatabaseController.Login(loginDto);
 
-            if (User == null) return new JsonResult(new { message = "Invalid Username or Password!" });
+            if (User == null) return new JsonResult(new { message = "Hatalı Giriş" });
 
             // return new Response(User);
             return new JsonResult(new { message = "Başarılı Giriş!" });

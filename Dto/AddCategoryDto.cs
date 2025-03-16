@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.Models;
 
-namespace WebApi.Models;
-
-public class Category
+public class AddCategoryDto
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public string Name { get; set; }
-    public int? ParentCategoryId { get; set; }
+    public int ParentCategoryId { get; set; }
 }
