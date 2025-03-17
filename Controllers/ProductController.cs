@@ -111,13 +111,19 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
         return new JsonResult(new { message = "Succesful!" });
     }
     
-    // [HttpPost]
-    // [Route("/User/UpdateProducts")]
-    // public IActionResult UpdateProducts(string basketId)
-    // {
-    //     var registerResult = _userDatabaseController.UpdateProducts(basketId);
-    //
-    //     if (registerResult == null) return new JsonResult(new { message = "Error" });
-    //     return new JsonResult(new { message = registerResult });
-    // }
+    [HttpPost]
+    [Route("/Product/RemoveProduct")]
+    public async Task<IActionResult> RemoveProduct(string productId)
+    {
+        await _productDatabaseController.RemoveProduct(productId);
+        return new JsonResult(new { message = "Succesful!" });
+    }
+
+    [HttpPost]
+    [Route("/User/UpdateProducts")]
+    public async Task<IActionResult> UpdateProducts(UpdateProductDto updateProductDto)
+    {
+        await _productDatabaseController.UpdateProduct(updateProductDto);
+        return new JsonResult(new { message = "Succesful!" });
+    }
 }

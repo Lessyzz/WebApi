@@ -35,7 +35,8 @@ namespace WebApi.Data
                 Password = ComputeSha256Hash(_us.Password),
                 Email = _us.Email,
                 Number = _us.Number,
-                Roles = _us.Role,
+                Roles = "User",
+                Verified = false
             };
             
             await context.Users.AddAsync(user);

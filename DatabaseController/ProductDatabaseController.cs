@@ -145,5 +145,31 @@ namespace WebApi.Data
             }
         }
 
+        public async Task RemoveProduct(string productId)
+        {
+            var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == productId);
+            if (product != null)
+            {
+                context.Products.Remove(product);
+                await context.SaveChangesAsync();
+            }
+        }
+    
+        public async Task UpdateProduct(UpdateProductDto updateProductDto)
+        {
+            var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == updateProductDto.Id);
+            if (product != null)
+            {
+                if (updateProductDto.Name != null) product.Name = updateProductDto.Name;
+                if (updateProductDto.Description != null) product.Description = updateProductDto.Description;
+                if (updateProductDto.Price != 0) product.Price = updateProductDto.Price;
+                if (updateProductDto.Image != null) product.Image = updateProductDto.Image;
+                if (updateProductDto.Categories != null) product.Categories = updateProductDto.Categories;
+                if (updateProductDto.Discount != 0) product.Discount = updateProductDto.Discount;
+                if (updateProductDto.Quantity != 0) product.Quantity = updateProductDto.Quantity;
+                if (updateProductDto.ProductSellerId != null) product.ProductSellerId = updateProductDto.ProductSellerId;
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

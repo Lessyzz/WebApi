@@ -2,4 +2,64 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-Register Page
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret</title>
+    <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
+    <link rel="stylesheet" href="/assets/beer.min.css">
+    <script type="module" src="/assets/beer.min.js" defer></script>
+
+    <style>
+        body {
+            background-color: rgb(29, 29, 29);
+        }
+
+        .input-color {
+            background-color: rgb(66, 66, 66);
+            color: white;
+        }
+
+        .label-color {
+            color: rgb(49, 49, 248);
+        }
+    </style>
+</head>
+
+<body>
+<form method="post" action="">
+    <main class="responsive max">
+        <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px; background-color: rgb(44, 44, 44);">
+            <h4 style="margin-bottom: 50px; color: white;">Kayıt ol</h4>
+            <div class="field fill label">
+                <input type="text" name="Username" class="input-color">
+                <label class="label-color">Ad Soyad</label>
+            </div>
+            <div class="field fill label">
+                <input type="text" name="Number" class="input-color">
+                <label class="label-color">Telefon Numarası</label>
+            </div>
+            <div class="field fill label">
+                <input type="email" name="Email" class="input-color">
+                <label class="label-color">Email</label>
+            </div>
+            <div class="field fill label">
+                <input type="password" name="Password" class="input-color">
+                <label class="label-color">Şifre</label>
+            </div>
+            <button style="color: white; background-color: rgb(66, 66, 66);">Kayıt ol</button>
+            <progress class="circle"></progress> 
+        </article>
+    </main>
+</form>
+</body>
+<script type="module" src="/assets/material-dynamic-colors.min.js"></script>
+<script type="module">
+    ui("mode", "light");
+    ui("theme", "#096ee2");
+</script>
+
+</html>
