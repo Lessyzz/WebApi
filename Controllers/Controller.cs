@@ -13,5 +13,12 @@ namespace WebApi.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        [Route("/product")]
+        public IActionResult Product()
+        {
+            return View();
+        }
     }
 }

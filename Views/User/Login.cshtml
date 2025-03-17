@@ -16,22 +16,27 @@
 
 <body>
 <form method="post" action="">
-<main class="responsive max">
-    <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px;">
-        <h4 class="primary-text" style="margin-bottom: 50px;">Giriş Yap</h4>
-        <div class="field fill label">
-            <input type="text" name="Number">
-            <label>Telefon Numarası</label>
-        </div>
-        <div class="field fill label">
-            <input type="password" name="Password">
-            <label>Şifre</label>
-        </div>
-        <button>Giriş Yap</button>
-        <!-- <progress class="circle"></progress> -->
-    </article>
-</main>
+    <main class="responsive max">
+        <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px;">
+            <h4 class="primary-text" style="margin-bottom: 50px;">Giriş Yap</h4>
+            <div class="field fill label">
+                <input type="text" name="Number">
+                <label>Telefon Numarası</label>
+            </div>
+            <div class="field fill label">
+                <input type="password" name="Password">
+                <label>Şifre</label>
+            </div>
+            <button>Giriş Yap</button>
+            <progress class="circle"></progress> 
+        </article>
+    </main>
 </form>
 </body>
+<script type="module" src="/assets/material-dynamic-colors.min.js"></script>
+<script type="module">
+    ui("mode", "light");
+    ui("theme", "#096ee2");
+</script>
 
 </html>

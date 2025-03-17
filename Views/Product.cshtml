@@ -1,0 +1,223 @@
+﻿@{
+ViewData["Title"] = "Ana Sayfa";
+}
+
+@{ // Navbarı direkt hazır şablondan çekiyoruz.
+    Layout = "~/Views/Shared/_Navbar.cshtml"; 
+}
+
+<head>
+    <title>E-Ticaret</title>
+</head>
+
+<main class="responsive center-align">
+    <div class="grid margin padding surface-container-high round left-align">
+        <div class="discount-badge">50% İndirim</div>
+        <img class="s12 l6 center" src="https://picsum.photos/500/500"
+            style="max-width: min(500px, 100%); max-height: 500px;">
+        <div class="s12 l6">
+            <h4>Kutahia Porcelen</h4>
+            <nav class="top-margin">
+                <div class="stars">
+                    <i class="small fill">star</i>
+                    <i class="small fill">star</i>
+                    <i class="small fill">star</i>
+                    <i class="small">star</i>
+                    <i class="small">star</i>
+                </div>
+                <span>3.2</span>
+                <span>(145 Değerlendirme)</span>
+            </nav>
+            <nav>
+                <h5 class="primary-text">350₺</h5>
+                <h6 class="overline">750₺</h6>
+            </nav>
+            <p>
+                Experience immersive sound with our premium wireless headphones. Featuring active noise
+                cancellation technology, these
+                headphones deliver crystal-clear audio while blocking out ambient noise. With a comfortable
+                over-ear design and up to 30
+                hours of battery life, they're perfect for long listening sessions at home or on the go.
+            </p>
+            <div style="margin-top: 3rem;">
+                <h6 class="small primary-text">Renk Seçenekleri</h6>
+                <div class="row">
+                    <button class="circle red small"><i>done</i></button>
+                    <!-- Stokta kalmadı gibi bir şey için -->
+                    <button class="circle blue small" disabled></button>
+                    <button class="circle green small"></button>
+                    <button class="circle orange small"></button>
+                </div>
+            </div>
+            <div class="top-margin">
+                <h6 class="small primary-text">Boy Seçenekleri</h6>
+                <div class="row">
+                    <button class=" circle">S</button>
+                    <button class="transparent circle">M</button>
+                    <!-- Stokta kalmadı gibi bir şey için -->
+                    <button class="transparent circle" disabled>L</button>
+                    <button class="transparent circle">XL</button>
+                </div>
+            </div>
+            <nav style="margin-top: 3rem;">
+                <div class="row">
+                    <button class="transparent circle" onclick="remove()"><i>remove</i></button>
+                    <div class="field round fill" style="width: 70px;">
+                        <input id="quantity-input" type="number" value="1" placeholder="1"
+                            style="text-align: center;">
+                    </div>
+                    <button class="transparent circle" onclick="add()"><i>add</i></button>
+                </div>
+                <div class="max"></div>
+                <button>Sepete Ekle</button>
+            </nav>
+        </div>
+    </div>
+    <div class="margin padding surface-container-high round left-align">
+        <div class="details-section">
+            <nav class="tabbed">
+                <a class="active">
+                    <i>style</i>
+                    <span>Özellikler</span>
+                </a>
+                <a>
+                    <i>family_star</i>
+                    <span>Değerlendirmeler</span>
+                </a>
+                <a>
+                    <i>forum</i>
+                    <span>Soru Cevap</span>
+                </a>
+            </nav>
+            <div class="page padding active">
+                <p>Our Premium Wireless Noise-Cancelling Headphones deliver an exceptional audio experience with
+                    industry-leading noise
+                    cancellation technology. Designed for comfort and performance, these headphones feature
+                    plush ear cushions and an
+                    adjustable headband for a perfect fit.
+
+                    The advanced noise cancellation system uses multiple microphones to analyze and counteract
+                    external sounds, allowing you
+                    to enjoy your music without distractions. Whether you're commuting, working, or traveling,
+                    these headphones provide a
+                    peaceful listening environment.
+
+                    With Bluetooth 5.0 connectivity, you can easily pair with your devices and enjoy stable,
+                    high-quality wireless audio.
+                    The built-in microphone ensures clear call quality, and the intuitive touch controls allow
+                    you to manage your music and
+                    calls with ease.
+
+                    The 30-hour battery life means you can listen all day without worrying about running out of
+                    power. And when you do need
+                    to recharge, the quick-charge feature gives you 5 hours of playback from just 10 minutes of
+                    charging.
+                </p>
+            </div>
+            <div class="page padding">
+                <div class="grid">
+                    <div class="s12 l6 center-align middle-align">
+                        <div>
+                            <h2>3.2</h2>
+                            <div class="stars">
+                                <i class="small fill">star</i>
+                                <i class="small fill">star</i>
+                                <i class="small fill">star</i>
+                                <i class="small">star</i>
+                                <i class="small">star</i>
+                            </div>
+                            <h6 class="small">145 Değerlendirme</h6>
+                        </div>
+                    </div>
+                    <div class="s12 l6">
+                        <div class="row">5<i>star</i> <progress value="40" max="100"></progress> 50%</div>
+                        <div class="row">4<i>star</i> <progress value="30" max="100"></progress> 30%</div>
+                        <div class="row">3<i>star</i> <progress value="5" max="100"></progress> 5%</div>
+                        <div class="row">2<i>star</i> <progress value="10" max="100"></progress> 10%</div>
+                        <div class="row">1<i>star</i> <progress value="15" max="100"></progress> 15%</div>
+                    </div>
+                </div>
+                <div class="top-margin">
+                    <nav>
+                        <img src="https://www.thispersondoesnotexist.com/" alt="" class="circle large">
+                        <div class="max">
+                            John Doe
+                            <div>17 Mart 2025</div>
+                        </div>
+                        <div>
+                            4<i>star</i>
+                        </div>
+                    </nav>
+                    <p>I absolutely love this product! The quality is exceptional and it exceeded all my
+                        expectations. It arrived quickly and
+                        was packaged securely. I've been using it for about a week now and can definitely say
+                        it's worth every penny. Would
+                        highly recommend to anyone looking for a reliable solution.</p>
+                </div>
+                <hr>
+                <div class="top-margin">
+                    <nav>
+                        <img src="https://www.thispersondoesnotexist.com/" alt="" class="circle large">
+                        <div class="max">
+                            Emily Doe
+                            <div>12 Mart 2025</div>
+                        </div>
+                        <div>
+                            1<i>star</i>
+                        </div>
+                    </nav>
+                    <p>I hated it</p>
+                </div>
+            </div>
+            <div class="page padding">
+                <h5>Guidelines</h5>
+            </div>
+            <div class="page padding">
+                <h5>Acessibility</h5>
+            </div>
+        </div>
+    </div>
+</main>
+<style>
+    div.discount-badge {
+        position: absolute;
+        top: 30px;
+        left: -10px;
+        background-color: var(--primary-container);
+        color: var(--on-primary-container);
+        padding: 5px 15px;
+        font-weight: bold;
+        border-radius: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    div.discount-badge::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        border-top: 10px solid var(--primary-container);
+        border-left: 10px solid transparent;
+        filter: brightness(0.8);
+    }
+</style>
+<script>
+    const input = document.getElementById("quantity-input")
+
+    function add() {
+        input.value = parseInt(input.value || '1') + 1
+    }
+    function remove() {
+        input.value = Math.max(parseInt(input.value || '1') - 1, 1)
+    }
+
+    document.querySelectorAll("nav.tabbed>a").forEach((tab, i) => {
+        tab.addEventListener('click', () => {
+            document.querySelector('.page.active').classList.remove('active')
+            document.querySelectorAll('.page')[i].classList.add('active')
+            document.querySelector('nav.tabbed>a.active').classList.remove('active')
+            tab.classList.add('active')
+        })
+    })
+</script>
