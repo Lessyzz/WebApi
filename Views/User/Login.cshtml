@@ -1,57 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Ana Sayfa";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Ticaret</title>
-    <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
-    <link rel="stylesheet" href="/assets/beer.min.css">
-    <script type="module" src="/assets/beer.min.js" defer></script>
-
+    <title>Login Page</title>
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+    <script src="/assets/bootstrap.bundle.min.js" defer></script>
     <style>
         body {
-            background-color: rgb(29, 29, 29);
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         .input-color {
-            background-color: rgb(66, 66, 66);
-            color: white;
+            border-left: 4px solid #0d6efd;
         }
-
-        .label-color {
-            color: rgb(49, 49, 248);
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+        }
+        .brand {
+            text-align: center;
+            margin-bottom: 30px;
         }
     </style>
 </head>
-
 <body>
-<form method="post" action="">
-    <main class="responsive max">
-        <article class="round absolute center middle center-align" style="width: 100%; max-width: 600px; background-color: rgb(44, 44, 44);">
-            <h4 style="margin-bottom: 50px; color: white;">Giriş Yap</h4>
-            <div class="field fill label">
-                <input type="text" name="Number" class="input-color">
-                <label class="label-color">Telefon Numarası</label>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="login-container">
+            <div class="brand">
+                <h2>Giriş Yap</h2>
+                <p class="text-muted">Lütfen Bilgilerinizi Girin</p>
             </div>
-            <div class="field fill label input-color">
-                <input type="password" name="Password" >
-                <label class="label-color">Şifre</label>
-            </div>
-            <button style="color: white; background-color: rgb(66, 66, 66);">Giriş Yap</button>
-            @* <progress class="circle"></progress>  *@
-        </article>
-    </main>
-</form>
-</body>
-<script type="module" src="/assets/material-dynamic-colors.min.js"></script>
-<script type="module">
-    ui("mode", "light");
-    ui("theme", "#096ee2");
-</script>
 
+            <form method="post" action="">
+                <div class="mb-3">
+                    <label for="numberInput" class="form-label">Telefon</label>
+                    <input type="text" name="Number" class="form-control input-color" id="numberInput" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Şifre</label>
+                    <input type="password" name="Password" class="form-control" id="passwordInput" placeholder="">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Beni Hatırla</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Giriş Yap</button>
+            </form>
+
+            <div class="mt-3 text-center">
+                <a href="#" class="text-decoration-none">Şifremi Unuttum</a>
+                <p>Henüz bir hesabın yok mu? <a href="/user/register" class="text-decoration-none">Kayıt Ol</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
