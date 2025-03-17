@@ -12,4 +12,5 @@ public class EfContext(DbContextOptions<EfContext> options) : IdentityDbContext<
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<BasketProduct> BasketProducts { get; set; }
+    public DbSet<PaidProduct> PaidProducts { get; set; }
 }

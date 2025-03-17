@@ -23,7 +23,7 @@ public class CategoryController(CategoryDatabaseController _categoryDatabaseCont
         return new JsonResult(new { message = "Successful!" });
     }
 
-    [HttpPatch]
+    [HttpPost]
     [Route("/Category/UpdateCategory")]
     public async Task<IActionResult> UpdateCategory([FromForm]UpdateCategoryDto updateCategoryDto)
     {

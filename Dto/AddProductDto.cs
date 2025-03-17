@@ -11,4 +11,6 @@ public class AddProductDto
     public List<string> Image { get; set; }
     public List<int> Categories { get; set; }
     public float Discount { get; set; }
+    public int Quantity { get; set; }
+    public string ProductSellerId { get; set; }
 }

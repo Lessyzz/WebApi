@@ -35,23 +35,34 @@ namespace WebApi.Data
             return entities;
         }
         
-        public async Task AddProduct(AddProductDto addProductDto, string imageUrl)
+        public async Task<List<PaidProduct>> GetPaidProducts(string userId)
         {
-            List<string> images = new List<string>();
-            var imagesStr = imageUrl.Split(',');
-            foreach (var image in imagesStr)
-            {
-                images.Add(image);
-            }
-            
+            var entities = await context.PaidProducts
+                .Where(b => b.UserId == userId)
+                .ToListAsync();
+            return entities;
+        }
+
+        public async Task<List<PaidProduct>> GetPaidProductsAsSeller(string sellerId)
+        {
+            var entities = await context.PaidProducts
+                .Where(b => b.SellerId == sellerId)
+                .ToListAsync();
+            return entities;
+        }
+
+        public async Task AddProduct(AddProductDto addProductDto)
+        {
             var product = new Product
             {
                 Name = addProductDto.Name,
                 Description = addProductDto.Description,
                 Price = addProductDto.Price,
-                Image = images,
+                Image = addProductDto.Image,
                 Categories = addProductDto.Categories,
                 Discount = addProductDto.Discount,
+                ProductSellerId = addProductDto.ProductSellerId,
+                Quantity = addProductDto.Quantity
             };
 
             await context.Products.AddAsync(product);
@@ -80,7 +91,59 @@ namespace WebApi.Data
                 await context.BasketProducts.AddAsync(basketProduct);
                 await context.SaveChangesAsync();
             }
-        }       
+        }
         
+        public async Task RemoveProductFromBasketProduct(string productId, string userId)
+        {
+            var basketProduct = await context.BasketProducts.FirstOrDefaultAsync(Product => Product.ProductId == productId && Product.UserId == userId);
+            if (basketProduct != null)
+            {
+                context.BasketProducts.Remove(basketProduct);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveOneProductFromBasketProduct(string productId, string userId)
+        {
+            var basketProduct = await context.BasketProducts.FirstOrDefaultAsync(Product => Product.ProductId == productId && Product.UserId == userId);
+            if (basketProduct != null)
+            {
+                if (basketProduct.Quantity > 1) basketProduct.Quantity--;
+                else context.BasketProducts.Remove(basketProduct);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveAllProductsFromBasketProduct(string userId)
+        {
+            var basketProducts = await context.BasketProducts.Where(Product => Product.UserId == userId).ToListAsync();
+            if (basketProducts != null)
+            {
+                context.BasketProducts.RemoveRange(basketProducts);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task BuyProduct(BuyProductDto buyProductDto)
+        {
+            var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == buyProductDto.ProductId);
+            if (product != null && product.Quantity >= buyProductDto.Quantity)
+            {
+                // Satın alım tamamlandı. Önceki alışverişler kısmına eklendi.
+                context.PaidProducts.Add(new PaidProduct
+                {
+                    ProductId = buyProductDto.ProductId,
+                    Quantity = buyProductDto.Quantity,
+                    UserId = buyProductDto.UserId,
+                    TotalPrice = product.Price * buyProductDto.Quantity,
+                    SellerId = product.ProductSellerId,
+                });
+
+                // Ürünün stok sayısı düşürüldü.
+                product.Quantity -= buyProductDto.Quantity;
+                await context.SaveChangesAsync();
+            }
+        }
+
     }
 }

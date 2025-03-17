@@ -16,5 +16,7 @@ public class User
     public string Password { get; set; }
     public string Email { get; set; }
     public string Number { get; set; }
+    public string? Address { get; set; } // For sellers
+    public bool Verified { get; set; } // Verify sellers for security
     public string Roles { get; set; } // List. a,b,c
 }
