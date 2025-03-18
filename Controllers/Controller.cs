@@ -20,5 +20,13 @@ namespace WebApi.Controllers
         {
             return View();
         }
+        
+        
+        [HttpGet]
+        [Route("/basket")]
+        public IActionResult Basket()
+        {
+            return View();
+        }
     }
 }
