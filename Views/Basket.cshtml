@@ -1,0 +1,224 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-3">Sepetim</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Basket items -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div id="basket-items">
+                    <!-- Empty basket message (will be hidden when items exist) -->
+                    <div id="empty-basket" class="text-center py-5">
+                        <i class="bi bi-basket text-muted" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">Sepetiniz boş</h5>
+                        <p class="text-muted">Alışverişe başlamak için ürünleri sepetinize ekleyin.</p>
+                        <a href="/" class="btn btn-primary mt-2">Alışverişe Başla</a>
+                    </div>
+
+                    <!-- Item template (will be repeated for each item via JavaScript) -->
+                    <div class="basket-item d-none">
+                        <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                            <img src="https://picsum.photos/500/500" alt="" class="item-image rounded" width="80" height="80" style="object-fit: cover;">
+                            <div class="ms-3 flex-grow-1">
+                                <h5 class="item-name mb-1"></h5>
+                                <p class="item-price text-muted mb-0"></p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="input-group input-group-sm" style="width: 120px;">
+                                    <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                                    <input type="text" class="form-control text-center item-quantity" value="1" readonly>
+                                    <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
+                                </div>
+                                <button class="btn btn-sm btn-outline-danger ms-3 remove-item">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Order summary -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Sipariş Özeti</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Ara Toplam</span>
+                    <span id="subtotal">0,00 ₺</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Kargo</span>
+                    <span id="shipping">0,00 ₺</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Toplam</strong>
+                    <strong id="total">0,00 ₺</strong>
+                </div>
+
+                <button id="checkout-button" class="btn btn-primary w-100" disabled>
+                    Siparişi Tamamla
+                </button>
+            </div>
+        </div>
+
+        <!-- Promo code -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6>Promosyon Kodu</h6>
+                <div class="input-group mt-2">
+                    <input type="text" class="form-control" placeholder="Kodunuzu girin">
+                    <button class="btn btn-outline-secondary" type="button">Uygula</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for basket functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sample data - replace with your actual basket data retrieval method
+        let basketItems = [
+            {
+                id: 1,
+                name: "KTU Logolu T-shirt",
+                price: 249.99,
+                image: "https://picsum.photos/500/500",
+                quantity: 1
+            },
+            {
+                id: 2,
+                name: "KTU Baskılı Kupa",
+                price: 129.99,
+                image: "https://picsum.photos/500/508",
+                quantity: 2
+            }
+        ];
+
+        // For testing empty basket, uncomment the next line
+        // basketItems = [];
+
+        renderBasket();
+
+        // Render basket items
+        function renderBasket() {
+            const basketItemsContainer = document.getElementById('basket-items');
+            const emptyBasket = document.getElementById('empty-basket');
+            const template = document.querySelector('.basket-item');
+            const subtotalElement = document.getElementById('subtotal');
+            const shippingElement = document.getElementById('shipping');
+            const totalElement = document.getElementById('total');
+            const checkoutButton = document.getElementById('checkout-button');
+
+            // Clear previous items (except template and empty message)
+            Array.from(basketItemsContainer.children).forEach(child => {
+                if (!child.classList.contains('basket-item') && child.id !== 'empty-basket') {
+                    child.remove();
+                }
+            });
+
+            if (basketItems.length === 0) {
+                emptyBasket.classList.remove('d-none');
+                checkoutButton.disabled = true;
+                subtotalElement.textContent = '0,00 ₺';
+                shippingElement.textContent = '0,00 ₺';
+                totalElement.textContent = '0,00 ₺';
+                return;
+            }
+
+            // Hide empty basket message and enable checkout
+            emptyBasket.classList.add('d-none');
+            checkoutButton.disabled = false;
+
+            // Calculate totals
+            const subtotal = basketItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 500 ? 0 : 49.99;
+            const total = subtotal + shipping;
+
+            // Update summary
+            subtotalElement.textContent = formatPrice(subtotal);
+            shippingElement.textContent = formatPrice(shipping);
+            totalElement.textContent = formatPrice(total);
+
+            // Render each item
+            basketItems.forEach(item => {
+                const itemElement = template.cloneNode(true);
+                itemElement.classList.remove('d-none');
+
+                // Set item details
+                itemElement.querySelector('.item-image').src = item.image;
+                itemElement.querySelector('.item-image').alt = item.name;
+                itemElement.querySelector('.item-name').textContent = item.name;
+                itemElement.querySelector('.item-price').textContent = formatPrice(item.price);
+                itemElement.querySelector('.item-quantity').value = item.quantity;
+
+                // Set data attributes
+                itemElement.dataset.itemId = item.id;
+
+                // Add event listeners
+                itemElement.querySelector('.increase-quantity').addEventListener('click', () => {
+                    changeQuantity(item.id, 1);
+                });
+
+                itemElement.querySelector('.decrease-quantity').addEventListener('click', () => {
+                    changeQuantity(item.id, -1);
+                });
+
+                itemElement.querySelector('.remove-item').addEventListener('click', () => {
+                    removeItem(item.id);
+                });
+
+                basketItemsContainer.appendChild(itemElement);
+            });
+        }
+
+        // Change item quantity
+        function changeQuantity(itemId, change) {
+            const itemIndex = basketItems.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                basketItems[itemIndex].quantity += change;
+
+                // Remove if quantity is 0
+                if (basketItems[itemIndex].quantity <= 0) {
+                    removeItem(itemId);
+                    return;
+                }
+
+                renderBasket();
+            }
+        }
+
+        // Remove item from basket
+        function removeItem(itemId) {
+            basketItems = basketItems.filter(item => item.id !== itemId);
+            renderBasket();
+        }
+
+        // Format price with Turkish currency
+        function formatPrice(price) {
+            return price.toFixed(2).replace('.', ',') + ' ₺';
+        }
+
+        // Checkout button handler
+        document.getElementById('checkout-button').addEventListener('click', function() {
+            if (basketItems.length > 0) {
+                alert('Ödeme sayfasına yönlendiriliyorsunuz...');
+                // Here you would redirect to checkout page
+                // window.location.href = '/checkout';
+            }
+        });
+    });
+</script>
