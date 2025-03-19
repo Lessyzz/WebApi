@@ -7,5 +7,6 @@
         public string Email { get; set; }
         public string Number { get; set; }
         public string Role { get; set; }
+        public string? Address { get; set; }
     }
 }

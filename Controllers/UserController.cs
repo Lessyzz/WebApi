@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             if (registerResult.Code == 400) return new JsonResult(new { message = registerResult });
 
             // Success
-            return new JsonResult(new { message = "User Registered Successfully!" });
+            return Redirect("/");
         }
 
         
@@ -42,10 +42,10 @@ namespace WebApi.Controllers
         {
             var User = await _userDatabaseController.Login(loginDto);
 
-            if (User == null) return new JsonResult(new { message = "Hatalı Giriş" });
+            if (User == null) return new JsonResult(new { message = "Hatali Giris!" });
 
             // return new Response(User);
-            return new JsonResult(new { message = "Başarılı Giriş!" });
+            return Redirect("/");
         }
     }
 }

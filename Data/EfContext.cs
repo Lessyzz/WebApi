@@ -9,6 +9,7 @@ public class EfContext(DbContextOptions<EfContext> options) : IdentityDbContext<
 {
     public DbSet<JwtToken> JwtTokens { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Seller> Sellers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<BasketProduct> BasketProducts { get; set; }

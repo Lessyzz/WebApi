@@ -21,6 +21,12 @@ namespace WebApi.Data
             return entities;
         }
 
+        public async Task<List<Product>> GetProductsAsSeller(string sellerId)
+        {
+            var entities = await context.Products.Where(Product => Product.ProductSellerId == sellerId).ToListAsync();
+            return entities;
+        }
+
         public async Task<Product> GetProductById(string productId)
         {
             var entity = await context.Products.FirstOrDefaultAsync(Product => Product.Id == productId);

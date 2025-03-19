@@ -15,7 +15,7 @@ namespace WebApi.Controllers
         }
         
         [HttpGet]
-        [Route("/product")]
+        [Route("/Product")]
         public IActionResult Product()
         {
             return View();
@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         
         
         [HttpGet]
-        [Route("/basket")]
+        [Route("/Basket")]
         public IActionResult Basket()
         {
             return View();

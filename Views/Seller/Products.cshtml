@@ -1,0 +1,26 @@
+@{ ViewData["Title"] = "Merchant Dashboard"; }
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("C")</td> <!-- C => Para birimi formatı -->
+                <td>@product.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>

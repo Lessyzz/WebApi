@@ -17,6 +17,14 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
     }
 
     [HttpGet]
+    [Route("/Product/GetProductsAsSeller")]
+    public async Task<IActionResult> GetProductsAsSeller(string sellerId)
+    {
+        var registerResult = await _productDatabaseController.GetProductsAsSeller(sellerId);
+        return new JsonResult(new { message = registerResult });
+    }
+
+    [HttpGet]
     [Route("/Product/GetProductById")]
     public async Task<IActionResult> GetProductById(string productId)
     {
