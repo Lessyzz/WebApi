@@ -8,56 +8,207 @@
 
 <head>
     <title>E-Ticaret</title>
+    <style>
+        .category-card {
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .category-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+
+        .category-header {
+            padding: 15px;
+            font-weight: 600;
+            color: #333;
+            background-color: #f8f9fa;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .subcategory {
+            padding: 10px 20px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .subcategory:hover {
+            background-color: #f1f1f1;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .product-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image-container {
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+        }
+
+        .product-image {
+            transition: transform 0.5s ease;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 0.9rem;
+            align-self: flex-end;
+        }
+
+        .add-to-cart {
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #007bff;
+        }
+    </style>
 </head>
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <div class="row">
-        <!-- Categories sidebar -->
+        <!-- Categories sidebar with subcategories -->
         <div class="col-lg-3 col-md-4">
-            <div class="card rounded shadow-sm mt-3">
-                <div class="list-group list-group-flush">
-                    <div class="list-group-item border-top border-bottom">Elektronik</div>
-                    <div class="list-group-item border-bottom">Giyim</div>
-                    <div class="list-group-item border-bottom">Porselen</div>
-                    <div class="list-group-item border-bottom">Kitap</div>
-                    <div class="list-group-item border-bottom">Mobilya</div>
-                    <div class="list-group-item border-bottom">Yapı Market</div>
-                </div>
+            <h4 class="section-title">Kategoriler</h4>
+
+            <!-- Category 1 -->
+            <div class="category-card">
+                <div class="category-header">Elektronik</div>
+                <div class="subcategory">Telefonlar</div>
+                <div class="subcategory">Bilgisayarlar</div>
+                <div class="subcategory">Televizyonlar</div>
+                <div class="subcategory">Kulaklıklar</div>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="category-card">
+                <div class="category-header">Giyim</div>
+                <div class="subcategory">Kadın Giyim</div>
+                <div class="subcategory">Erkek Giyim</div>
+                <div class="subcategory">Çocuk Giyim</div>
+                <div class="subcategory">Ayakkabılar</div>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="category-card">
+                <div class="category-header">Ev & Yaşam</div>
+                <div class="subcategory">Mobilya</div>
+                <div class="subcategory">Mutfak Eşyaları</div>
+                <div class="subcategory">Dekorasyon</div>
+                <div class="subcategory">Banyo Ürünleri</div>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="category-card">
+                <div class="category-header">Kitap & Hobi</div>
+                <div class="subcategory">Kitaplar</div>
+                <div class="subcategory">Kırtasiye</div>
+                <div class="subcategory">Oyunlar</div>
+                <div class="subcategory">Müzik Aletleri</div>
             </div>
         </div>
 
         <!-- Main content -->
         <div class="col-lg-9 col-md-8">
-            <!-- Hero image -->
-            <div class="mt-3">
-                <img class="img-fluid w-100 rounded" style="aspect-ratio: 16/9;" src="assets/hero.jpg" alt=""/>
+            <!-- Hero section -->
+            <div class="hero-section" style="height: 400px; border-radius: 12px; margin-bottom: 40px; overflow: hidden;">
+                <img src="assets/hero.jpg" alt="Hero Banner" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
 
             <!-- Deals section -->
             <div class="mt-5">
-                <h5 class="mb-4">Kaçırılabilek Fırsatlar</h5>
+                <h4 class="section-title">Kaçırılmayacak Fırsatlar</h4>
                 <div class="row">
                     <!-- Product Card 1 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
                                 <a href="/product">
-                                    <img class="card-img-top" src="https://picsum.photos/200/300" alt="Product">
-                                    <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                                    <img class="product-image" src="https://picsum.photos/400/300" alt="Product">
+                                    <span class="discount-badge bg-danger text-white">%50 İndirim</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-danger">En çok satan</span>
+                                    <span class="badge bg-secondary">Son 5 ürün</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Akıllı Bluetooth Kulaklık</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">399.90₺</span>
+                                        <span class="old-price ms-2">799.80₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -65,25 +216,27 @@
 
                     <!-- Product Card 2 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
                                 <a href="/product">
-                                    <img class="card-img-top" src="https://picsum.photos/205/300" alt="Product">
-                                    <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                                    <img class="product-image" src="https://picsum.photos/401/300" alt="Product">
+                                    <span class="discount-badge bg-danger text-white">%40 İndirim</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-danger">En çok satan</span>
+                                    <span class="badge bg-info">Yeni</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Premium Deri Cüzdan</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">149.90₺</span>
+                                        <span class="old-price ms-2">249.90₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -91,25 +244,26 @@
 
                     <!-- Product Card 3 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
                                 <a href="/product">
-                                    <img class="card-img-top" src="https://picsum.photos/210/300" alt="Product">
-                                    <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                                    <img class="product-image" src="https://picsum.photos/402/300" alt="Product">
+                                    <span class="discount-badge bg-danger text-white">%30 İndirim</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-warning text-dark">Sınırlı Stok</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Akıllı Fitness Bilekliği</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">279.90₺</span>
+                                        <span class="old-price ms-2">399.90₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -119,27 +273,28 @@
 
             <!-- Best Sellers section -->
             <div class="mt-5 mb-5">
-                <h5 class="mb-4">En Çok Satanlar</h5>
+                <h4 class="section-title">En Çok Satanlar</h4>
                 <div class="row">
                     <!-- Product Card 1 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
-                                <img class="card-img-top" src="https://picsum.photos/200/300" alt="Product">
-                                <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
+                                <img class="product-image" src="https://picsum.photos/403/300" alt="Product">
+                                <span class="discount-badge bg-danger text-white">%25 İndirim</span>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-danger">En çok satan</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Ultra HD Powerbank</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">199.90₺</span>
+                                        <span class="old-price ms-2">269.90₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -147,23 +302,24 @@
 
                     <!-- Product Card 2 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
-                                <img class="card-img-top" src="https://picsum.photos/205/300" alt="Product">
-                                <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
+                                <img class="product-image" src="https://picsum.photos/404/300" alt="Product">
+                                <span class="discount-badge bg-danger text-white">%15 İndirim</span>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-danger">En çok satan</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Ergonomik Oyuncu Koltuğu</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">1299.90₺</span>
+                                        <span class="old-price ms-2">1529.90₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -171,23 +327,25 @@
 
                     <!-- Product Card 3 -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
-                                <img class="card-img-top" src="https://picsum.photos/210/300" alt="Product">
-                                <span class="position-absolute top-0 end-0 badge rounded-pill bg-danger m-2">%50 İndirim</span>
+                        <div class="card product-card shadow-sm">
+                            <div class="product-image-container">
+                                <img class="product-image" src="https://picsum.photos/405/300" alt="Product">
+                                <span class="discount-badge bg-danger text-white">%20 İndirim</span>
                             </div>
                             <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="badge bg-danger me-2">En çok satan</span>
-                                    <span class="badge bg-secondary">Tükenmek üzere</span>
+                                <div class="product-meta">
+                                    <span class="badge bg-danger">En çok satan</span>
+                                    <span class="badge bg-dark">Premium</span>
                                 </div>
-                                <h5 class="card-title">Çakmak</h5>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <span class="fs-5 fw-bold">15.90₺</span>
-                                        <span class="text-decoration-line-through ms-2 text-muted">31.80₺</span>
+                                <h5 class="card-title">Seramik Kahve Seti</h5>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div class="d-flex align-items-end">
+                                        <span class="product-price">349.90₺</span>
+                                        <span class="old-price ms-2">439.90₺</span>
                                     </div>
-                                    <button class="btn btn-primary btn-sm">Sepete Ekle</button>
+                                    <button class="btn btn-primary add-to-cart">
+                                        Sepete Ekle
+                                    </button>
                                 </div>
                             </div>
                         </div>
