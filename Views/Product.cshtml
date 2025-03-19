@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Ürün";
+ViewData["Title"] = "Ürün";
 }
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
@@ -14,11 +14,11 @@
     <div class="row bg-light rounded p-4 position-relative">
         <div class="discount-badge">50% İndirim</div>
         <div class="col-12 col-lg-6 text-center mb-4 mb-lg-0">
-            <img class="img-fluid" src="https://picsum.photos/500/500"
-                 style="max-width: min(500px, 100%); max-height: 500px;">
+            <img class="img-fluid" src="assets/product.png"
+                style="max-width: min(500px, 100%); max-height: 500px;">
         </div>
         <div class="col-12 col-lg-6">
-            <h4>Kutahia Porcelen</h4>
+            <h4>Çini İşlemeli Kupa</h4>
             <div class="d-flex align-items-center mt-3">
                 <div class="me-2">
                     <i class="bi bi-star-fill text-warning"></i>
@@ -35,19 +35,18 @@
                 <h6 class="text-decoration-line-through">750₺</h6>
             </div>
             <p>
-                Experience immersive sound with our premium wireless headphones. Featuring active noise
-                cancellation technology, these
-                headphones deliver crystal-clear audio while blocking out ambient noise. With a comfortable
-                over-ear design and up to 30
-                hours of battery life, they're perfect for long listening sessions at home or on the go.
+                Çini işlemeli kupa, geleneksel Türk çini sanatının zarif motifleriyle süslenmiş seramik bir bardaktır.
+                Estetik ve işlevselliği birleştirerek hem günlük kullanım hem de dekoratif amaçlar için tercih edilir.
             </p>
             <div class="mt-5">
                 <h6 class="text-primary">Renk Seçenekleri</h6>
                 <div class="d-flex">
-                    <button class="btn btn-danger rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">
+                    <button class="btn btn-danger rounded-circle me-2 d-flex justify-content-center align-items-center"
+                        style="width: 40px; height: 40px;">
                         <i class="bi bi-check"></i>
                     </button>
-                    <button class="btn btn-primary rounded-circle me-2" style="width: 40px; height: 40px;" disabled></button>
+                    <button class="btn btn-primary rounded-circle me-2" style="width: 40px; height: 40px;"
+                        disabled></button>
                     <button class="btn btn-success rounded-circle me-2" style="width: 40px; height: 40px;"></button>
                     <button class="btn btn-warning rounded-circle me-2" style="width: 40px; height: 40px;"></button>
                 </div>
@@ -55,10 +54,11 @@
             <div class="mt-4">
                 <h6 class="text-primary">Boy Seçenekleri</h6>
                 <div class="d-flex">
-                    <button class="btn btn-primary rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">S</button>
-                    <button class="btn btn-outline-primary rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">M</button>
-                    <button class="btn btn-outline-primary rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;" disabled>L</button>
-                    <button class="btn btn-outline-primary rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">XL</button>
+                    <button class="btn btn-primary me-2 d-flex justify-content-center align-items-center">100ml</button>
+                    <button
+                        class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center">200ml</button>
+                    <button class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center"
+                        disabled>250ml</button>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-5">
@@ -66,7 +66,8 @@
                     <button class="btn btn-outline-secondary rounded-circle" onclick="remove()">
                         <i class="bi bi-dash"></i>
                     </button>
-                    <input id="quantity-input" type="number" value="1" min="1" class="form-control mx-2" style="width: 70px; text-align: center;">
+                    <input id="quantity-input" type="number" value="1" min="1" class="form-control mx-2"
+                        style="width: 70px; text-align: center;">
                     <button class="btn btn-outline-secondary rounded-circle" onclick="add()">
                         <i class="bi bi-plus"></i>
                     </button>
@@ -80,19 +81,24 @@
         <div class="col-12">
             <ul class="nav nav-tabs" id="productTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active d-flex align-items-center" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab" aria-controls="features" aria-selected="true">
+                    <button class="nav-link active d-flex align-items-center" id="features-tab" data-bs-toggle="tab"
+                        data-bs-target="#features" type="button" role="tab" aria-controls="features"
+                        aria-selected="true">
                         <i class="bi bi-brush me-2"></i>
                         <span>Özellikler</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link d-flex align-items-center" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">
+                    <button class="nav-link d-flex align-items-center" id="reviews-tab" data-bs-toggle="tab"
+                        data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
+                        aria-selected="false">
                         <i class="bi bi-star me-2"></i>
                         <span>Değerlendirmeler</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link d-flex align-items-center" id="qa-tab" data-bs-toggle="tab" data-bs-target="#qa" type="button" role="tab" aria-controls="qa" aria-selected="false">
+                    <button class="nav-link d-flex align-items-center" id="qa-tab" data-bs-toggle="tab"
+                        data-bs-target="#qa" type="button" role="tab" aria-controls="qa" aria-selected="false">
                         <i class="bi bi-chat-dots me-2"></i>
                         <span>Soru Cevap</span>
                     </button>
@@ -101,28 +107,18 @@
 
             <div class="tab-content p-4" id="productTabsContent">
                 <div class="tab-pane fade show active" id="features" role="tabpanel" aria-labelledby="features-tab">
-                    <p>Our Premium Wireless Noise-Cancelling Headphones deliver an exceptional audio experience with
-                        industry-leading noise
-                        cancellation technology. Designed for comfort and performance, these headphones feature
-                        plush ear cushions and an
-                        adjustable headband for a perfect fit.
+                    <p>
+                        Çini işlemeli kupa, Osmanlı ve Selçuklu dönemlerinden beri süregelen geleneksel çini sanatının
+                        modern bir yansımasıdır. Seramik malzemeden üretilen bu kupalar, genellikle el işçiliğiyle
+                        süslenir ve çiçek, geometrik desenler veya Osmanlı motifleri gibi geleneksel Türk çini sanatının
+                        karakteristik öğelerini taşır. Mavi, beyaz, kırmızı ve yeşil tonlarıyla dikkat çeken çini
+                        işlemeli kupalar, hem estetik hem de kültürel bir anlam taşır.
 
-                        The advanced noise cancellation system uses multiple microphones to analyze and counteract
-                        external sounds, allowing you
-                        to enjoy your music without distractions. Whether you're commuting, working, or traveling,
-                        these headphones provide a
-                        peaceful listening environment.
-
-                        With Bluetooth 5.0 connectivity, you can easily pair with your devices and enjoy stable,
-                        high-quality wireless audio.
-                        The built-in microphone ensures clear call quality, and the intuitive touch controls allow
-                        you to manage your music and
-                        calls with ease.
-
-                        The 30-hour battery life means you can listen all day without worrying about running out of
-                        power. And when you do need
-                        to recharge, the quick-charge feature gives you 5 hours of playback from just 10 minutes of
-                        charging.
+                        Bu kupalar, sıcak ve soğuk içecekler için kullanılabilmesinin yanı sıra, sanatsal ve dekoratif
+                        bir obje olarak da tercih edilir. Çini işlemeli kupalar, el yapımı olmaları nedeniyle her biri
+                        benzersiz bir görünüme sahiptir. Geleneksel motiflerle süslenmiş bu ürünler, hediyelik eşya
+                        olarak da büyük ilgi görmektedir. Geçmişin zarafetini günümüz tasarımlarıyla birleştiren çini
+                        işlemeli kupalar, sanat ve işlevselliği bir araya getiren özel ürünlerdir.
                     </p>
                 </div>
 
@@ -144,7 +140,8 @@
                                 <span class="me-2">5</span>
                                 <i class="bi bi-star-fill text-warning me-2"></i>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-2">50%</span>
                             </div>
@@ -152,7 +149,8 @@
                                 <span class="me-2">4</span>
                                 <i class="bi bi-star-fill text-warning me-2"></i>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-2">30%</span>
                             </div>
@@ -160,7 +158,8 @@
                                 <span class="me-2">3</span>
                                 <i class="bi bi-star-fill text-warning me-2"></i>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 5%" aria-valuenow="5"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-2">5%</span>
                             </div>
@@ -168,7 +167,8 @@
                                 <span class="me-2">2</span>
                                 <i class="bi bi-star-fill text-warning me-2"></i>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-2">10%</span>
                             </div>
@@ -176,7 +176,8 @@
                                 <span class="me-2">1</span>
                                 <i class="bi bi-star-fill text-warning me-2"></i>
                                 <div class="progress flex-grow-1">
-                                    <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-2">15%</span>
                             </div>
@@ -184,11 +185,12 @@
                     </div>
                     <div class="mt-4">
                         <div class="d-flex mb-2">
-                            <img src="https://www.thispersondoesnotexist.com/" alt="" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                            <img src="https://www.thispersondoesnotexist.com/" alt="" class="rounded-circle me-3"
+                                style="width: 50px; height: 50px;">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <strong>John Doe</strong>
+                                        <strong>Mehmet Yılmaz</strong>
                                         <div class="text-muted small">17 Mart 2025</div>
                                     </div>
                                     <div>
@@ -196,20 +198,21 @@
                                         <i class="bi bi-star-fill text-warning"></i>
                                     </div>
                                 </div>
-                                <p>I absolutely love this product! The quality is exceptional and it exceeded all my
-                                    expectations. It arrived quickly and
-                                    was packaged securely. I've been using it for about a week now and can definitely say
-                                    it's worth every penny. Would
-                                    highly recommend to anyone looking for a reliable solution.</p>
+                                <p>
+                                    Gerçekten harika bir ürün! Çini işlemeleri çok zarif ve kaliteli. Hem kullanışlı hem
+                                    de dekoratif bir parça. Çay ve kahve içerken keyif veriyor. El yapımı olması da ayrı
+                                    bir değer katıyor. Kesinlikle tavsiye ederim!
+                                </p>
                             </div>
                         </div>
                         <hr>
                         <div class="d-flex">
-                            <img src="https://www.thispersondoesnotexist.com/" alt="" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                            <img src="https://www.thispersondoesnotexist.com/" alt="" class="rounded-circle me-3"
+                                style="width: 50px; height: 50px;">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <strong>Emily Doe</strong>
+                                        <strong>Ahmet Yılmaz</strong>
                                         <div class="text-muted small">12 Mart 2025</div>
                                     </div>
                                     <div>
@@ -217,14 +220,111 @@
                                         <i class="bi bi-star-fill text-warning"></i>
                                     </div>
                                 </div>
-                                <p>I hated it</p>
+                                <p>
+                                    Görsellerde çok şık duruyordu ama elime ulaşan kupa beklediğim gibi değildi.
+                                    İşlemeleri soluk ve kalitesizdi. Ayrıca seramik oldukça ince, kırılmaya çok müsait.
+                                    Fiyatına göre daha iyi bir kalite beklerdim.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
-                    <h5>Guidelines</h5>
+                    <div class="card-body">
+                        <form id="question-form">
+                            <div class="mb-3">
+                                <label for="question" class="form-label fw-bold">Bir sorunuz mu var? Satıcıya
+                                    sorun</label>
+                                <textarea class="form-control" id="question" rows="2"
+                                    placeholder="Sorunuzu Buraya Yazın..."></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div></div>
+                                <button type="submit" class="btn btn-primary">Gönder</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Search Questions -->
+                    <div class="card-body border-bottom bg-light mt-5">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" placeholder="Sorularda Ara...">
+                            <button class="btn btn-outline-secondary" type="button">Ara</button>
+                        </div>
+                    </div>
+
+                    <!-- Q&A List -->
+                    <div class="list-group list-group-flush">
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between mb-1">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-question-circle text-primary me-2"></i>
+                                    Üzerindeki desenler zamanla silinir mi?
+                                </h6>
+                                <small class="text-muted">1 saat önce soruldu</small>
+                            </div>
+                            <p class="small text-muted mb-0">F. S. Tarafından Soruldu</p>
+                            <div class="mt-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-clock me-1"></i> Cevap Bekleniyor
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Question 1 -->
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between mb-1">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-question-circle text-primary me-2"></i>
+                                    Bu kupa bulaşık makinesinde yıkanabilir mi?
+                                </h6>
+                                <small class="text-muted">2 gün önce soruldu</small>
+                            </div>
+                            <p class="small text-muted mb-0">M. D. Tarafından Soruldu</p>
+
+                            <!-- Answer -->
+                            <div class="border-start border-3 border-success ps-3 mt-3">
+                                <div class="d-flex w-100 justify-content-between mb-1">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-check-circle text-success me-2"></i>
+                                        Merhaba! Çini işlemeli kupamız elde yıkamaya daha uygundur. Bulaşık makinesinde
+                                        yüksek sıcaklık ve deterjanlar zamanla
+                                        desenlerin solmasına neden olabilir. Uzun ömürlü kullanım için elde yıkamanızı
+                                        tavsiye ederiz.
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between mb-1">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-question-circle text-primary me-2"></i>
+                                    Ürün tamamen el yapımı mı?
+                                </h6>
+                                <small class="text-muted">5 gün önce soruldu</small>
+                            </div>
+                            <p class="small text-muted mb-0">S. M. Tarafından Soruldu</p>
+
+                            <!-- Answer -->
+                            <div class="border-start border-3 border-success ps-3 mt-3">
+                                <div class="d-flex w-100 justify-content-between mb-1">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-check-circle text-success me-2"></i>
+                                        Evet, kupamız tamamen el yapımıdır. Çini desenleri usta zanaatkarlar tarafından
+                                        tek tek işlenmektedir, bu nedenle her
+                                        ürün kendine özgü küçük farklılıklar içerebilir.
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,8 +342,10 @@
         font-weight: bold;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         z-index: 1;
-        width: auto; /* Fix for 100% width issue */
-        display: inline-block; /* Ensure it takes only needed width */
+        width: auto;
+        /* Fix for 100% width issue */
+        display: inline-block;
+        /* Ensure it takes only needed width */
     }
 
     .discount-badge::before {
@@ -280,19 +382,19 @@
         input.value = Math.max(parseInt(input.value || '1') - 1, 1);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Initialize Bootstrap tabs
         var tabElements = document.querySelectorAll('#productTabs button');
-        tabElements.forEach(function(tabElement) {
-            tabElement.addEventListener('click', function(event) {
+        tabElements.forEach(function (tabElement) {
+            tabElement.addEventListener('click', function (event) {
                 event.preventDefault();
                 var tabId = this.getAttribute('data-bs-target');
 
                 // Remove active class from all tabs and panes
-                document.querySelectorAll('#productTabs button').forEach(function(tab) {
+                document.querySelectorAll('#productTabs button').forEach(function (tab) {
                     tab.classList.remove('active');
                 });
-                document.querySelectorAll('#productTabsContent .tab-pane').forEach(function(pane) {
+                document.querySelectorAll('#productTabsContent .tab-pane').forEach(function (pane) {
                     pane.classList.remove('show', 'active');
                 });
 

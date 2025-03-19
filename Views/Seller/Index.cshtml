@@ -1,0 +1,52 @@
+@{ ViewData["Title"] = "Merchant Dashboard"; }
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<div class="container mt-4">
+    <h2 class="mb-4">Merhaba, Mehmet Yılmaz!</h2>
+    
+    <div class="row">
+        <!-- Orders Summary -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Toplam Siparişler</h5>
+                    <p class="card-text display-4">120</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Products Count -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Aktif Ürünler</h5>
+                    <p class="card-text display-4">35</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Revenue -->
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Toplam Gelir</h5>
+                    <p class="card-text display-4">4,500₺</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="/Products" class="btn btn-outline-primary btn-lg w-100">Ürünleri Yönet</a>
+        </div>
+        <div class="col-md-6">
+            <a href="/Orders" class="btn btn-outline-secondary btn-lg w-100">Siparişleri Görüntüle</a>
+        </div>
+    </div>
+</div>
