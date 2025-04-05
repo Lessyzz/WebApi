@@ -11,8 +11,8 @@ using WebApi.Data;
 namespace WebApi.Data.migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20250315201911_pasdd")]
-    partial class pasdd
+    [Migration("20250320105146_ert")]
+    partial class ert
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,25 +229,10 @@ namespace WebApi.Data.migrations
                     b.ToTable("JwtTokens");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Basket", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Baskets");
-                });
-
             modelBuilder.Entity("WebApi.Models.BasketProduct", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("BasketId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProductId")
@@ -257,11 +242,15 @@ namespace WebApi.Data.migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BasketProducts");
                 });
@@ -272,20 +261,57 @@ namespace WebApi.Data.migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ParentCategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("WebApi.Models.PaidProduct", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("PaidProducts");
                 });
 
             modelBuilder.Entity("WebApi.Models.Product", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Categories")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -306,18 +332,27 @@ namespace WebApi.Data.migrations
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("ProductSellerId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductSellerId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("WebApi.Models.User", b =>
+            modelBuilder.Entity("WebApi.Models.Seller", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BasketId")
+                    b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -340,9 +375,53 @@ namespace WebApi.Data.migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Verified")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketId");
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Sellers");
+                });
+
+            modelBuilder.Entity("WebApi.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -406,47 +485,43 @@ namespace WebApi.Data.migrations
 
             modelBuilder.Entity("WebApi.Models.BasketProduct", b =>
                 {
-                    b.HasOne("WebApi.Models.Basket", "Basket")
-                        .WithMany("Products")
-                        .HasForeignKey("BasketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WebApi.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Basket");
+                    b.HasOne("WebApi.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApi.Models.PaidProduct", b =>
+                {
+                    b.HasOne("WebApi.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Category", b =>
-                {
-                    b.HasOne("WebApi.Models.Product", null)
-                        .WithMany("Category")
-                        .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("WebApi.Models.User", b =>
-                {
-                    b.HasOne("WebApi.Models.Basket", "Basket")
-                        .WithMany()
-                        .HasForeignKey("BasketId");
-
-                    b.Navigation("Basket");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Basket", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("WebApi.Models.Product", b =>
                 {
-                    b.Navigation("Category");
+                    b.HasOne("WebApi.Models.User", "ProductSeller")
+                        .WithMany()
+                        .HasForeignKey("ProductSellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductSeller");
                 });
 #pragma warning restore 612, 618
         }

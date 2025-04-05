@@ -14,4 +14,13 @@ public class EfContext(DbContextOptions<EfContext> options) : IdentityDbContext<
     public DbSet<Category> Categories { get; set; }
     public DbSet<BasketProduct> BasketProducts { get; set; }
     public DbSet<PaidProduct> PaidProducts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Product>()
+            .HasOne<User>(p => p.ProductSeller)
+            .WithMany(u => u.Products);
+        
+        base.OnModelCreating(builder);
+    }
 }

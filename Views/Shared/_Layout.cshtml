@@ -101,12 +101,128 @@
 </footer>
 </body>
 
-<script>
-    // Bootstrap doesn't have direct equivalents to Beer CSS theming
-    // You might want to use a custom theme or Bootstrap themes instead
-    // For example: https://bootswatch.com/ offers theme options
+<style>
+    .category-card {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-    // If you want to implement light/dark mode:
-    // document.documentElement.setAttribute('data-bs-theme', 'light');
-</script>
+    .category-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        transform: translateY(-3px);
+    }
+
+    .category-header {
+        padding: 15px;
+        font-weight: 600;
+        color: #333;
+        background-color: #f8f9fa;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .subcategory {
+        padding: 10px 20px;
+        color: #666;
+        transition: all 0.2s ease;
+    }
+
+    .subcategory:hover {
+        background-color: #f1f1f1;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .product-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        border: none;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-image-container {
+        overflow: hidden;
+        position: relative;
+        height: 200px;
+    }
+
+    .product-image {
+        transition: transform 0.5s ease;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        border-radius: 30px;
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .product-meta {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-weight: 700;
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    .old-price {
+        color: #999;
+        text-decoration: line-through;
+        font-size: 0.9rem;
+        align-self: flex-end;
+    }
+
+    .add-to-cart {
+        border-radius: 30px;
+        padding: 8px 15px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .section-title {
+        position: relative;
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: #007bff;
+    }
+</style>
+
+
 </html>

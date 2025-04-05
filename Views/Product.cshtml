@@ -12,7 +12,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 <div class="container mt-4">
     <div class="row bg-light rounded p-4 position-relative">
-        <div class="discount-badge">50% İndirim</div>
+        <div class="discount-badge-overflowed">50% İndirim</div>
         <div class="col-12 col-lg-6 text-center mb-4 mb-lg-0">
             <img class="img-fluid" src="assets/product.png"
                 style="max-width: min(500px, 100%); max-height: 500px;">
@@ -332,7 +332,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 </div>
 
 <style>
-    .discount-badge {
+    .discount-badge-overflowed {
         position: absolute;
         top: 30px;
         left: -10px;
@@ -348,7 +348,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         /* Ensure it takes only needed width */
     }
 
-    .discount-badge::before {
+    .discount-badge-overflowed::before {
         content: "";
         position: absolute;
         left: 0;
