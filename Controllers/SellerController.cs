@@ -6,12 +6,17 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 
-public class SellerController(ProductDatabaseController productDatabaseController, SellerDatabaseController sellerDatabaseController) : Microsoft.AspNetCore.Mvc.Controller
+public class SellerController(
+    ProductDatabaseController productDatabaseController,
+    SellerDatabaseController sellerDatabaseController,
+    CategoryDatabaseController categoryDatabaseController
+    ) : Microsoft.AspNetCore.Mvc.Controller
 {
     [HttpGet]
     [Route("/Seller")]
     public async Task<IActionResult> Index()
     {
+        ViewBag.Products = await productDatabaseController.GetProductsAsSeller("c2ae16c5-4d71-4f38-94c6-107bd4fa47ae");
         return View();
     }
 
@@ -60,7 +65,33 @@ public class SellerController(ProductDatabaseController productDatabaseControlle
     [Route("/Seller/Products")]
     public async Task<IActionResult> Products()
     {
-        var registerResult = await productDatabaseController.GetProductsAsSeller("87b090c9-ca9e-4849-a7d7-27ba88b30785");
+        var registerResult = await productDatabaseController.GetProductsAsSeller("9e2157e4-0fce-42d3-ab91-66ed36017b12");
         return View(registerResult);
+    }
+    
+    [HttpGet("/Seller/AddProduct")]
+    public async Task<IActionResult> AddProduct()
+    {
+        var categories = await categoryDatabaseController.GetCategories();
+        var flatCategories = FlattenCategories(categories);
+        ViewBag.Categories = flatCategories;
+        return View();
+    }
+    
+    private List<(int Id, string Name)> FlattenCategories(List<Category> categories, int? parentId = null, int level = 0)
+    {
+        var result = new List<(int, string)>();
+
+        var children = categories.Where(c => c.ParentCategoryId == parentId).ToList();
+
+        foreach (var child in children)
+        {
+            var indent = new string('-', level * 2);
+            result.Add((child.Id, $"{indent} {child.Name}"));
+
+            result.AddRange(FlattenCategories(categories, child.Id, level + 1));
+        }
+
+        return result;
     }
 }

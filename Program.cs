@@ -34,7 +34,7 @@ builder.Services.AddIdentityCore<IdentityUser>(options =>
         .AddEntityFrameworkStores<EfContext>();
 
 builder.Services.ApplyAuthSetup(builder.Configuration);
-builder.Services.AddExceptionHandler<AppExceptionHandler>();
+// builder.Services.AddExceptionHandler<AppExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddCors(options =>

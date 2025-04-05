@@ -1,0 +1,115 @@
+@using WebApi.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Yeni Ürün Ekle";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-center">Yeni Ürün Ekle</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" action="/Product/AddProduct" id="productForm">
+                <div class="row">
+                    <!-- Left column for basic info -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Ürün Adı</label>
+                            <input name="Name" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Açıklama</label>
+                            <textarea name="Description" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fiyat (₺)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₺</span>
+                                    <input type="number" step="0.01" name="Price" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">İndirim (%)</label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" name="Discount" class="form-control" value="0" />
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right column for category, quantity and images -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Kategori</label>
+                            <select name="CategoryId" class="form-select" required>
+                                <option value="">-- Kategori Seçin --</option>
+                                @foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
+                                {
+                                    <option value="@cat.Id">@cat.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Stok Adedi</label>
+                            <input type="number" name="Quantity" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ürün Görselleri</label>
+                            <input type="file" name="ImageFiles" id="imageInput" class="form-control" accept="image/*" multiple />
+                        </div>
+
+                        <div id="imagePreviewContainer" class="d-flex flex-wrap gap-2 mt-2">
+                            <!-- Image previews will be shown here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-plus-circle me-2"></i> Ürün Ekle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Image preview functionality
+    document.getElementById('imageInput').addEventListener('change', function() {
+        const container = document.getElementById('imagePreviewContainer');
+        container.innerHTML = ''; // Clear previous previews
+
+        if (this.files) {
+            Array.from(this.files).forEach(file => {
+                if (!file.type.match('image.*')) return;
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'position-relative';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+
+                    previewDiv.appendChild(img);
+                    container.appendChild(previewDiv);
+                }
+
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>

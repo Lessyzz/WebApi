@@ -64,8 +64,8 @@ namespace WebApi.Data
                 Name = addProductDto.Name,
                 Description = addProductDto.Description,
                 Price = addProductDto.Price,
-                Image = addProductDto.Image,
-                Categories = addProductDto.Categories,
+                Images = addProductDto.Images,
+                CategoryId = addProductDto.CategoryId,
                 Discount = addProductDto.Discount,
                 ProductSellerId = addProductDto.ProductSellerId,
                 Quantity = addProductDto.Quantity
@@ -169,8 +169,8 @@ namespace WebApi.Data
                 if (updateProductDto.Name != null) product.Name = updateProductDto.Name;
                 if (updateProductDto.Description != null) product.Description = updateProductDto.Description;
                 if (updateProductDto.Price != 0) product.Price = updateProductDto.Price;
-                if (updateProductDto.Image != null) product.Image = updateProductDto.Image;
-                if (updateProductDto.Categories != null) product.Categories = updateProductDto.Categories;
+                if (updateProductDto.Images != null) product.Images = updateProductDto.Images;
+                if (updateProductDto.CategoryId != null) product.CategoryId = updateProductDto.CategoryId;
                 if (updateProductDto.Discount != 0) product.Discount = updateProductDto.Discount;
                 if (updateProductDto.Quantity != 0) product.Quantity = updateProductDto.Quantity;
                 if (updateProductDto.ProductSellerId != null) product.ProductSellerId = updateProductDto.ProductSellerId;

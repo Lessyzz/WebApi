@@ -19,4 +19,6 @@ public class User
     public string? Address { get; set; } // For sellers
     public bool Verified { get; set; } // Verify sellers for security
     public string Roles { get; set; } // List. a,b,c
+    
+    public List<Product> Products { get; set; }
 }

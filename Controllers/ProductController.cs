@@ -67,9 +67,36 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
 
     [HttpPost]
     [Route("/Product/AddProduct")]
-    public async Task<IActionResult> AddProduct(AddProductDto addProductDto)
+    public async Task<IActionResult> AddProduct([FromForm] AddProductDto addProductDto, List<IFormFile> ImageFiles)
     {
+        addProductDto.ProductSellerId = "c2ae16c5-4d71-4f38-94c6-107bd4fa47ae";
+        
+        var imageUrls = new List<string>();
+        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products");
+
+        if (!Directory.Exists(uploadPath))
+            Directory.CreateDirectory(uploadPath);
+
+        foreach (var file in ImageFiles)
+        {
+            if (file.Length <= 0) continue;
+            
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadPath, uniqueFileName);
+
+            await using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imageUrl = $"/images/products/{uniqueFileName}";
+            imageUrls.Add(imageUrl);
+        }
+        
+        addProductDto.Images = string.Join(',', imageUrls);
+
         await _productDatabaseController.AddProduct(addProductDto);
+
         return new JsonResult(new { message = "Successful!" });
     }
     

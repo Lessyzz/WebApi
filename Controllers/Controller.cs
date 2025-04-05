@@ -5,12 +5,13 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class Controller(UserDatabaseController _userDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
+    public class Controller(UserDatabaseController _userDatabaseController, ProductDatabaseController _productDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
     {
         [HttpGet]
         [Route("/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Products = await _productDatabaseController.GetProducts();
             return View();
         }
         

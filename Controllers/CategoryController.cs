@@ -11,9 +11,11 @@ public class CategoryController(CategoryDatabaseController _categoryDatabaseCont
     [Route("/Category/GetCategories")]
     public async Task<IActionResult> GetCategories()
     {
-        var registerResult = await _categoryDatabaseController.GetCategories();
-        return new JsonResult(new { message = registerResult });
+        var categories = await _categoryDatabaseController.GetCategories();
+        var categoryList = categories.Select(c => new { id = c.Id, name = c.Name }).ToList();
+        return Json(categoryList);
     }
+    
 
     [HttpPost]
     [Route("/Category/AddCategory")]

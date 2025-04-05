@@ -307,9 +307,8 @@ namespace WebApi.Data.migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Categories")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -318,7 +317,7 @@ namespace WebApi.Data.migrations
                     b.Property<float>("Discount")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Images")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -337,6 +336,8 @@ namespace WebApi.Data.migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ProductSellerId");
 
@@ -512,13 +513,26 @@ namespace WebApi.Data.migrations
 
             modelBuilder.Entity("WebApi.Models.Product", b =>
                 {
-                    b.HasOne("WebApi.Models.User", "ProductSeller")
+                    b.HasOne("WebApi.Models.Category", "Category")
                         .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.User", "ProductSeller")
+                        .WithMany("Products")
                         .HasForeignKey("ProductSellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Category");
+
                     b.Navigation("ProductSeller");
+                });
+
+            modelBuilder.Entity("WebApi.Models.User", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
