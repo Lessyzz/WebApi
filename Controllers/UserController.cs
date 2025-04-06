@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.DatabaseController;
 using WebApi.Dto;
 using WebApi.Models;
 
@@ -21,15 +22,28 @@ namespace WebApi.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/User/Logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwtToken");
+
+            return Redirect("/");
+        }
+
 
         [HttpPost]
         [Route("/User/Register")]
         public async Task<IActionResult> RegisterPOST([FromForm]RegisterDto registerDto)
         {
-            var registerResult = await _userDatabaseController.Register(registerDto);
+            var token = await _userDatabaseController.Register(registerDto);
 
-            // Failed
-            if (registerResult.Code == 400) return new JsonResult(new { message = registerResult });
+            Response.Cookies.Append("jwtToken", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = DateTime.UtcNow.AddYears(1453)
+            });
 
             // Success
             return Redirect("/");
@@ -40,11 +54,15 @@ namespace WebApi.Controllers
         [Route("/User/Login")]
         public async Task<IActionResult> LoginPOST([FromForm]LoginDto loginDto)
         {
-            var User = await _userDatabaseController.Login(loginDto);
+            var token = await _userDatabaseController.Login(loginDto);
 
-            if (User == null) return new JsonResult(new { message = "Hatali Giris!" });
-
-            // return new Response(User);
+            Response.Cookies.Append("jwtToken", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = DateTime.UtcNow.AddYears(1453)
+            });
+            
             return Redirect("/");
         }
     }

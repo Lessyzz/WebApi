@@ -31,7 +31,7 @@ namespace WebApi.Data
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<string> GenerateRefreshTokenAsync(string userId)
+        public async Task<string> GenerateRefreshTokenAsync(string userId, string userName)
         {
             var tokenJti = Guid.NewGuid().ToString();
             var validUntil = DateTime.UtcNow.AddMonths(3);
@@ -40,12 +40,14 @@ namespace WebApi.Data
             {
                 new("jti", tokenJti),
                 new("sid", userId),
-                new("rol", "RefreshToken")
+                new("rol", "RefreshToken"),
+                new("usr", userName)
             };
             var token = GenerateJwt(claims, validUntil);
             
-            await databaseService.SaveJWT(new JwtToken
-            { TokenJti = tokenJti, UserId = userId, ValidUntil = validUntil });
+            //Boşver
+            // await databaseService.SaveJWT(new JwtToken
+            // { TokenJti = tokenJti, UserId = userId, ValidUntil = validUntil });
 
             return token;
         }

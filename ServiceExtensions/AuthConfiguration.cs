@@ -44,6 +44,15 @@ public static class AuthConfiguration
 
                 options.Events = new JwtBearerEvents
                 {
+                    OnMessageReceived = context =>
+                    {
+                        var token = context.Request.Cookies["jwtToken"];
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            context.Token = token;
+                        }
+                        return Task.CompletedTask;
+                    },
                     OnChallenge = context =>
                     {
                         context.HandleResponse();
@@ -67,19 +76,7 @@ public static class AuthConfiguration
                         var json = JsonConvert.SerializeObject(response);
 
                         return context.Response.WriteAsync(json);
-                    },
-                    // OnAuthenticationFailed = context =>
-                    // {
-                    //     if (context.Exception.GetType() != typeof(SecurityTokenExpiredException))
-                    //         return Task.CompletedTask;
-                    //     context.Response.StatusCode = 401;
-                    //     context.Response.ContentType = "application/json";
-                    //
-                    //     var response = new Response("token_expired", 401);
-                    //     var json = JsonConvert.SerializeObject(response);
-                    //
-                    //     return context.Response.WriteAsync(json);
-                    // }
+                    }
                 };
             });
 

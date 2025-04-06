@@ -1,15 +1,13 @@
-﻿using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebApi.Data;
+using WebApi.Dto;
 using WebApi.Hubs;
 using WebApi.Models;
-using WebApi.Dto;
 
-namespace WebApi.Data
+namespace WebApi.DatabaseController
 {
     public class SellerDatabaseController(EfContext context, JWTTokenSystem jWtTokenSystem, IHubContext<NotificationHub> hubContext)
     {
@@ -54,7 +52,7 @@ namespace WebApi.Data
                 Id = entity.Id,
                 Username = entity.Username,
                 Roles = entity.Roles,
-                RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id),
+                RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id, entity.Username),
                 AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles)
             }; 
             return null;

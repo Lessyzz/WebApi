@@ -1,32 +1,30 @@
-﻿using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebApi.Data;
+using WebApi.Dto;
 using WebApi.Hubs;
 using WebApi.Models;
-using WebApi.Dto;
 
-namespace WebApi.Data
+namespace WebApi.DatabaseController
 {
     public class UserDatabaseController(EfContext context, JWTTokenSystem jWtTokenSystem, IHubContext<NotificationHub> hubContext)
     {
         private readonly IHubContext<NotificationHub> _hubContext = hubContext;
 
 
-        public async Task<Response> Register(RegisterDto _us)
+        public async Task<string> Register(RegisterDto _us)
         {
             var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Number == _us.Number);
             if (existingUser != null)
             {
-                return new Response("Number problem!", 400);
+                throw new Exception($"User with number {_us.Number} already exists");
             }
             existingUser = await context.Users.FirstOrDefaultAsync(u => u.Email == _us.Email);
             if (existingUser != null)
             {
-                return new Response("Email problem!", 400);
+                throw new Exception($"User with email {_us.Email} already exists");
             }
             
             var user = new User
@@ -42,21 +40,16 @@ namespace WebApi.Data
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
-            return new Response("User registered successfully!");
+            return await jWtTokenSystem.GenerateRefreshTokenAsync(user.Id,user.Username);
         }
         
-        public async Task<LoginResponseDto?> Login(LoginDto _us)
+        public async Task<string> Login(LoginDto _us)
         {
-            var entity = await context.Users.FirstOrDefaultAsync(User => User.Number == _us.Number && User.Password == ComputeSha256Hash(_us.Password));
-            if (entity != null) return new LoginResponseDto
-            {
-                Id = entity.Id,
-                Username = entity.Username,
-                Roles = entity.Roles,
-                RefreshToken = await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id),
-                AccessToken = await jWtTokenSystem.GenerateAccessTokenAsync(entity.Id, entity.Roles)
-            }; 
-            return null;
+            var entity = await context.Users.FirstOrDefaultAsync(user => user.Number == _us.Number && user.Password == ComputeSha256Hash(_us.Password));
+            
+            if (entity == null) throw new Exception($"Wrong username or password");
+            
+            return await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id,entity.Username);
         } 
         
         public async Task<Response> GetAccessToken(string tokenJti, string userId)
