@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
     <link href="/assets/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/bootstrap-icons.css">
-    <script src="/assets/bootstrap.bundle.min.js" defer=""></script>
+    <script  src="/assets/bootstrap.bundle.min.js" defer></script>
 </head>
 
 <body>
@@ -23,12 +23,38 @@
                 <i class="bi bi-box-arrow-in-right me-1"></i>Giriş Yap
             </a>
             <a href="User/Register" class="btn btn-primary me-2">Kayıt Ol</a>
-            <a href="Basket" class="btn btn-outline-primary">
-                <i class="bi bi-basket"></i>
-            </a>
+            <div id="basket-button" class="dropdown">
+                <button class="btn btn-outline-primary position-relative" id="basketDropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bi bi-basket"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger basket-count">0</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end p-3 shadow" aria-labelledby="basketDropdown" style="width: 350px; max-height: 500px; overflow-y: auto;">
+                    <div class="basket-items-container">
+                        <div class="text-center py-4 empty-basket-message">
+                            <i class="bi bi-basket display-4 text-muted"></i>
+                            <p class="mt-2">Sepetiniz boş</p>
+                        </div>
+                        <div class="basket-items-list d-none">
+                            <!-- Items will be loaded here dynamically -->
+                        </div>
+                    </div>
+                    <div class="dropdown-divider basket-footer d-none"></div>
+                    <div class="d-flex justify-content-between align-items-center basket-summary d-none">
+                        <span class="fw-bold">Toplam:</span>
+                        <span class="fw-bold basket-total">0.00 ₺</span>
+                    </div>
+                    <div class="d-grid gap-2 mt-3 basket-actions d-none">
+                        <button class="btn btn-outline-danger btn-sm" id="clearBasket">
+                            <i class="bi bi-trash me-1"></i>Sepeti Temizle
+                        </button>
+                        <a href="/Basket" class="btn btn-primary">Sepete Git</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
+
 
 <div class="container mt-4">
     @RenderBody()  @* Sayfaların içeriği buraya eklenecek *@
@@ -99,6 +125,18 @@
         <p class="mb-0">© 2025 E-Ticaret. Tüm hakları saklıdır.</p>
     </div>
 </footer>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="basketToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="basketToastBody">
+                Ürün Başarıyla Eklendi!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <style>
@@ -224,5 +262,245 @@
     }
 </style>
 
+@* Basket *@
 
+<!-- Item Template (hidden, will be cloned via JavaScript) -->
+<template id="basket-item-template">
+    <div class="basket-item d-flex align-items-center mb-3">
+        <img src="" alt="" class="basket-item-image me-2" width="50" height="50" style="object-fit: cover;">
+        <div class="flex-grow-1 me-2">
+            <div class="fw-bold basket-item-name text-truncate"></div>
+            <div class="small text-muted basket-item-price"></div>
+        </div>
+        <div class="d-flex align-items-center quantity-controls">
+            <button class="btn btn-sm btn-outline-secondary decrease-quantity">
+                <i class="bi bi-dash"></i>
+            </button>
+            <span class="mx-2 basket-item-quantity"></span>
+            <button class="btn btn-sm btn-outline-secondary increase-quantity">
+                <i class="bi bi-plus"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger ms-2 remove-item">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId = "c2ae16c5-4d71-4f38-94c6-107bd4fa47ae"
+        loadBasketItems(userId);
+
+        // Event listeners
+        document.getElementById('clearBasket').addEventListener('click', function(event) {
+            // Prevent the dropdown from closing
+            event.stopPropagation();
+            clearBasket(userId);
+        });
+
+        // Event delegation for dynamically created elements
+        document.querySelector('.basket-items-list').addEventListener('click', function(event) {
+            // Prevent the dropdown from closing
+            event.stopPropagation();
+
+            const target = event.target.closest('button');
+            if (!target) return;
+
+            const basketItem = target.closest('.basket-item');
+            const productId = basketItem.dataset.productId;
+
+            if (target.classList.contains('increase-quantity')) {
+                addToBasket(productId, userId);
+            } else if (target.classList.contains('decrease-quantity')) {
+                decreaseQuantity(productId, userId);
+            } else if (target.classList.contains('remove-item')) {
+                removeFromBasket(productId, userId);
+            }
+        });
+    });
+
+    // Function to get current user ID - implement based on your auth system
+    function getUserId() {
+        // Example: return from localStorage or from a hidden field
+        return localStorage.getItem('userId') || 'guest';
+    }
+
+    // Load basket items
+    function loadBasketItems(userId) {
+        fetch(`/Product/GetBasketProducts?userId=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                updateBasketUI(data);
+            })
+            .catch(error => {
+                console.error('Error loading basket items:', error);
+            });
+    }
+
+    // Update basket UI with items
+    function updateBasketUI(items) {
+        console.log(items)
+        const basketItemsList = document.querySelector('.basket-items-list');
+        const emptyMessage = document.querySelector('.empty-basket-message');
+        const basketFooter = document.querySelector('.basket-footer');
+        const basketSummary = document.querySelector('.basket-summary');
+        const basketActions = document.querySelector('.basket-actions');
+        const basketCount = document.querySelector('.basket-count');
+        const template = document.getElementById('basket-item-template');
+
+        // Clear current items
+        basketItemsList.innerHTML = '';
+
+        if (items.length === 0) {
+            emptyMessage.classList.remove('d-none');
+            basketItemsList.classList.add('d-none');
+            basketFooter.classList.add('d-none');
+            basketSummary.classList.add('d-none');
+            basketActions.classList.add('d-none');
+            basketCount.textContent = '0';
+            return;
+        }
+
+        // Show items list, hide empty message
+        emptyMessage.classList.add('d-none');
+        basketItemsList.classList.remove('d-none');
+        basketFooter.classList.remove('d-none');
+        basketSummary.classList.remove('d-none');
+        basketActions.classList.remove('d-none');
+
+        // Calculate total quantity for badge
+        let totalQuantity = 0;
+        let totalPrice = 0;
+
+        // Populate items
+        items.forEach(item => {
+            const clone = template.content.cloneNode(true);
+            const basketItem = clone.querySelector('.basket-item');
+
+            basketItem.dataset.productId = item.productId;
+
+            // Set item details
+            const image = clone.querySelector('.basket-item-image');
+            image.src = item.product.images.split(',')[0] || '/assets/placeholder.jpg';
+            image.alt = item.product.name;
+
+            clone.querySelector('.basket-item-name').textContent = item.product.name;
+
+            const discountedPrice = item.product.getDiscountedPrice
+                ? item.product.getDiscountedPrice()
+                : (item.product.price - (item.product.price * item.product.discount / 100));
+
+            clone.querySelector('.basket-item-price').textContent = `${discountedPrice.toFixed(2)} ₺`;
+            clone.querySelector('.basket-item-quantity').textContent = item.quantity;
+
+            // Add to list
+            basketItemsList.appendChild(clone);
+
+            // Update totals
+            totalQuantity += item.quantity;
+            totalPrice += discountedPrice * item.quantity;
+        });
+
+        // Update badge count
+        basketCount.textContent = totalQuantity;
+
+        // Update total price
+        document.querySelector('.basket-total').textContent = `${totalPrice.toFixed(2)} ₺`;
+    }
+
+    // Add to basket
+    function addToBasket(productId,userId) {
+        fetch('/Product/AddProductToBasketProduct?productId=' + productId + "&userId=" + userId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                loadBasketItems(userId);
+                showToast('Ürün Sepete Eklendi!', true);
+            })
+            .catch(error => {
+                console.error('Error adding product to basket:', error);
+                showToast('Bir Hata Oluştu.', false);
+            });
+    }
+
+
+    // Decrease quantity
+    function decreaseQuantity(productId, userId) {
+        fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                loadBasketItems(userId);
+            })
+            .catch(error => {
+                console.error('Error decreasing product quantity:', error);
+            });
+    }
+
+    // Remove item from basket
+    function removeFromBasket(productId, userId) {
+        fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                loadBasketItems(userId);
+            })
+            .catch(error => {
+                console.error('Error removing product from basket:', error);
+            });
+    }
+
+    // Clear entire basket
+    function clearBasket(userId) {
+        fetch('/Product/RemoveAllProductsFromBasketProduct?userId=' + userId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                loadBasketItems(userId);
+            })
+            .catch(error => {
+                console.error('Error clearing basket:', error);
+            });
+    }
+
+    function showToast(message, isSuccess = true) {
+        const toastElement = document.getElementById('basketToast');
+        const toastBody = document.getElementById('basketToastBody');
+
+        // Update message and style
+        toastBody.textContent = message;
+        toastElement.classList.remove('bg-success', 'bg-danger');
+        toastElement.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+
+        // Show the toast
+        const bsToast = new bootstrap.Toast(toastElement);
+        bsToast.show();
+    }
+</script>
 </html>

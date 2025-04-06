@@ -37,6 +37,7 @@ namespace WebApi.Data
         {
             var entities = await context.BasketProducts
                 .Where(b => b.UserId == userId)
+                .Include(p => p.Product)
                 .ToListAsync();
             return entities;
         }

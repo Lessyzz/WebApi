@@ -40,9 +40,8 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
     public async Task<IActionResult> GetBasketProducts(string userId)
     {
         var registerResult = await _productDatabaseController.GetBasketProducts(userId);
-
-        if (registerResult == null) return new JsonResult(new { message = "Error" });
-        return new JsonResult(new { message = registerResult });
+        
+        return new JsonResult(registerResult);
     }
     
     [HttpGet]
