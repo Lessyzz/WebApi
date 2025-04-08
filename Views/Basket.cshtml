@@ -4,6 +4,10 @@
 
 <div class="row">
     <div class="col-12">
+        <h6 onclick="history.go(-1);" style="cursor: pointer;">
+            <i class="bi bi-arrow-left"></i>
+            Geri
+        </h6>
         <h2 class="mb-3">Sepetim</h2>
     </div>
 </div>
@@ -107,7 +111,6 @@
     // JavaScript for basket functionality
     document.addEventListener('DOMContentLoaded', function() {
         // Get current user ID
-        const userId = 'c2ae16c5-4d71-4f38-94c6-107bd4fa47ae';
         let basketItems = [];
 
         // Load basket items
@@ -115,7 +118,7 @@
 
         // Load basket items from API
         function loadBasketItems() {
-            fetch(`/Product/GetBasketProducts?userId=${userId}`)
+            fetch(`/Product/GetBasketProducts`)
                 .then(response => response.json())
                 .then(data => {
                     basketItems = data;
@@ -247,7 +250,7 @@
 
         // Add to basket
         function addToBasket(productId) {
-            fetch('/Product/AddProductToBasketProduct?productId=' + productId + "&userId=" + userId, {
+            fetch('/Product/AddProductToBasketProduct?productId=' + productId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -265,7 +268,7 @@
 
         // Decrease quantity
         function decreaseQuantity(productId) {
-            fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+            fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -283,7 +286,7 @@
 
         // Remove item from basket
         function removeFromBasket(productId) {
-            fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+            fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -301,13 +304,12 @@
 
         // Clear entire basket
         function clearBasket() {
-            fetch('/Product/RemoveAllProductsFromBasketProduct?userId=' + userId, {
+            fetch('/Product/RemoveAllProductsFromBasketProduct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ userId })
             })
                 .then(response => response.json())
                 .then(data => {

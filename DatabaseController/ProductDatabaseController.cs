@@ -23,7 +23,7 @@ namespace WebApi.Data
 
         public async Task<List<Product>> GetProductsAsSeller(string sellerId)
         {
-            var entities = await context.Products.Where(Product => Product.ProductSellerId == sellerId).ToListAsync();
+            var entities = await context.Products.Where(Product => Product.ProductSellerId == sellerId).Include(p => p.Category).ToListAsync();
             return entities;
         }
 
@@ -162,7 +162,7 @@ namespace WebApi.Data
             }
         }
     
-        public async Task UpdateProduct(UpdateProductDto updateProductDto)
+        public async Task UpdateProduct(Product updateProductDto)
         {
             var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == updateProductDto.Id);
             if (product != null)

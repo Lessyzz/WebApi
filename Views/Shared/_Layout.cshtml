@@ -8,6 +8,7 @@
     <link href="/assets/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/bootstrap-icons.css">
     <script  src="/assets/bootstrap.bundle.min.js" defer></script>
+    <script  src="/assets/jquery.min.js" defer></script>
 </head>
 
 <body>
@@ -309,14 +310,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const userId = "c2ae16c5-4d71-4f38-94c6-107bd4fa47ae"
-        loadBasketItems(userId);
+        loadBasketItems();
 
         // Event listeners
         document.getElementById('clearBasket').addEventListener('click', function(event) {
             // Prevent the dropdown from closing
             event.stopPropagation();
-            clearBasket(userId);
+            clearBasket();
         });
 
         // Event delegation for dynamically created elements
@@ -331,24 +331,18 @@
             const productId = basketItem.dataset.productId;
 
             if (target.classList.contains('increase-quantity')) {
-                addToBasket(productId, userId);
+                addToBasket(productId);
             } else if (target.classList.contains('decrease-quantity')) {
-                decreaseQuantity(productId, userId);
+                decreaseQuantity(productId);
             } else if (target.classList.contains('remove-item')) {
-                removeFromBasket(productId, userId);
+                removeFromBasket(productId);
             }
         });
     });
 
-    // Function to get current user ID - implement based on your auth system
-    function getUserId() {
-        // Example: return from localStorage or from a hidden field
-        return localStorage.getItem('userId') || 'guest';
-    }
-
     // Load basket items
-    function loadBasketItems(userId) {
-        fetch(`/Product/GetBasketProducts?userId=${userId}`)
+    function loadBasketItems() {
+        fetch(`/Product/GetBasketProducts`)
             .then(response => response.json())
             .then(data => {
                 updateBasketUI(data);
@@ -430,8 +424,8 @@
     }
 
     // Add to basket
-    function addToBasket(productId,userId) {
-        fetch('/Product/AddProductToBasketProduct?productId=' + productId + "&userId=" + userId, {
+    function addToBasket(productId) {
+        fetch('/Product/AddProductToBasketProduct?productId=' + productId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -445,7 +439,7 @@
                 return response.json();
             })
             .then(data => {
-                loadBasketItems(userId);
+                loadBasketItems();
                 showToast('Ürün Sepete Eklendi!', true);
             })
             .catch(error => {
@@ -456,8 +450,8 @@
 
 
     // Decrease quantity
-    function decreaseQuantity(productId, userId) {
-        fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+    function decreaseQuantity(productId) {
+        fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -466,7 +460,7 @@
         })
             .then(response => response.json())
             .then(data => {
-                loadBasketItems(userId);
+                loadBasketItems();
             })
             .catch(error => {
                 console.error('Error decreasing product quantity:', error);
@@ -474,8 +468,8 @@
     }
 
     // Remove item from basket
-    function removeFromBasket(productId, userId) {
-        fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId + "&userId=" + userId, {
+    function removeFromBasket(productId) {
+        fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -484,7 +478,7 @@
         })
             .then(response => response.json())
             .then(data => {
-                loadBasketItems(userId);
+                loadBasketItems();
             })
             .catch(error => {
                 console.error('Error removing product from basket:', error);
@@ -492,8 +486,8 @@
     }
 
     // Clear entire basket
-    function clearBasket(userId) {
-        fetch('/Product/RemoveAllProductsFromBasketProduct?userId=' + userId, {
+    function clearBasket() {
+        fetch('/Product/RemoveAllProductsFromBasketProduct', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -502,7 +496,7 @@
         })
             .then(response => response.json())
             .then(data => {
-                loadBasketItems(userId);
+                loadBasketItems();
             })
             .catch(error => {
                 console.error('Error clearing basket:', error);

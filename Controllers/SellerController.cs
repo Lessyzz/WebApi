@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebApi.Data;
@@ -15,9 +17,10 @@ public class SellerController(
 {
     [HttpGet]
     [Route("/Seller")]
+    [Authorize]
     public async Task<IActionResult> Index()
     {
-        ViewBag.Products = await productDatabaseController.GetProductsAsSeller("c2ae16c5-4d71-4f38-94c6-107bd4fa47ae");
+        ViewBag.Products = await productDatabaseController.GetProductsAsSeller(User.Claims.First(c => c.Type == "sid").Value);
         return View();
     }
 
@@ -79,6 +82,20 @@ public class SellerController(
         return View();
     }
     
+    [HttpGet("/Seller/EditProduct/{id}")]
+    [Authorize]
+    public async Task<IActionResult> EditProduct(string id)
+    {
+        var product = await productDatabaseController.GetProductById(id);
+        ViewBag.Product = product;
+        
+        var categories = await categoryDatabaseController.GetCategories();
+        var flatCategories = FlattenCategories(categories);
+        ViewBag.Categories = flatCategories;
+        
+        return View();
+    }
+
     private List<(int Id, string Name)> FlattenCategories(List<Category> categories, int? parentId = null, int level = 0)
     {
         var result = new List<(int, string)>();
@@ -95,4 +112,5 @@ public class SellerController(
 
         return result;
     }
+    
 }
