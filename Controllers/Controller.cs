@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
-using WebApi.Dto;
-using WebApi.Models;
+using WebApi.DatabaseController;
 
 namespace WebApi.Controllers
 {
@@ -9,6 +9,7 @@ namespace WebApi.Controllers
     {
         [HttpGet]
         [Route("/")]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Products = await _productDatabaseController.GetProducts();
@@ -27,6 +28,7 @@ namespace WebApi.Controllers
         [Route("/Basket")]
         public IActionResult Basket()
         {
+            
             return View();
         }
     }

@@ -1,0 +1,150 @@
+@using WebApi.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Product product = ViewBag.Product;
+    var currentImages = product.Images.Split(',', StringSplitOptions.RemoveEmptyEntries);
+}
+
+<div class="container py-4">
+    <h6 onclick="history.go(-1);" style="cursor: pointer;">
+        <i class="bi bi-arrow-left"></i>
+        Geri
+    </h6>
+    <h2 class="mb-4">
+        Ürünü Düzenle: @product.Name
+    </h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" asp-action="EditProduct" asp-route-id="@product.Id" id="productForm">
+                <input name="Id" type="hidden" asp-for="Id"  value="@product.Id"/>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Ürün Adı</label>
+                            <input name="Name" asp-for="Name" class="form-control" value="@product.Name"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Açıklama</label>
+                            <textarea name="Description" asp-for="Description" class="form-control" rows="4">@product.Description</textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Price" class="form-label">Fiyat (₺)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₺</span>
+                                    <input name="Price" type="number" step="0.01" asp-for="Price" class="form-control"  value="@product.Price"/>
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Discount" class="form-label">İndirim (%)</label>
+                                <div class="input-group">
+                                    <input name="Discount" type="number" step="0.01" asp-for="Discount" class="form-control"  value="@product.Discount"/>
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <span asp-validation-for="Discount" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Kategori</label>
+                            <select name="CategoryId" asp-for="CategoryId" class="form-select" asp-items="categories">
+                                <option value="">-- Kategori Seçin --</option>
+                                @foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
+                                {
+                                    <option value="@cat.Id" @(cat.Id == product.CategoryId ? "selected" : "")>@cat.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Quantity" class="form-label">Stok Adedi</label>
+                            <input name="Quantity" type="number" asp-for="Quantity" class="form-control"  value="@product.Quantity"/>
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+
+                        <hr/>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mevcut Görseller</label>
+                            @if(currentImages.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    @foreach(var imageUrl in currentImages)
+                                    {
+                                        <div class="position-relative">
+                                            <img src="@imageUrl" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover;" alt="Mevcut Resim"
+                                                 onerror="this.onerror=null; this.src='https://placehold.co/75x75/eee/ccc?text=Hata';" />
+                                        </div>
+                                    }
+                                </div>
+                            } else {
+                                <p class="text-muted small">Bu ürün için mevcut görsel bulunmamaktadır.</p>
+                            }
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="imageInput" class="form-label">Yeni Görsel Ekle (Mevcutları Değiştirir)</label>
+                            <input type="file" name="NewImageFiles" id="imageInput" class="form-control" accept="image/*" multiple />
+                            <div class="form-text">Yeni görseller yüklerseniz, mevcut görsellerin tümü silinir ve yenileri kaydedilir.</div>
+                        </div>
+
+                        <div id="imagePreviewContainer" class="d-flex flex-wrap gap-2 mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-check-circle me-2"></i> Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function() {
+        const container = document.getElementById('imagePreviewContainer');
+        container.innerHTML = '';
+
+        if (this.files) {
+            Array.from(this.files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'position-relative';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+                    img.alt = 'Yeni Resim Önizleme';
+
+                    previewDiv.appendChild(img);
+                    container.appendChild(previewDiv);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>
+

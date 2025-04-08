@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
+using WebApi.DatabaseController;
 using WebApi.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("J
 builder.Services.AddSingleton<JwtConfiguration>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 builder.Services.AddScoped<AdminDatabaseController>();
 builder.Services.AddScoped<JWTTokenSystem>();
 builder.Services.AddScoped<UserDatabaseController>();
@@ -88,19 +90,20 @@ app.Use(async (context, next) =>
     await next();
 });
 
-app.UseStaticFiles();
-
-app.UseHttpsRedirection();
+app.UseRouting();               
 
 app.UseCors("cors");
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication();          
+app.UseAuthorization();       
 
-// app.UseStatusCodePagesWithRedirects("/"); // This will be activated later!!!
+app.UseStaticFiles();
+app.UseHttpsRedirection();
+
+// app.UseStatusCodePagesWithRedirects("/");
 
 app.MapControllers();
+app.MapRazorPages();
 
-app.UseRouting();
 
 app.Run();

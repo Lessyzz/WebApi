@@ -4,6 +4,10 @@
 
 <div class="row">
     <div class="col-12">
+        <h6 onclick="history.go(-1);" style="cursor: pointer;">
+            <i class="bi bi-arrow-left"></i>
+            Geri
+        </h6>
         <h2 class="mb-3">Sepetim</h2>
     </div>
 </div>
@@ -25,7 +29,7 @@
                     <!-- Item template (will be repeated for each item via JavaScript) -->
                     <div class="basket-item d-none">
                         <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
-                            <img src="https://picsum.photos/500/500" alt="" class="item-image rounded" width="80" height="80" style="object-fit: cover;">
+                            <img src="" alt="" class="item-image rounded" width="80" height="80" style="object-fit: cover;">
                             <div class="ms-3 flex-grow-1">
                                 <h5 class="item-name mb-1"></h5>
                                 <p class="item-price text-muted mb-0"></p>
@@ -84,40 +88,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- Clear basket button -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <button id="clear-basket-button" class="btn btn-outline-danger w-100">
+                    <i class="bi bi-trash me-2"></i>Sepeti Temizle
+                </button>
+            </div>
+        </div>
     </div>
+    
+    <style>
+        #basket-button{
+            display: none !important;
+        }
+    </style>
 </div>
 
 <!-- JavaScript for basket functionality -->
 <script>
+    // JavaScript for basket functionality
     document.addEventListener('DOMContentLoaded', function() {
-        // Sample data - replace with your actual basket data retrieval method
-        let basketItems = [
-            {
-                id: 1,
-                name: "KTUN Logolu T-shirt",
-                price: 249.99,
-                image: "https://picsum.photos/500/500",
-                quantity: 1
-            },
-            {
-                id: 2,
-                name: "KTUN Baskılı Kupa",
-                price: 129.99,
-                image: "https://picsum.photos/500/508",
-                quantity: 2
-            }
-        ];
+        // Get current user ID
+        let basketItems = [];
 
-        // For testing empty basket, uncomment the next line
-        // basketItems = [];
+        // Load basket items
+        loadBasketItems();
 
-        renderBasket();
+        // Load basket items from API
+        function loadBasketItems() {
+            fetch(`/Product/GetBasketProducts`)
+                .then(response => response.json())
+                .then(data => {
+                    basketItems = data;
+                    renderBasket();
+                })
+                .catch(error => {
+                    console.error('Error loading basket items:', error);
+                });
+        }
 
         // Render basket items
         function renderBasket() {
             const basketItemsContainer = document.getElementById('basket-items');
             const emptyBasket = document.getElementById('empty-basket');
-            const template = document.querySelector('.basket-item');
+            const templateItem = document.querySelector('.basket-item.d-none'); // Make sure we're selecting the hidden template
             const subtotalElement = document.getElementById('subtotal');
             const shippingElement = document.getElementById('shipping');
             const totalElement = document.getElementById('total');
@@ -125,12 +141,13 @@
 
             // Clear previous items (except template and empty message)
             Array.from(basketItemsContainer.children).forEach(child => {
-                if (!child.classList.contains('basket-item') && child.id !== 'empty-basket') {
+                if (!child.classList.contains('d-none') && child.id !== 'empty-basket') {
                     child.remove();
                 }
             });
 
-            if (basketItems.length === 0) {
+            if (!basketItems || basketItems.length === 0) {
+                // Show empty basket message and disable checkout
                 emptyBasket.classList.remove('d-none');
                 checkoutButton.disabled = true;
                 subtotalElement.textContent = '0,00 ₺';
@@ -144,7 +161,14 @@
             checkoutButton.disabled = false;
 
             // Calculate totals
-            const subtotal = basketItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            let subtotal = 0;
+            basketItems.forEach(item => {
+                const price = item.product.getDiscountedPrice
+                    ? item.product.getDiscountedPrice()
+                    : (item.product.price - (item.product.price * item.product.discount / 100));
+                subtotal += price * item.quantity;
+            });
+
             const shipping = subtotal > 500 ? 0 : 49.99;
             const total = subtotal + shipping;
 
@@ -155,56 +179,145 @@
 
             // Render each item
             basketItems.forEach(item => {
-                const itemElement = template.cloneNode(true);
-                itemElement.classList.remove('d-none');
+                // Clone the template
+                const newItem = templateItem.cloneNode(true);
+                newItem.classList.remove('d-none');
 
-                // Set item details
-                itemElement.querySelector('.item-image').src = item.image;
-                itemElement.querySelector('.item-image').alt = item.name;
-                itemElement.querySelector('.item-name').textContent = item.name;
-                itemElement.querySelector('.item-price').textContent = formatPrice(item.price);
-                itemElement.querySelector('.item-quantity').value = item.quantity;
+                const price = item.product.getDiscountedPrice
+                    ? item.product.getDiscountedPrice()
+                    : (item.product.price - (item.product.price * item.product.discount / 100));
 
-                // Set data attributes
-                itemElement.dataset.itemId = item.id;
+                try {
+                    // Set item details - Using try/catch to help diagnose issues
+                    const imageUrl = item.product.images ? item.product.images.split(',')[0] : '/assets/placeholder.jpg';
 
-                // Add event listeners
-                itemElement.querySelector('.increase-quantity').addEventListener('click', () => {
-                    changeQuantity(item.id, 1);
-                });
+                    const imageElement = newItem.querySelector('.item-image');
+                    if (imageElement) {
+                        imageElement.src = imageUrl;
+                        imageElement.alt = item.product.name;
+                    }
 
-                itemElement.querySelector('.decrease-quantity').addEventListener('click', () => {
-                    changeQuantity(item.id, -1);
-                });
+                    const nameElement = newItem.querySelector('.item-name');
+                    if (nameElement) {
+                        nameElement.textContent = item.product.name;
+                    }
 
-                itemElement.querySelector('.remove-item').addEventListener('click', () => {
-                    removeItem(item.id);
-                });
+                    const priceElement = newItem.querySelector('.item-price');
+                    if (priceElement) {
+                        priceElement.textContent = formatPrice(price);
+                    }
 
-                basketItemsContainer.appendChild(itemElement);
+                    const quantityElement = newItem.querySelector('.item-quantity');
+                    if (quantityElement) {
+                        quantityElement.value = item.quantity;
+                    }
+
+                    // Set data attribute directly on the new item
+                    newItem.setAttribute('data-product-id', item.productId);
+
+                    // Add event listeners with proper selector targeting
+                    const increaseBtn = newItem.querySelector('.increase-quantity');
+                    if (increaseBtn) {
+                        increaseBtn.addEventListener('click', function() {
+                            const productId = newItem.getAttribute('data-product-id');
+                            addToBasket(productId);
+                        });
+                    }
+
+                    const decreaseBtn = newItem.querySelector('.decrease-quantity');
+                    if (decreaseBtn) {
+                        decreaseBtn.addEventListener('click', function() {
+                            const productId = newItem.getAttribute('data-product-id');
+                            decreaseQuantity(productId);
+                        });
+                    }
+
+                    const removeBtn = newItem.querySelector('.remove-item');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', function() {
+                            const productId = newItem.getAttribute('data-product-id');
+                            removeFromBasket(productId);
+                        });
+                    }
+
+                    // Append the new item to the container
+                    basketItemsContainer.appendChild(newItem);
+                } catch (error) {
+                    console.error('Error rendering basket item:', error);
+                }
             });
         }
 
-        // Change item quantity
-        function changeQuantity(itemId, change) {
-            const itemIndex = basketItems.findIndex(item => item.id === itemId);
-            if (itemIndex !== -1) {
-                basketItems[itemIndex].quantity += change;
+        // Add to basket
+        function addToBasket(productId) {
+            fetch('/Product/AddProductToBasketProduct?productId=' + productId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    loadBasketItems();
+                })
+                .catch(error => {
+                    console.error('Error adding product to basket:', error);
+                });
+        }
 
-                // Remove if quantity is 0
-                if (basketItems[itemIndex].quantity <= 0) {
-                    removeItem(itemId);
-                    return;
-                }
-
-                renderBasket();
-            }
+        // Decrease quantity
+        function decreaseQuantity(productId) {
+            fetch('/Product/RemoveOneProductFromBasketProduct?productId=' + productId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    loadBasketItems();
+                })
+                .catch(error => {
+                    console.error('Error decreasing product quantity:', error);
+                });
         }
 
         // Remove item from basket
-        function removeItem(itemId) {
-            basketItems = basketItems.filter(item => item.id !== itemId);
-            renderBasket();
+        function removeFromBasket(productId) {
+            fetch('/Product/RemoveProductFromBasketProduct?productId=' + productId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    loadBasketItems();
+                })
+                .catch(error => {
+                    console.error('Error removing product from basket:', error);
+                });
+        }
+
+        // Clear entire basket
+        function clearBasket() {
+            fetch('/Product/RemoveAllProductsFromBasketProduct', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    loadBasketItems();
+                })
+                .catch(error => {
+                    console.error('Error clearing basket:', error);
+                });
         }
 
         // Format price with Turkish currency
@@ -218,6 +331,13 @@
                 alert('Ödeme sayfasına yönlendiriliyorsunuz...');
                 // Here you would redirect to checkout page
                 // window.location.href = '/checkout';
+            }
+        });
+
+        // Clear basket button handler
+        document.getElementById('clear-basket-button').addEventListener('click', function() {
+            if (confirm('Sepetinizdeki tüm ürünleri silmek istediğinize emin misiniz?')) {
+                clearBasket();
             }
         });
     });
