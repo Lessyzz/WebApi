@@ -266,6 +266,6 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
     public async Task<IActionResult> CheckPromotionCode(string code)
     {
         var registerResult = await _productDatabaseController.CheckPromotionCode(code);
-        return new JsonResult(new { message = registerResult });
+        return new JsonResult(new { discount = registerResult });
     }
 }
