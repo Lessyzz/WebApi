@@ -4,10 +4,12 @@
 
 <div class="row">
     <div class="col-12">
-        <h6 onclick="history.go(-1);" style="cursor: pointer;">
-            <i class="bi bi-arrow-left"></i>
-            Geri
-        </h6>
+        <a  class="link-body-emphasis" href="/">
+            <h6 style="cursor: pointer;">
+                <i class="bi bi-arrow-left"></i>
+                Geri
+            </h6>
+        </a>
         <h2 class="mb-3">Sepetim</h2>
     </div>
 </div>
@@ -72,9 +74,11 @@
                     <strong id="total">0,00 ₺</strong>
                 </div>
 
+                    <a href="/Checkout">
                 <button id="checkout-button" class="btn btn-primary w-100" disabled>
-                    Siparişi Tamamla
+                        Siparişi Tamamla
                 </button>
+                    </a>
             </div>
         </div>
 
@@ -324,15 +328,6 @@
         function formatPrice(price) {
             return price.toFixed(2).replace('.', ',') + ' ₺';
         }
-
-        // Checkout button handler
-        document.getElementById('checkout-button').addEventListener('click', function() {
-            if (basketItems.length > 0) {
-                alert('Ödeme sayfasına yönlendiriliyorsunuz...');
-                // Here you would redirect to checkout page
-                // window.location.href = '/checkout';
-            }
-        });
 
         // Clear basket button handler
         document.getElementById('clear-basket-button').addEventListener('click', function() {

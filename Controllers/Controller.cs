@@ -22,13 +22,24 @@ namespace WebApi.Controllers
         {
             var product = await _productDatabaseController.GetProductById(id);
             if (product == null) return NotFound();
-            ViewBag.Product = product;
-            return View();
+            return View(product);
         }
         
         [HttpGet]
         [Route("/Basket")]
         public IActionResult Basket()
+        {
+            return View();
+        }
+
+        [HttpGet("/Checkout")]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+        
+        [HttpGet("/Success")]
+        public IActionResult Success()
         {
             return View();
         }

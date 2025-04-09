@@ -1,7 +1,4 @@
-﻿@{
-ViewData["Title"] = "Ürün";
-}
-
+﻿@model WebApi.Models.Product
 @{
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,16 +6,45 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 <head>
     <title>E-Ticaret</title>
 </head>
+<h5 class="mt-4 mb-3" style="cursor: pointer;">
+    <a  class="link-body-emphasis" href="/">
+        <i class="bi bi-arrow-left"></i>
+        Geri
+    </a>
+</h5>
+<div class="container">
+    <div class="row shadow p-4 position-relative">
+        @if (Model.Discount > 0)
+        {
+            <div class="discount-badge-overflowed">@Model.Discount% İndirim</div>
+        }
+        <div class="col-12 col-lg-6 text-center mb-4">
+            @{
+                var imageArray = Model.Images.Split(',');
+            }
 
-<div class="container mt-4">
-    <div class="row bg-light rounded p-4 position-relative">
-        <div class="discount-badge-overflowed">50% İndirim</div>
-        <div class="col-12 col-lg-6 text-center mb-4 mb-lg-0">
-            <img class="img-fluid" src="/assets/product.png"
-                style="max-width: min(500px, 100%); max-height: 500px;">
+            <!-- Main large image -->
+            <div class="mb-3">
+                <img id="mainImage" class="img-fluid" src="@imageArray[0]"
+                     style="max-width: min(500px, 100%); max-height: 500px;">
+            </div>
+
+            <!-- Thumbnail images row -->
+            <div class="row g-2 justify-content-center">
+                @for (int i = 0; i < imageArray.Length; i++)
+                {
+                    <div class="col-auto">
+                        <img class="img-thumbnail product-thumbnail"
+                             src="@imageArray[i]"
+                             style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;"
+                             onclick="changeMainImage('@imageArray[i]')"
+                             alt="Product image @(i+1)">
+                    </div>
+                }
+            </div>
         </div>
         <div class="col-12 col-lg-6">
-            <h4>@ViewBag.Product.Name</h4>
+            <h4>@Model.Name</h4>
             <div class="d-flex align-items-center mt-3">
                 <div class="me-2">
                     <i class="bi bi-star-fill text-warning"></i>
@@ -30,27 +56,23 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <span class="me-2">3.2</span>
                 <span>(145 Değerlendirme)</span>
             </div>
-            @{
-                var price = ViewBag.Product.Price ?? 0;
-                var discount = ViewBag.Product.Discount ?? 0;
-                var discountedPrice = price - (price * discount / 100);
-            }
             <div class="d-flex align-items-center">
-                <h5 class="text-primary me-2">@discountedPrice ₺</h5>
-                <h6 class="text-decoration-line-through">@price ₺</h6>
+                <h5 class="text-primary me-2">@Model.GetDiscountedPrice()₺</h5>
+                @if (Model.Discount > 0)
+                {
+                    <h6 class="text-decoration-line-through">@Model.Price₺</h6>
+                }
             </div>
-            <p>
-                @ViewBag.Product.Description
-            </p>
+            <p></p>
             <div class="mt-5">
                 <h6 class="text-primary">Renk Seçenekleri</h6>
                 <div class="d-flex">
                     <button class="btn btn-danger rounded-circle me-2 d-flex justify-content-center align-items-center"
-                        style="width: 40px; height: 40px;">
+                            style="width: 40px; height: 40px;">
                         <i class="bi bi-check"></i>
                     </button>
                     <button class="btn btn-primary rounded-circle me-2" style="width: 40px; height: 40px;"
-                        disabled></button>
+                            disabled></button>
                     <button class="btn btn-success rounded-circle me-2" style="width: 40px; height: 40px;"></button>
                     <button class="btn btn-warning rounded-circle me-2" style="width: 40px; height: 40px;"></button>
                 </div>
@@ -62,7 +84,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     <button
                         class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center">200ml</button>
                     <button class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center"
-                        disabled>250ml</button>
+                            disabled>250ml</button>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-5">
@@ -71,7 +93,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <i class="bi bi-dash"></i>
                     </button>
                     <input id="quantity-input" type="number" value="1" min="1" class="form-control mx-2"
-                        style="width: 70px; text-align: center;">
+                           style="width: 70px; text-align: center;">
                     <button class="btn btn-outline-secondary rounded-circle" onclick="add()">
                         <i class="bi bi-plus"></i>
                     </button>
@@ -112,17 +134,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             <div class="tab-content p-4" id="productTabsContent">
                 <div class="tab-pane fade show active" id="features" role="tabpanel" aria-labelledby="features-tab">
                     <p>
-                        Çini işlemeli kupa, Osmanlı ve Selçuklu dönemlerinden beri süregelen geleneksel çini sanatının
-                        modern bir yansımasıdır. Seramik malzemeden üretilen bu kupalar, genellikle el işçiliğiyle
-                        süslenir ve çiçek, geometrik desenler veya Osmanlı motifleri gibi geleneksel Türk çini sanatının
-                        karakteristik öğelerini taşır. Mavi, beyaz, kırmızı ve yeşil tonlarıyla dikkat çeken çini
-                        işlemeli kupalar, hem estetik hem de kültürel bir anlam taşır.
-
-                        Bu kupalar, sıcak ve soğuk içecekler için kullanılabilmesinin yanı sıra, sanatsal ve dekoratif
-                        bir obje olarak da tercih edilir. Çini işlemeli kupalar, el yapımı olmaları nedeniyle her biri
-                        benzersiz bir görünüme sahiptir. Geleneksel motiflerle süslenmiş bu ürünler, hediyelik eşya
-                        olarak da büyük ilgi görmektedir. Geçmişin zarafetini günümüz tasarımlarıyla birleştiren çini
-                        işlemeli kupalar, sanat ve işlevselliği bir araya getiren özel ürünlerdir.
+                        @Model.Description
                     </p>
                 </div>
 
@@ -410,7 +422,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     });
 
     function addToBasketWithQuantity() {
-        const productId = '@(ViewBag.Product?.Id ?? 0)';
+        const productId = '@Model.Id'
         const quantity = input.value;
         
         fetch('/Product/AddProductToBasketProductWithQuantity?productId=' + productId + '&quantity=' + quantity, {
@@ -434,5 +446,9 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             console.error('Error adding product to basket:', error);
             showToast('Bir Hata Oluştu.', false);
         });
+    }
+
+    function changeMainImage(imageSrc) {
+        document.getElementById('mainImage').src = imageSrc;
     }
 </script>
