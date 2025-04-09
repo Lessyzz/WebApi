@@ -1,0 +1,264 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+    ViewData["Title"] = "Sipariş Başarılı";
+    var orderNumber = "TR" + DateTime.Now.ToString("yyyyMMddHHmm") + new Random().Next(1000, 9999).ToString();
+    var orderDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+    
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Success Card -->
+            <div class="card shadow border-0 mb-4">
+                <div class="card-body text-center py-5">
+                    <div class="display-1 text-success mb-4">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <h1 class="text-success fw-bold mb-4">Siparişiniz Alındı!</h1>
+                    <p class="lead mb-4">Ödemeniz başarıyla tamamlandı. Siparişiniz hazırlanıp kargoya verilecek.</p>
+                    <div class="d-flex justify-content-center">
+                        <div class="badge bg-success p-3 fs-6">
+                            <i class="bi bi-bag-check me-2"></i>Sipariş No: @orderNumber
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Details -->
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-info-circle me-2"></i>Sipariş Bilgileri</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar3 text-primary me-2 fs-5"></i>
+                                <h5 class="mb-0">Sipariş Tarihi</h5>
+                            </div>
+                            <p class="text-muted">@orderDate</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-credit-card text-primary me-2 fs-5"></i>
+                                <h5 class="mb-0">Ödeme Yöntemi</h5>
+                            </div>
+                            <p class="text-muted">Kredi Kartı (****1234)</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-truck text-primary me-2 fs-5"></i>
+                                <h5 class="mb-0">Tahmini Teslimat</h5>
+                            </div>
+                            <p class="text-muted">@(DateTime.Now.AddDays(3).ToString("dd.MM.yyyy")) - @(DateTime.Now.AddDays(5).ToString("dd.MM.yyyy"))</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-box-seam text-primary me-2 fs-5"></i>
+                                <h5 class="mb-0">Kargo Firması</h5>
+                            </div>
+                            <p class="text-muted">Aras Kargo</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-geo-alt text-primary me-2 fs-5"></i>
+                            <h5 class="mb-0">Teslimat Adresi</h5>
+                        </div>
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <p class="mb-1"><strong>Ahmet Yılmaz</strong></p>
+                                <p class="mb-1">Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5</p>
+                                <p class="mb-0">Kadıköy / İstanbul, 34700</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0"><i class="bi bi-basket me-2"></i>Sipariş Özeti</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ürün</th>
+                                    <th scope="col" class="text-center">Adet</th>
+                                    <th scope="col" class="text-end">Fiyat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-light rounded p-2 me-3">
+                                                <i class="bi bi-laptop fs-4 text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Notebook Pro XS5</h6>
+                                                <small class="text-muted">15.6" FHD, 16GB RAM, 512GB SSD</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-end">1.299,00 ₺</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">Ara Toplam</td>
+                                    <td class="text-end">1.299,00 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Kargo</td>
+                                    <td class="text-end">29,90 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">KDV</td>
+                                    <td class="text-end">239,80 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="fw-bold">Toplam</td>
+                                    <td class="text-end fw-bold">1.568,70 ₺</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="bi bi-signpost-2 me-2"></i>Sıradaki Adımlar</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row gy-4">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-envelope-paper text-primary fs-1"></i>
+                                </div>
+                                <h5>Sipariş Onayı</h5>
+                                <p class="text-muted small">E-posta adresinize sipariş onayı gönderildi</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-box-seam text-primary fs-1"></i>
+                                </div>
+                                <h5>Hazırlık & Kargo</h5>
+                                <p class="text-muted small">Siparişiniz hazırlanıp kargoya verilecek</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-house-door text-primary fs-1"></i>
+                                </div>
+                                <h5>Teslimat</h5>
+                                <p class="text-muted small">Siparişiniz adresinize teslim edilecek</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                <a href="#" class="btn btn-primary">
+                    <i class="bi bi-list-ul me-2"></i>Siparişlerim
+                </a>
+                <a href="#" class="btn btn-outline-primary">
+                    <i class="bi bi-shop me-2"></i>Alışverişe Devam Et
+                </a>
+                <a href="#" class="btn btn-outline-secondary">
+                    <i class="bi bi-printer me-2"></i>Sipariş Detayını Yazdır
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Generate a confetti effect for celebration
+    document.addEventListener('DOMContentLoaded', function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '1000';
+        document.body.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        const colors = ['#4CAF50', '#2196F3', '#FFC107', '#E91E63', '#9C27B0'];
+        const confetti = [];
+        
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: -Math.random() * canvas.height,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2,
+                    angle: Math.random() * 6.28,
+                    spin: Math.random() * 0.2 - 0.1
+                });
+            }
+        }
+        
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < confetti.length; i++) {
+                const c = confetti[i];
+                
+                c.y += c.speed;
+                c.angle += c.spin;
+                
+                ctx.save();
+                ctx.translate(c.x, c.y);
+                ctx.rotate(c.angle);
+                ctx.fillStyle = c.color;
+                ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+                ctx.restore();
+                
+                if (c.y > canvas.height) {
+                    confetti.splice(i, 1);
+                    i--;
+                }
+            }
+            
+            if (confetti.length > 0) {
+                requestAnimationFrame(animateConfetti);
+            } else {
+                setTimeout(() => {
+                    canvas.remove();
+                }, 1000);
+            }
+        }
+        
+        // Start confetti
+        createConfetti();
+        animateConfetti();
+        
+        // Remove confetti after a few seconds
+        setTimeout(() => {
+            confetti.length = 0;
+        }, 3000);
+    });
+</script>

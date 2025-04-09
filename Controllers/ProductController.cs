@@ -102,7 +102,7 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
 
         await _productDatabaseController.AddProduct(addProductDto);
 
-        return new JsonResult(new { message = "Successful!" });
+        return Redirect("/Seller");
     }
 
 
