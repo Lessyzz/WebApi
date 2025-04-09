@@ -14,11 +14,11 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     <div class="row bg-light rounded p-4 position-relative">
         <div class="discount-badge-overflowed">50% İndirim</div>
         <div class="col-12 col-lg-6 text-center mb-4 mb-lg-0">
-            <img class="img-fluid" src="assets/product.png"
+            <img class="img-fluid" src="/assets/product.png"
                 style="max-width: min(500px, 100%); max-height: 500px;">
         </div>
         <div class="col-12 col-lg-6">
-            <h4>Çini İşlemeli Kupa</h4>
+            <h4>@ViewBag.Product.Name</h4>
             <div class="d-flex align-items-center mt-3">
                 <div class="me-2">
                     <i class="bi bi-star-fill text-warning"></i>
@@ -30,13 +30,17 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <span class="me-2">3.2</span>
                 <span>(145 Değerlendirme)</span>
             </div>
+            @{
+                var price = ViewBag.Product.Price ?? 0;
+                var discount = ViewBag.Product.Discount ?? 0;
+                var discountedPrice = price - (price * discount / 100);
+            }
             <div class="d-flex align-items-center">
-                <h5 class="text-primary me-2">350₺</h5>
-                <h6 class="text-decoration-line-through">750₺</h6>
+                <h5 class="text-primary me-2">@discountedPrice ₺</h5>
+                <h6 class="text-decoration-line-through">@price ₺</h6>
             </div>
             <p>
-                Çini işlemeli kupa, geleneksel Türk çini sanatının zarif motifleriyle süslenmiş seramik bir bardaktır.
-                Estetik ve işlevselliği birleştirerek hem günlük kullanım hem de dekoratif amaçlar için tercih edilir.
+                @ViewBag.Product.Description
             </p>
             <div class="mt-5">
                 <h6 class="text-primary">Renk Seçenekleri</h6>
@@ -72,7 +76,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <i class="bi bi-plus"></i>
                     </button>
                 </div>
-                <button class="btn btn-primary ms-auto">Sepete Ekle</button>
+                <button class="btn btn-primary ms-auto" onclick="addToBasketWithQuantity()">Sepete Ekle</button>
             </div>
         </div>
     </div>
@@ -404,4 +408,31 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             });
         });
     });
+
+    function addToBasketWithQuantity() {
+        const productId = '@(ViewBag.Product?.Id ?? 0)';
+        const quantity = input.value;
+        
+        fetch('/Product/AddProductToBasketProductWithQuantity?productId=' + productId + '&quantity=' + quantity, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            loadBasketItems();
+            showToast('Ürün Sepete Eklendi!', true);
+        })
+        .catch(error => {
+            console.error('Error adding product to basket:', error);
+            showToast('Bir Hata Oluştu.', false);
+        });
+    }
 </script>

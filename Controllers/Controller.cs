@@ -17,18 +17,19 @@ namespace WebApi.Controllers
         }
         
         [HttpGet]
-        [Route("/Product")]
-        public IActionResult Product()
+        [Route("/Product/{id}")]
+        public async Task<IActionResult> Product(string id)
         {
+            var product = await _productDatabaseController.GetProductById(id);
+            if (product == null) return NotFound();
+            ViewBag.Product = product;
             return View();
         }
-        
         
         [HttpGet]
         [Route("/Basket")]
         public IActionResult Basket()
         {
-            
             return View();
         }
     }

@@ -104,6 +104,17 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
 
         return new JsonResult(new { message = "Successful!" });
     }
+
+
+    // Tek seferde istediğin kadar sepete eklemeye yarıyor
+    [HttpPost]
+    [Route("/Product/AddProductToBasketProductWithQuantity")]
+    [Authorize]
+    public async Task<IActionResult> AddProductToBasketProductWithQuantity(string productId, int quantity)
+    {
+        await _productDatabaseController.AddProductToBasketProductWithQuantity(productId, User.FindFirstValue("sid")!, quantity);
+        return new JsonResult(new { message = "Succesful!" });
+    }
     
 
     // Sepete ürün eklemeye basıldığında eğer hiç ürün yoksa 1 tane ekler. Eğer varsa sayısını 1 arttırır.
@@ -152,6 +163,17 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
     public async Task<IActionResult> BuyProduct(BuyProductDto buyProductDto)
     {
         await _productDatabaseController.BuyProduct(buyProductDto);
+        return new JsonResult(new { message = "Succesful!" });
+    }
+
+    [HttpPost]
+    [Route("/Product/BuyProductAsList")]
+    public async Task<IActionResult> BuyProductAsList(List<BuyProductDto> buyProductDtos)
+    {
+        foreach (var buyProductDto in buyProductDtos)
+        {
+            await _productDatabaseController.BuyProduct(buyProductDto);
+        }
         return new JsonResult(new { message = "Succesful!" });
     }
     
@@ -221,5 +243,29 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
         }
         
         return Redirect("/Seller");
+    }
+
+    [HttpPost]
+    [Route("/Product/AddPromotionCode")]
+    public async Task<IActionResult> AddPromotionCode(string code, double discount)
+    {
+        await _productDatabaseController.AddPromotionCode(code, discount);
+        return new JsonResult(new { message = "Succesful!" });
+    }
+
+    [HttpPost]
+    [Route("/Product/RemovePromotionCode")]
+    public async Task<IActionResult> RemovePromotionCode(string code)
+    {
+        await _productDatabaseController.RemovePromotionCode(code);
+        return new JsonResult(new { message = "Succesful!" });
+    }
+
+    [HttpPost]
+    [Route("/Product/CheckPromotionCode")]
+    public async Task<IActionResult> CheckPromotionCode(string code)
+    {
+        var registerResult = await _productDatabaseController.CheckPromotionCode(code);
+        return new JsonResult(new { message = registerResult });
     }
 }

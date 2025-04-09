@@ -14,6 +14,7 @@ public class EfContext(DbContextOptions<EfContext> options) : IdentityDbContext<
     public DbSet<Category> Categories { get; set; }
     public DbSet<BasketProduct> BasketProducts { get; set; }
     public DbSet<PaidProduct> PaidProducts { get; set; }
+    public DbSet<PromotionCode> PromotionCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

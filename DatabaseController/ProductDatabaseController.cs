@@ -75,6 +75,31 @@ namespace WebApi.Data
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
         }        
+
+        // Tek seferde istediğin kadar sepete eklemeye yarıyor
+        public async Task AddProductToBasketProductWithQuantity(string productId, string userId, int quantity)
+        {
+            var basketProductAlready = await context.BasketProducts.FirstOrDefaultAsync(Product => Product.ProductId == productId && Product.UserId == userId);
+            if (basketProductAlready != null) // Eğer ürün zaten sepette var ise miktar kadar arttır.
+            {
+                basketProductAlready.Quantity += quantity;
+                await context.SaveChangesAsync();
+            }
+            else // Eğer ürün sepette yok ise sepete miktar kadar ekle.
+            {
+                var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == productId);
+                var basketProduct = new BasketProduct
+                {
+                    ProductId = productId,
+                    Product = product,
+                    UserId = userId,
+                    Quantity = quantity,
+                };
+
+                await context.BasketProducts.AddAsync(basketProduct);
+                await context.SaveChangesAsync();
+            }
+        }
         
         public async Task AddProductToBasketProduct(string productId, string userId)
         {
@@ -177,6 +202,38 @@ namespace WebApi.Data
                 if (updateProductDto.ProductSellerId != null) product.ProductSellerId = updateProductDto.ProductSellerId;
                 await context.SaveChangesAsync();
             }
+        }
+        
+
+        public async Task AddPromotionCode(string code, double discount)
+        {
+            var promotionCode = new PromotionCode
+            {
+                Name = code,
+                Discount = discount
+            };
+            await context.PromotionCodes.AddAsync(promotionCode);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemovePromotionCode(string code)
+        {
+            var promotionCode = await context.PromotionCodes.FirstOrDefaultAsync(p => p.Name == code);
+            if (promotionCode != null)
+            {
+                context.PromotionCodes.Remove(promotionCode);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<double> CheckPromotionCode(string code)
+        {
+            var promotionCode = await context.PromotionCodes.FirstOrDefaultAsync(p => p.Name == code);
+            if (promotionCode != null)
+            {
+                return promotionCode.Discount;
+            }
+            return 0;
         }
     }
 }
