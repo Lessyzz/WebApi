@@ -29,7 +29,7 @@ namespace WebApi.Data
 
         public async Task<Product> GetProductById(string productId)
         {
-            var entity = await context.Products.FirstOrDefaultAsync(Product => Product.Id == productId);
+            var entity = await context.Products.Include(p => p.ProductSeller).FirstOrDefaultAsync(Product => Product.Id == productId);
             return entity!;
         }
         

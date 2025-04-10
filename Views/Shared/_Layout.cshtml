@@ -28,8 +28,13 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end p-3 shadow" aria-labelledby="profile-dropdown" style="width: max-content">
                         <a href="/Seller" class="btn">
-                          <i class="bi bi-shop-window"></i>  Satıcı Sayfası
+                            <i class="bi bi-shop-window"></i>  Satıcı Sayfası
                         </a>
+                        <div>
+                            <a href="/Orders" class="btn">
+                                <i class="bi bi-cart-check-fill"></i>  Siparişlerim
+                            </a>
+                        </div>
                         <div class="dropdown-divider"></div>
                         <a href="/User/Logout" class="btn">
                             <i class="bi bi-box-arrow-in-left"></i> Çıkış Yap
@@ -39,10 +44,10 @@
             }
             else
             {
-                <a href="User/Login" class="btn btn-outline-primary me-2">
+                <a href="/User/Login" class="btn btn-outline-primary me-2">
                     <i class="bi bi-box-arrow-in-right me-1"></i>Giriş Yap
                 </a>
-                <a href="User/Register" class="btn btn-primary me-2">Kayıt Ol</a>
+                <a href="/User/Register" class="btn btn-primary me-2">Kayıt Ol</a>
             }
             <div id="basket-button" class="dropdown">
                 <button class="btn btn-outline-primary position-relative" id="basketDropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
