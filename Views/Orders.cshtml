@@ -1,0 +1,79 @@
+@{
+    @model List<WebApi.Models.PaidProduct>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Sipariş Geçmişi";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow border-0 mb-4">
+                <div class="card-body text-center py-5">
+                    <h1 class="mb-4">Sipariş Geçmişiniz</h1>
+                    <p class="lead mb-4">Burada geçmiş siparişlerinizi görebilirsiniz.</p>
+                </div>
+            </div>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                // PaymentId'ye göre siparişleri grupla
+                var groupedOrders = Model
+                    .GroupBy(order => order.PaymentId)
+                    .ToList();
+
+                foreach (var group in groupedOrders)
+                {
+                    // Grup için toplam hesaplamaları
+                    var subtotal = group.Sum(order => order.Quantity * order.TotalPrice);
+                    var tax = subtotal * 0.18; // %18 vergi
+                    var shippingFee = subtotal > 500 ? 0 : 29.90; // 500 TL üstü ücretsiz kargo
+                    var total = subtotal + tax + shippingFee;
+
+                    <div class="card shadow border-0 mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h4 class="mb-0"><i class="bi bi-check-circle me-2"></i>Ödeme ID: @group.Key</h4> <!-- PaymentId -->
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Ürün Adı</th>
+                                        <th>Adet</th>
+                                        <th>Toplam Fiyat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in group)
+                                    {
+                                        <tr>
+                                            <td>@order.Product.Name</td>
+                                            <td>@order.Quantity</td>
+                                            <td>@String.Format("{0:N2} ₺", order.Quantity * order.TotalPrice)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Ara Toplam:</strong> @String.Format("{0:N2} ₺", subtotal)</p>
+                                    <p><strong>Vergi (18%):</strong> @String.Format("{0:N2} ₺", tax)</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Kargo Ücreti:</strong> @String.Format("{0:N2} ₺", shippingFee)</p>
+                                    <p><strong>Toplam Tutar:</strong> @String.Format("{0:N2} ₺", total)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning text-center" role="alert">
+                    Şu an sipariş geçmişiniz bulunmamaktadır.
+                </div>
+            }
+        </div>
+    </div>
+</div>

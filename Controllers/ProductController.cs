@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WebApi.Data;
 using WebApi.Dto;
 using WebApi.Models;
@@ -174,6 +175,21 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
         {
             await _productDatabaseController.BuyProduct(buyProductDto);
         }
+        return new JsonResult(new { message = "Succesful!" });
+    }
+
+    // BuyAllBasketProducts
+
+    [HttpPost]
+    [Route("/Product/BuyAllBasketProducts")]
+    public async Task<IActionResult> BuyAllBasketProducts([FromBody] PaymentInfoDto paymentInfo)
+    {
+        var userId = User.FindFirstValue("sid")!;
+        var basketProducts = await _productDatabaseController.GetBasketProducts(userId);
+        await _productDatabaseController.BuyAllBasketProducts(userId);
+        await _productDatabaseController.RemoveAllProductsFromBasketProduct(userId);
+        TempData["BasketProducts"] = JsonConvert.SerializeObject(basketProducts);
+        TempData["PaymentInfo"] = JsonConvert.SerializeObject(paymentInfo);
         return new JsonResult(new { message = "Succesful!" });
     }
     

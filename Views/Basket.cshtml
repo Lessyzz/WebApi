@@ -68,17 +68,21 @@
                     <span>Kargo</span>
                     <span id="shipping">0,00 ₺</span>
                 </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>KDV (%18)</span>
+                    <span id="tax">0,00 ₺</span>
+                </div>
                 <hr>
                 <div class="d-flex justify-content-between mb-3">
                     <strong>Toplam</strong>
                     <strong id="total">0,00 ₺</strong>
                 </div>
 
-                    <a href="/Checkout">
+                <a href="/Checkout">
                 <button id="checkout-button" class="btn btn-primary w-100" disabled>
-                        Siparişi Tamamla
+                    Siparişi Tamamla
                 </button>
-                    </a>
+                </a>
             </div>
         </div>
 
@@ -142,6 +146,7 @@
             const shippingElement = document.getElementById('shipping');
             const totalElement = document.getElementById('total');
             const checkoutButton = document.getElementById('checkout-button');
+            const taxElement = document.querySelector('#tax');
 
             // Clear previous items (except template and empty message)
             Array.from(basketItemsContainer.children).forEach(child => {
@@ -173,13 +178,15 @@
                 subtotal += price * item.quantity;
             });
 
-            const shipping = subtotal > 500 ? 0 : 49.99;
-            const total = subtotal + shipping;
+            const shipping = subtotal > 500 ? 0 : 29.90; 
+            const tax = subtotal * 0.18;
+            const total = subtotal + shipping + tax;
 
-            // Update summary
             subtotalElement.textContent = formatPrice(subtotal);
             shippingElement.textContent = formatPrice(shipping);
             totalElement.textContent = formatPrice(total);
+            taxElement.textContent = formatPrice(tax);
+            
 
             // Render each item
             basketItems.forEach(item => {
@@ -326,7 +333,7 @@
 
         // Format price with Turkish currency
         function formatPrice(price) {
-            return price.toFixed(2).replace('.', ',') + ' ₺';
+            return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(price);
         }
 
         // Clear basket button handler

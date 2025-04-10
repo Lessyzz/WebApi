@@ -420,7 +420,7 @@
         basketCount.textContent = totalQuantity;
 
         // Update total price
-        document.querySelector('.basket-total').textContent = `${totalPrice.toFixed(2)} ₺`;
+        document.querySelector('.basket-total').textContent = `${totalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺`;
     }
 
     // Add to basket

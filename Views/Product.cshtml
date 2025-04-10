@@ -57,13 +57,16 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <span>(145 Değerlendirme)</span>
             </div>
             <div class="d-flex align-items-center">
-                <h5 class="text-primary me-2">@Model.GetDiscountedPrice()₺</h5>
+                <h5 class="text-primary me-2" style="font-size: 1.25rem; font-weight: bold;">
+                    @String.Format("{0:N2} ₺", @Model.GetDiscountedPrice())
+                </h5>
                 @if (Model.Discount > 0)
                 {
-                    <h6 class="text-decoration-line-through">@Model.Price₺</h6>
+                    <h6 class="text-decoration-line-through" style="font-size: 1rem; color: #888; margin-top: 0.25rem;">
+                        @String.Format("{0:N2} ₺", @Model.Price)
+                    </h6>
                 }
             </div>
-            <p></p>
             <div class="mt-5">
                 <h6 class="text-primary">Renk Seçenekleri</h6>
                 <div class="d-flex">

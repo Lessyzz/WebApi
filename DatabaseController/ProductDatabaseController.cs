@@ -177,6 +177,47 @@ namespace WebApi.Data
             }
         }
 
+        public async Task BuyAllBasketProducts(string userId)
+        {
+            var basketProducts = await context.BasketProducts.Where(Product => Product.UserId == userId).ToListAsync();
+            
+            double totalProductPrice = 0;
+            var paymentId = Guid.NewGuid().ToString();
+            foreach (var basketProduct in basketProducts)
+            {
+                var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == basketProduct.ProductId);
+                if (product != null && product.Quantity >= basketProduct.Quantity)
+                {
+                    // Ürün fiyatını hesapla
+                    double productTotalPrice = product.GetDiscountedPrice() * basketProduct.Quantity;
+                    totalProductPrice += productTotalPrice;
+
+                    // double shippingCost = totalProductPrice >= 500 ? 0 : 29.90;
+
+                    // double taxAmount = totalProductPrice * 0.18; // 18% KDV
+
+                    // double finalPrice = totalProductPrice + taxAmount + shippingCost;
+
+                    context.PaidProducts.Add(new PaidProduct
+                    {
+                        ProductId = basketProduct.ProductId,
+                        PaymentId = paymentId,
+                        Quantity = basketProduct.Quantity,
+                        UserId = userId,
+                        TotalPrice = productTotalPrice,
+                        SellerId = product.ProductSellerId,
+                    });
+
+                    // Stok miktarını azalt
+                    product.Quantity -= basketProduct.Quantity;
+                }
+            }
+
+            context.BasketProducts.RemoveRange(basketProducts);
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task RemoveProduct(string productId)
         {
             var product = await context.Products.FirstOrDefaultAsync(Product => Product.Id == productId);
@@ -234,6 +275,19 @@ namespace WebApi.Data
                 return promotionCode.Discount;
             }
             return 0;
+        }
+
+        public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await context.Products.Where(Product => Product.CategoryId == categoryId).ToListAsync();
+            return products;
+        }
+
+        // Get orders
+        public async Task<List<PaidProduct>> GetOrders(string userId)
+        {
+            var orders = await context.PaidProducts.Where(Product => Product.UserId == userId).ToListAsync();
+            return orders;
         }
     }
 }

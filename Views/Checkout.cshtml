@@ -149,38 +149,62 @@
                                     <i class="bi bi-arrow-left"></i> Adres Bilgilerine Dön
                                 </button>
 
-                                <a href="/Success">
-                                    <button class="btn btn-success float-end">
+                                @* <a href="/Success"> *@
+                                    <button class="btn btn-success float-end" onclick="buyAllBasketProducts()">
                                         <i class="bi bi-lock"></i> Ödemeyi Tamamla
                                     </button>
-                                </a>
+                                @* </a> *@
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Order Summary -->
+            @{
+                decimal subtotal = 0;
+                decimal shipping = 29.90M;
+                decimal tax = 0;
+                decimal total = 0;
+            }
             <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">Sipariş Özeti</h5>
                 </div>
                 <div class="card-body">
+                    @if (ViewBag.BasketProducts != null)
+                    {
+                        subtotal = 0;
+                        foreach (var item in ViewBag.BasketProducts)
+                        {
+                            double discountedPrice = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
+                            subtotal += (decimal)(discountedPrice * item.Quantity);
+                        }
+
+                        shipping = 29.90M;
+                        if (subtotal > 500)
+                        {
+                            shipping = 0;
+                        }
+                        tax = subtotal * 0.18M; // %18 KDV
+                        total = subtotal + shipping + tax;
+                    }
+                    
                     <div class="d-flex justify-content-between mb-2">
                         <span>Ara Toplam</span>
-                        <span>1.299,00 ₺</span>
+                        <span>@String.Format("{0:N2} ₺", subtotal)</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Kargo</span>
-                        <span>29,90 ₺</span>
+                        <span>@String.Format("{0:N2} ₺", shipping)</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>KDV</span>
-                        <span>239,80 ₺</span>
+                        <span>@String.Format("{0:N2} ₺", tax)</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Toplam</span>
-                        <span>1.568,70 ₺</span>
+                        <span>@String.Format("{0:N2} ₺", total)</span>
                     </div>
                 </div>
             </div>
@@ -226,4 +250,52 @@
             progressBar.textContent = 'Adım 1/2';
         });
     });
+
+    function buyAllBasketProducts() {
+        const formValues = getAllFormValues();
+        fetch('/Product/BuyAllBasketProducts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formValues)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            loadBasketItems();
+            showToast('Ödeme başarıyla tamamlandı!', true);
+            setTimeout(() => {
+                window.location.href = '/Success';
+            }, 500);
+        })
+        .catch(error => {
+            console.error('Error adding product to basket:', error);
+            showToast('Bir Hata Oluştu.', false);
+        });
+    }
+
+    function getAllFormValues() {
+        const valueForm = {
+            FirstName: document.getElementById('firstName').value,
+            LastName: document.getElementById('lastName').value,
+            Email: document.getElementById('email').value,
+            Phone: document.getElementById('phone').value,
+            Address: document.getElementById('address').value,
+            Province: document.getElementById('province').value,
+            District: document.getElementById('district').value,
+            PostalCode: document.getElementById('postalCode').value,
+            NameOnCard: document.getElementById('nameOnCard').value,
+            CardNumber: document.getElementById('cardNumber').value,
+            ExpirationMonth: document.getElementById('expirationMonth').value,
+            ExpirationYear: document.getElementById('expirationYear').value,
+            Cvv: document.getElementById('cvv').value,
+        };
+        return valueForm;
+    }
 </script>
