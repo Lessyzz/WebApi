@@ -27,6 +27,7 @@ namespace WebApi.Data
             var category = new Category
             {
                 Name = addCategoryDto.Name,
+                Features = addCategoryDto.Features,
                 ParentCategoryId = addCategoryDto.ParentCategoryId,
             };
 

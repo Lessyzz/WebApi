@@ -1,8 +1,8 @@
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebApi.Data;
 using WebApi.DatabaseController;
 using WebApi.Models;
@@ -60,8 +60,8 @@ namespace WebApi.Controllers
         [HttpGet("/Success")]
         public IActionResult Success()
         {
-            var basketProducts = JsonConvert.DeserializeObject<List<BasketProduct>>(TempData["BasketProducts"].ToString());
-            var paymentInfo = JsonConvert.DeserializeObject<PaymentInfoDto>(TempData["PaymentInfo"].ToString());
+            var basketProducts = JsonSerializer.Deserialize<List<BasketProduct>>(TempData["BasketProducts"].ToString());
+            var paymentInfo = JsonSerializer.Deserialize<PaymentInfoDto>(TempData["PaymentInfo"].ToString());
             ViewBag.BasketProducts = basketProducts;
             ViewBag.PaymentInfo = paymentInfo;
             return View();
@@ -75,19 +75,12 @@ namespace WebApi.Controllers
             if (category == null) return NotFound();
 
             var products = await _productDatabaseController.GetProductsByCategoryId(id);
-
-            var groupedCategories = categories
-                .Where(c => c.ParentCategoryId == null) // Ana kategoriler
-                .Select(category => new
-                {
-                    Category = category,
-                    Subcategories = categories.Where(c => c.ParentCategoryId == category.Id).ToList() // Alt kategoriler
-                })
-                .ToList();
-
+            
             ViewBag.Products = products;
             ViewBag.Category = category;
-            ViewBag.GroupedCategories = groupedCategories;
+            
+            SetFeatures(category, products);
+            
             return View();
         }
 
@@ -100,6 +93,43 @@ namespace WebApi.Controllers
             .Include(o => o.Product)
             .ToListAsync();
             return View(orders);
+        }
+
+        private void SetFeatures(Category category, List<Product> products)
+        {
+            Dictionary<string, List<string>> featureOptions = new Dictionary<string, List<string>>();
+    
+            if (!string.IsNullOrEmpty(category.Features))
+            {
+                var features = category.Features.Split(',').Select(f => f.Trim()).ToArray();
+        
+                foreach (var feature in features)
+                {
+                    featureOptions[feature] = new List<string>();
+                }
+        
+                foreach (var product in products)
+                {
+                    try
+                    {
+                        var productFeatures = JsonSerializer.Deserialize<Dictionary<string, string>>(product.Features);
+                
+                        foreach (var feature in features)
+                        {
+                            if (productFeatures.ContainsKey(feature) && !featureOptions[feature].Contains(productFeatures[feature]))
+                            {
+                                featureOptions[feature].Add(productFeatures[feature]);
+                            }
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        continue;
+                    }
+                }
+            }
+    
+            ViewBag.FeatureOptions = featureOptions;
         }
     }
 }

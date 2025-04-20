@@ -27,4 +27,6 @@ public class Product
     {
         return Price - (Price * Discount / 100);
     }
+    
+    public string Features { get; set; }
 }

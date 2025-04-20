@@ -101,6 +101,8 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
         
         addProductDto.Images = string.Join(',', imageUrls);
 
+        
+        
         await _productDatabaseController.AddProduct(addProductDto);
 
         return Redirect("/Seller");
@@ -203,13 +205,15 @@ public class ProductController(ProductDatabaseController _productDatabaseControl
     
     [HttpPost("/Seller/EditProduct/{id}")]
     [Authorize]
-    public async Task<IActionResult> EditProduct(string id, [FromForm] Product product, List<IFormFile>? NewImageFiles)
+    public async Task<IActionResult> EditProduct(string id, [FromForm] Product product, List<IFormFile>? NewImageFiles, Dictionary<string, string> FeatureValues)
     {
         var sellerId = User.FindFirstValue("sid")!;
 
         var originalProduct = await _productDatabaseController.GetProductById(id);
         product.ProductSellerId = sellerId;
 
+        product.Features = JsonConvert.SerializeObject(FeatureValues);
+        
         var newImageUrls = new List<string>();
         if (NewImageFiles is { Count: > 0 })
         {

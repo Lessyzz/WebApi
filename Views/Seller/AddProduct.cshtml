@@ -1,10 +1,14 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Yeni Ürün Ekle";
+
+    var categoryFeaturesJson = ViewBag.CategoryFeaturesMap != null
+        ? System.Text.Json.JsonSerializer.Serialize(ViewBag.CategoryFeaturesMap)
+        : "{}";
 }
 
 <div class="container py-4">
-    <a class="link-body-emphasis" href="/Seller">
+    <a class="link-body-emphasis text-decoration-none" href="/Seller">
         <h6 style="cursor: pointer;">
             <i class="bi bi-arrow-left"></i>
             Geri
@@ -16,7 +20,6 @@
         <div class="card-body">
             <form method="post" enctype="multipart/form-data" action="/Product/AddProduct" id="productForm">
                 <div class="row">
-                    <!-- Left column for basic info -->
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Ürün Adı</label>
@@ -45,17 +48,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ürün Görselleri</label>
+                            <input type="file" name="ImageFiles" id="imageInput" class="form-control" accept="image/*" multiple/>
+                        </div>
+
+                        <div id="imagePreviewContainer" class="d-flex flex-wrap gap-2 mt-2 mb-3">
+                        </div>
                     </div>
 
-                    <!-- Right column for category, quantity and images -->
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Kategori</label>
-                            <select name="CategoryId" class="form-select" required>
+                            <select name="CategoryId" id="categorySelect" class="form-select" required>
                                 <option value="">-- Kategori Seçin --</option>
-                                @foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
+                                @if (ViewBag.Categories != null)
                                 {
-                                    <option value="@cat.Id">@cat.Name</option>
+                                    foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
                                 }
                             </select>
                         </div>
@@ -66,12 +78,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Ürün Görselleri</label>
-                            <input type="file" name="ImageFiles" id="imageInput" class="form-control" accept="image/*" multiple/>
-                        </div>
-
-                        <div id="imagePreviewContainer" class="d-flex flex-wrap gap-2 mt-2">
-                            <!-- Image previews will be shown here -->
+                            <label class="form-label">Ürün Özellikleri</label>
+                            <div id="featuresContainer" class="border p-3 rounded bg-light">
+                                <p class="text-muted" id="featuresPlaceholder">Lütfen önce bir kategori seçin.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,10 +110,10 @@
 
                 reader.onload = function(e) {
                     const previewDiv = document.createElement('div');
-                    previewDiv.className = 'position-relative';
-
+                    previewDiv.className = 'position-relative d-inline-block';
                     const img = document.createElement('img');
                     img.src = e.target.result;
+                    img.alt = "Image preview";
                     img.className = 'img-thumbnail';
                     img.style.width = '100px';
                     img.style.height = '100px';
@@ -117,4 +127,66 @@
             });
         }
     });
+
+    // --- Category-Defined Features Functionality ---
+    const categorySelect = document.getElementById('categorySelect');
+    const featuresContainer = document.getElementById('featuresContainer');
+    const featuresPlaceholder = document.getElementById('featuresPlaceholder');
+
+    const categoryFeaturesMap = JSON.parse('@Html.Raw(categoryFeaturesJson)');
+
+    // Function to update the feature inputs based on selected category
+    function updateFeatureInputs() {
+        const selectedCategoryId = categorySelect.value;
+        const featureKeys = categoryFeaturesMap[selectedCategoryId] || []; // Get feature keys for the category, or empty array if none/not found
+
+        // Clear previous features
+        featuresContainer.innerHTML = '';
+
+        if (featureKeys.length > 0) {
+            // Hide the placeholder if features exist
+            if(featuresPlaceholder) featuresPlaceholder.style.display = 'none';
+
+            // Generate input fields for each feature key
+            featureKeys.forEach(key => {
+                const featureDiv = document.createElement('div');
+                featureDiv.className = 'mb-3'; // Add margin between feature inputs
+
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.textContent = key; // Display the feature key as the label
+                // Associate label with input using 'for' and 'id'
+                const inputId = `featureInput_${key.replace(/[^a-zA-Z0-9]/g, '_')}`; // Create a safe ID
+                label.htmlFor = inputId;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.id = inputId;
+                input.name = `FeatureValues[${key}]`;
+                input.required = true; // Make feature values required
+
+                featureDiv.appendChild(label);
+                featureDiv.appendChild(input);
+                featuresContainer.appendChild(featureDiv);
+            });
+        } else {
+            // Show placeholder text if no category is selected or category has no defined features
+            if(featuresPlaceholder) {
+                featuresPlaceholder.textContent = selectedCategoryId ? 'Bu kategori için tanımlanmış özellik bulunmamaktadır.' : 'Lütfen önce bir kategori seçin.';
+                featuresPlaceholder.style.display = 'block'; // Ensure placeholder is visible
+            } else {
+                // Fallback if placeholder element wasn't found (shouldn't happen with current HTML)
+                featuresContainer.innerHTML = `<p class="text-muted">${selectedCategoryId ? 'Bu kategori için tanımlanmış özellik bulunmamaktadır.' : 'Lütfen önce bir kategori seçin.'}</p>`;
+            }
+        }
+    }
+
+    // Add event listener to the category dropdown
+    categorySelect.addEventListener('change', updateFeatureInputs);
+
+    // Initial call to populate features if a category is pre-selected (e.g., on validation failure)
+    // Or to show the initial placeholder text
+    updateFeatureInputs();
+
 </script>

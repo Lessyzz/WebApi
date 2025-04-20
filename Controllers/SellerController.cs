@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using WebApi.Data;
 using WebApi.DatabaseController;
 using WebApi.Dto;
@@ -78,7 +79,11 @@ public class SellerController(
     {
         var categories = await categoryDatabaseController.GetCategories();
         var flatCategories = FlattenCategories(categories);
+        
         ViewBag.Categories = flatCategories;
+
+        ViewBag.CategoryFeaturesMap = categories.ToDictionary(category => category.Id, category => category.Features.Split(','));
+
         return View();
     }
     
@@ -91,7 +96,9 @@ public class SellerController(
         
         var categories = await categoryDatabaseController.GetCategories();
         var flatCategories = FlattenCategories(categories);
+        
         ViewBag.Categories = flatCategories;
+        ViewBag.CategoryFeaturesMap = categories.ToDictionary(category => category.Id, category => category.Features.Split(','));
         
         return View();
     }

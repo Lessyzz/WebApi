@@ -1,6 +1,6 @@
-@using WebApi.Models
+@using System.Text.Json
 @{
-    ViewData["Title"] = "Ana Sayfa";
+    ViewData["Title"] = ViewBag.Category.Name;
 }
 
 @{
@@ -8,81 +8,510 @@
 }
 
 <head>
-    <title>E-Ticaret</title>
+    <title>@ViewBag.Category.Name - TechMart</title>
+    <link rel="stylesheet" href="/assets/nouislider.min.css">
 </head>
 
 <div class="container-fluid py-4">
-    <div class="row">
-        <!-- Categories sidebar with subcategories -->
-        <div class="col-lg-3 col-md-4">
-        <h4 class="section-title">Kategoriler</h4>
-
-        @foreach (var group in ViewBag.GroupedCategories)
-        {
-            <div class="category-card">
-                <div class="category-header">
-                    @group.Category.Name
-                </div>
-                @foreach (var subcategory in group.Subcategories)
-                {
-                    <div class="subcategory" onclick="redirectToCategory(@subcategory.Id)">
-                        @subcategory.Name
-                    </div>
-                }
-            </div>
-        }
+    <!-- Category Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.Category.Name</li>
+                </ol>
+            </nav>
+            <h2 class="mb-0">@ViewBag.Category.Name</h2>
+            @* <p class="text-muted">@ViewBag.Category.Description</p> *@
+        </div>
     </div>
 
-        <!-- Main content -->
-        <div class="col-lg-9 col-md-8">
-            <!-- Deals section -->
-            <div class="mt-5">
-                <h4 class="section-title">@ViewBag.Category.Name Çeşitleri</h4>
-                <div class="row">
-                    <!-- Product Card 1 -->
-                    @foreach (var product in (List<Product>)ViewBag.Products)
-                    {
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card product-card shadow-sm">
-                                <div class="product-image-container">
-                                    <a href="/product/@product.Id">
-                                        <img class="product-image" src="@product.Images.Split(',')[0]" alt="Product" style="width: 100%; height: 100%; object-fit: contain;">
-                                        <span class="discount-badge bg-danger text-white">%@product.Discount İndirim</span>
-                                    </a>
-                                </div>
-                                <div class="card-body d-flex flex-column">
-                                    <div class="product-meta">
-                                        @* <span class="badge bg-danger">En çok satan</span> *@
-                                        @* <span class="badge bg-secondary">Son 5 ürün</span> *@
-                                    </div>
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <div class="d-flex align-items-end">
-                                            <span class="product-price" style="font-size: 1.25rem; font-weight: bold; color: #28a745;">
-                                                @String.Format("{0:N2} ₺", @product.GetDiscountedPrice())
-                                            </span>
-                                            <span class="old-price ms-2" style="font-size: 1rem; text-decoration: line-through; color: #888;">
-                                                @String.Format("{0:N2} ₺", @product.Price)
-                                            </span>
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Filtreler</h5>
+                    <button id="clearFilters" class="btn btn-sm btn-outline-secondary">Temizle</button>
+                </div>
+                <div class="card-body">
+                    <!-- Price Range Filter -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-3">Fiyat Aralığı</h6>
+                        <div id="priceRange"></div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span id="priceMin">0 ₺</span>
+                            <span id="priceMax">10000 ₺</span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Dynamic Feature Filters -->
+                    @{
+                        var features = ViewBag.Category.Features.Split(',');
+                        foreach (var feature in features)
+                        {
+                            var featureId = feature.Replace(" ", "").ToLower();
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-2">@feature</h6>
+                                <div id="@featureId-filters" class="feature-filter-group">
+                                    @foreach (var option in ViewBag.FeatureOptions[feature])
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input feature-filter" type="checkbox"
+                                                   id="@featureId-@option.Replace(" ", "")"
+                                                   data-feature="@feature"
+                                                   data-value="@option">
+                                            <label class="form-check-label" for="@featureId-@option.Replace(" ", "")">
+                                                @option
+                                            </label>
                                         </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @if (Array.IndexOf(features, feature) < features.Length - 1)
+                            {
+                                <hr>
+                            }
+                        }
+                    }
+
+                    <!-- Mobile Filter Toggle Button -->
+                    <div class="filter-toggle-container d-lg-none position-fixed bottom-0 start-0 w-100 bg-white border-top p-2 z-3">
+                        <button class="filter-toggle btn btn-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
+                            <i class="bi bi-funnel me-2"></i> Filtreleri Göster
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Listing -->
+        <div class="col-lg-9">
+            <!-- Sort Options -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="result-count">
+                            <p class="mb-0"><span id="productCount">@ViewBag.Products.Count</span> ürün bulundu</p>
+                        </div>
+                        <div class="d-flex">
+                            <select id="sortOptions" class="form-select form-select-sm">
+                                <option value="default">Önerilen Sıralama</option>
+                                <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                                <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                                <option value="name-asc">İsim: A-Z</option>
+                                <option value="name-desc">İsim: Z-A</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row" id="productsContainer">
+                @foreach (var product in ViewBag.Products)
+                {
+                    <div class="col-6 col-md-4 col-lg-3 mb-4 product-item"
+                         data-price="@product.GetDiscountedPrice()"
+                         data-features='@product.Features'>
+                        <div class="card product-card shadow-sm h-100">
+                            <div class="product-image-container" style="height: 180px; padding: 15px; position: relative;">
+                                <a href="/product/@product.Id">
+                                    <img class="product-image" src="@product.Images.Split(',')[0]" alt="@product.Name" style="width: 100%; height: 100%; object-fit: contain;">
+                                    @if (product.Discount > 0)
+                                    {
+                                        <span class="discount-badge position-absolute top-0 end-0 bg-danger text-white px-2 py-1 m-2 rounded">%@product.Discount</span>
+                                    }
+                                </a>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title">@product.Name</h6>
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <div>
+                                        <span class="fw-bold text-success">@String.Format("{0:N2} ₺", @product.GetDiscountedPrice())</span>
+                                        @if (product.Discount > 0)
+                                        {
+                                            <span class="text-decoration-line-through text-muted small ms-1">@String.Format("{0:N2} ₺", @product.Price)</span>
+                                        }
                                     </div>
-                                    <div class="d-flex justify-content-center align-items-center mt-2 mt-auto">
-                                        <button class="btn btn-primary add-to-cart" onclick="addToBasket('@product.Id', 'c2ae16c5-4d71-4f38-94c6-107bd4fa47ae')" style="margin-top: 10px;">
-                                            Sepete Ekle
-                                        </button>
-                                    </div>
+                                    <button class="btn btn-sm btn-primary" onclick="addToBasket('@product.Id', 'c2ae16c5-4d71-4f38-94c6-107bd4fa47ae')">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="row d-none">
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-search" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">Sonuç Bulunamadı</h5>
+                    <p>Filtreleri değiştirerek tekrar deneyin.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Mobile Filter Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas" aria-labelledby="filterOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filterOffcanvasLabel">Filtreler</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Price Range Filter -->
+        <div class="mb-4">
+            <h6 class="fw-bold mb-3">Fiyat Aralığı</h6>
+            <div id="mobileSlider"></div>
+            <div class="d-flex justify-content-between mt-2">
+                <span id="mobilePriceMin">0 ₺</span>
+                <span id="mobilePriceMax">10000 ₺</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Dynamic Feature Filters For Mobile -->
+        @{
+            foreach (var feature in features)
+            {
+                var featureId = feature.Replace(" ", "").ToLower();
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-2">@feature</h6>
+                    <div id="mobile-@featureId-filters" class="feature-filter-group">
+                        @foreach (var option in ViewBag.FeatureOptions[feature])
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input mobile-feature-filter" type="checkbox"
+                                       id="mobile-@featureId-@option.Replace(" ", "")"
+                                       data-feature="@feature"
+                                       data-value="@option">
+                                <label class="form-check-label" for="mobile-@featureId-@option.Replace(" ", "")">
+                                    @option
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @if (Array.IndexOf(features, feature) < features.Length - 1)
+                {
+                    <hr>
+                }
+            }
+        }
+
+        <!-- Apply Filters Button for Mobile -->
+        <div class="d-grid gap-2 mt-4">
+            <button id="mobileClearFilters" class="btn btn-outline-secondary">Filtreleri Temizle</button>
+        </div>
+    </div>
+</div>
+
+<!-- Required Scripts -->
+<script src="/assets/nouislider.min.js"></script>
+<script src="/assets/wNumb.min.js"></script>
+
 <script>
-    function redirectToCategory(categoryId) {
-        window.location.href = `/Category/${categoryId}`;
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize price range slider
+        const priceRange = document.getElementById('priceRange');
+        const mobileSlider = document.getElementById('mobileSlider');
+        const priceMin = document.getElementById('priceMin');
+        const priceMax = document.getElementById('priceMax');
+        const mobilePriceMin = document.getElementById('mobilePriceMin');
+        const mobilePriceMax = document.getElementById('mobilePriceMax');
+
+        // Get min and max prices from products
+        let products = document.querySelectorAll('.product-item');
+        let prices = Array.from(products).map(p => parseFloat(p.dataset.price));
+        let minPrice = Math.floor(Math.min(...prices));
+        let maxPrice = Math.ceil(Math.max(...prices));
+
+        // Helper function to format price
+        function formatPrice(val) {
+            return val.toFixed(2) + ' ₺';
+        }
+
+        // Setup desktop slider
+        if (priceRange) {
+            noUiSlider.create(priceRange, {
+                start: [minPrice, maxPrice],
+                connect: true,
+                range: {
+                    'min': minPrice,
+                    'max': maxPrice
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+
+            priceRange.noUiSlider.on('update', function(values) {
+                priceMin.textContent = formatPrice(parseInt(values[0]));
+                priceMax.textContent = formatPrice(parseInt(values[1]));
+            });
+        }
+
+        // Setup mobile slider
+        if (mobileSlider) {
+            noUiSlider.create(mobileSlider, {
+                start: [minPrice, maxPrice],
+                connect: true,
+                range: {
+                    'min': minPrice,
+                    'max': maxPrice
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+
+            mobileSlider.noUiSlider.on('update', function(values) {
+                mobilePriceMin.textContent = formatPrice(parseInt(values[0]));
+                mobilePriceMax.textContent = formatPrice(parseInt(values[1]));
+            });
+        }
+
+        // Sync desktop and mobile sliders
+        if (priceRange && mobileSlider) {
+            priceRange.noUiSlider.on('change', function(values) {
+                mobileSlider.noUiSlider.set(values);
+            });
+
+            mobileSlider.noUiSlider.on('change', function(values) {
+                priceRange.noUiSlider.set(values);
+            });
+        }
+
+        // Apply filters function
+        function applyFilters() {
+            let priceValues = priceRange.noUiSlider.get();
+            let minPriceFilter = parseInt(priceValues[0]);
+            let maxPriceFilter = parseInt(priceValues[1]);
+
+            // Get all checked feature filters
+            let checkedFilters = {};
+            document.querySelectorAll('.feature-filter:checked').forEach(checkbox => {
+                let feature = checkbox.dataset.feature;
+                let value = checkbox.dataset.value;
+
+                if (!checkedFilters[feature]) {
+                    checkedFilters[feature] = [];
+                }
+                checkedFilters[feature].push(value);
+            });
+
+            // Filter products
+            let visibleProducts = 0;
+            products.forEach(product => {
+                let price = parseFloat(product.dataset.price);
+                let features = JSON.parse(product.dataset.features);
+
+                // Check price range
+                let passesPrice = price >= minPriceFilter && price <= maxPriceFilter;
+
+                // Check if product passes all active feature filters
+                let passesFeatures = true;
+                for (let feature in checkedFilters) {
+                    if (checkedFilters[feature].length > 0) {
+                        if (!features[feature] || !checkedFilters[feature].includes(features[feature])) {
+                            passesFeatures = false;
+                            break;
+                        }
+                    }
+                }
+
+                // Show or hide product
+                if (passesPrice && passesFeatures) {
+                    product.classList.remove('d-none');
+                    visibleProducts++;
+                } else {
+                    product.classList.add('d-none');
+                }
+            });
+
+            // Update product count and show "no results" message if needed
+            document.getElementById('productCount').textContent = visibleProducts;
+
+            if (visibleProducts === 0) {
+                document.getElementById('noResults').classList.remove('d-none');
+            } else {
+                document.getElementById('noResults').classList.add('d-none');
+            }
+        }
+
+        // Clear filters function
+        function clearFilters() {
+            // Reset price slider
+            if (priceRange.noUiSlider) {
+                priceRange.noUiSlider.set([minPrice, maxPrice]);
+            }
+            if (mobileSlider.noUiSlider) {
+                mobileSlider.noUiSlider.set([minPrice, maxPrice]);
+            }
+
+            // Uncheck all feature filters
+            document.querySelectorAll('.feature-filter, .mobile-feature-filter').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Show all products
+            products.forEach(product => {
+                product.classList.remove('d-none');
+            });
+
+            // Update count and hide "no results" message
+            document.getElementById('productCount').textContent = products.length;
+            document.getElementById('noResults').classList.add('d-none');
+        }
+
+        // Add event listeners
+        document.getElementById('clearFilters').addEventListener('click', clearFilters);
+        document.getElementById('mobileClearFilters').addEventListener('click', clearFilters);
+
+        if (priceRange) {
+            priceRange.noUiSlider.on('change', applyFilters);
+        }
+        if (mobileSlider) {
+            mobileSlider.noUiSlider.on('change', applyFilters);
+        }
+
+        document.querySelectorAll('.feature-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const feature = this.dataset.feature;
+                const value = this.dataset.value;
+                const mobileCheckbox = document.querySelector(`.mobile-feature-filter[data-feature="${feature}"][data-value="${value}"]`);
+                if (mobileCheckbox) {
+                    mobileCheckbox.checked = this.checked;
+                }
+                applyFilters();
+            });
+        });
+
+        document.querySelectorAll('.mobile-feature-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const feature = this.dataset.feature;
+                const value = this.dataset.value;
+                const desktopCheckbox = document.querySelector(`.feature-filter[data-feature="${feature}"][data-value="${value}"]`);
+                if (desktopCheckbox) {
+                    desktopCheckbox.checked = this.checked;
+                }
+                applyFilters();
+            });
+        });
+        
+        // Sync mobile and desktop filters
+        document.querySelectorAll('.feature-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const feature = this.dataset.feature;
+                const value = this.dataset.value;
+                const mobileCheckbox = document.querySelector(`.mobile-feature-filter[data-feature="${feature}"][data-value="${value}"]`);
+                if (mobileCheckbox) {
+                    mobileCheckbox.checked = this.checked;
+                }
+            });
+        });
+
+        document.querySelectorAll('.mobile-feature-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const feature = this.dataset.feature;
+                const value = this.dataset.value;
+                const desktopCheckbox = document.querySelector(`.feature-filter[data-feature="${feature}"][data-value="${value}"]`);
+                if (desktopCheckbox) {
+                    desktopCheckbox.checked = this.checked;
+                }
+            });
+        });
+
+        // Sort functionality
+        document.getElementById('sortOptions').addEventListener('change', function() {
+            const sortValue = this.value;
+            const productItems = Array.from(document.querySelectorAll('.product-item'));
+            const container = document.getElementById('productsContainer');
+
+            productItems.sort((a, b) => {
+                switch(sortValue) {
+                    case 'price-asc':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-desc':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    case 'name-asc':
+                        return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
+                    case 'name-desc':
+                        return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
+                    default:
+                        return 0;
+                }
+            });
+
+            // Clear container and append sorted items
+            container.innerHTML = '';
+            productItems.forEach(item => container.appendChild(item));
+        });
+        
+    });
 </script>
+
+<style>
+    /* Custom Styles */
+    .product-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .feature-filter-group {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    @@media (max-width: 991.98px) {
+    .filter-toggle-container {
+        box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        z-index: 1030;
+    }
+    }
+
+    .discount-badge {
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+
+    /* For nouislider */
+    .noUi-connect {
+        background: #0d6efd;
+    }
+
+    .noUi-horizontal {
+        height: 8px;
+    }
+
+    .noUi-handle {
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 0 1px #0d6efd;
+        border: none;
+
+        width: 20px !important;
+        height: 20px !important;
+        right: -9px !important;
+        top: -6px !important;
+    }
+
+    .noUi-handle:before,
+    .noUi-handle:after {
+        display: none;
+    }
+</style>
