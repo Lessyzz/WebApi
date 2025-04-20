@@ -21,4 +21,8 @@ public class User
     public string Roles { get; set; } // List. a,b,c
     
     public List<Product> Products { get; set; }
+    
+    public string? ResetCode { get; set; }
+    
+    public DateTime? ResetCodeExpires { get; set; }
 }
