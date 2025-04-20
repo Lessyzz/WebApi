@@ -21,6 +21,13 @@ namespace WebApi.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        [Route("/User/ForgotPassword")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
 
         [HttpGet]
         [Route("/User/Logout")]
