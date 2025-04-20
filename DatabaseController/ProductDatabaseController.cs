@@ -60,6 +60,9 @@ namespace WebApi.Data
 
         public async Task AddProduct(AddProductDto addProductDto)
         {
+
+            var features = JsonConvert.SerializeObject(addProductDto.FeatureValues);
+            
             var product = new Product
             {
                 Name = addProductDto.Name,
@@ -69,7 +72,8 @@ namespace WebApi.Data
                 CategoryId = addProductDto.CategoryId,
                 Discount = addProductDto.Discount,
                 ProductSellerId = addProductDto.ProductSellerId,
-                Quantity = addProductDto.Quantity
+                Quantity = addProductDto.Quantity,
+                Features = features
             };
 
             await context.Products.AddAsync(product);
@@ -241,6 +245,8 @@ namespace WebApi.Data
                 if (updateProductDto.Discount != 0) product.Discount = updateProductDto.Discount;
                 if (updateProductDto.Quantity != 0) product.Quantity = updateProductDto.Quantity;
                 if (updateProductDto.ProductSellerId != null) product.ProductSellerId = updateProductDto.ProductSellerId;
+                if (updateProductDto.Features != null) product.Features = updateProductDto.Features;
+                
                 await context.SaveChangesAsync();
             }
         }

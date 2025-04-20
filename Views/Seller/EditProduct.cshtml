@@ -1,12 +1,29 @@
-@using WebApi.Models
+@using WebApi.Models 
+@using System.Text.Json
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    // --- Controller Requirements ---
+    // 1. ViewBag.Product: The Product object being edited (must include the JSON string property, e.g., FeaturesJson)
+    // 2. ViewBag.Categories: Flattened List<(int Id, string Name)> for the category dropdown
+    // 3. ViewBag.CategoryFeaturesMap: Dictionary<int, List<string>> mapping category IDs to their defined feature keys
+    // 4. ViewBag.ExistingFeatures: Dictionary<string, string> parsed from product.FeaturesJson in the controller
+
     Product product = ViewBag.Product;
-    var currentImages = product.Images.Split(',', StringSplitOptions.RemoveEmptyEntries);
+    var currentImages = product.Images?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+
+    // Serialize maps/dictionaries needed by JavaScript
+    var categoryFeaturesJson = ViewBag.CategoryFeaturesMap != null
+        ? JsonSerializer.Serialize(ViewBag.CategoryFeaturesMap)
+        : "{}";
+    
+    // --- End Controller Requirements ---
+
+    // Determine the initially selected category ID for JavaScript
+    var initialCategoryId = product.CategoryId;
 }
 
 <div class="container py-4">
-    <a class="link-body-emphasis" href="/Seller">
+    <a class="link-body-emphasis text-decoration-none" href="/Seller">
         <h6 style="cursor: pointer;">
             <i class="bi bi-arrow-left"></i>
             Geri
@@ -18,66 +35,51 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
+            @* Use asp-action and asp-route for correct form submission *@
             <form method="post" enctype="multipart/form-data" asp-action="EditProduct" asp-route-id="@product.Id" id="productForm">
-                <input name="Id" type="hidden" asp-for="Id" value="@product.Id"/>
+                @* Hidden input for Product ID - IMPORTANT for binding *@
+                <input type="hidden" name="Id" value="@product.Id"/>
+                @* Optional: Anti-forgery token if needed *@
+                @* @Html.AntiForgeryToken() *@
+
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label asp-for="Name" class="form-label">Ürün Adı</label>
-                            <input name="Name" asp-for="Name" class="form-control" value="@product.Name"/>
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                            @* Use standard label/input if not using a full ViewModel with asp-for *@
+                            <label for="Name" class="form-label">Ürün Adı</label>
+                            <input id="Name" name="Name" class="form-control" value="@product.Name" required/>
+                            @* Add span for server-side validation if needed *@
+                            @* <span asp-validation-for="Name" class="text-danger"></span> *@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Description" class="form-label">Açıklama</label>
-                            <textarea name="Description" asp-for="Description" class="form-control" rows="4">@product.Description</textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <label for="Description" class="form-label">Açıklama</label>
+                            <textarea id="Description" name="Description" class="form-control" rows="4" required>@product.Description</textarea>
+                            @* <span asp-validation-for="Description" class="text-danger"></span> *@
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Price" class="form-label">Fiyat (₺)</label>
+                                <label for="Price" class="form-label">Fiyat (₺)</label>
                                 <div class="input-group">
                                     <span class="input-group-text">₺</span>
-                                    <input name="Price" type="number" step="0.01" asp-for="Price" class="form-control" value="@product.Price"/>
+                                    <input id="Price" name="Price" type="number" step="0.01" class="form-control" value="@product.Price" required/>
                                 </div>
-                                <span asp-validation-for="Price" class="text-danger"></span>
+                                @* <span asp-validation-for="Price" class="text-danger"></span> *@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Discount" class="form-label">İndirim (%)</label>
+                                <label for="Discount" class="form-label">İndirim (%)</label>
                                 <div class="input-group">
-                                    <input name="Discount" type="number" step="0.01" asp-for="Discount" class="form-control" value="@product.Discount"/>
+                                    <input id="Discount" name="Discount" type="number" step="0.01" class="form-control" value="@product.Discount"/>
                                     <span class="input-group-text">%</span>
                                 </div>
-                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                @* <span asp-validation-for="Discount" class="text-danger"></span> *@
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label asp-for="CategoryId" class="form-label">Kategori</label>
-                            <select name="CategoryId" asp-for="CategoryId" class="form-select" asp-items="categories">
-                                <option value="">-- Kategori Seçin --</option>
-                                @foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
-                                {
-                                    <option value="@cat.Id" @(cat.Id == product.CategoryId ? "selected" : "")>@cat.Name</option>
-                                }
-                            </select>
-                            <span asp-validation-for="CategoryId" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Quantity" class="form-label">Stok Adedi</label>
-                            <input name="Quantity" type="number" asp-for="Quantity" class="form-control" value="@product.Quantity"/>
-                            <span asp-validation-for="Quantity" class="text-danger"></span>
-                        </div>
-
                         <hr/>
-
                         <div class="mb-3">
                             <label class="form-label">Mevcut Görseller</label>
                             @if (currentImages.Any())
@@ -88,6 +90,7 @@
                                         <div class="position-relative">
                                             <img src="@imageUrl" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover;" alt="Mevcut Resim"
                                                  onerror="this.onerror=null; this.src='https://placehold.co/75x75/eee/ccc?text=Hata';"/>
+                                            @* Optional: Add delete button per image if needed *@
                                         </div>
                                     }
                                 </div>
@@ -98,9 +101,9 @@
                             }
                         </div>
 
-
                         <div class="mb-3">
                             <label for="imageInput" class="form-label">Yeni Görsel Ekle (Mevcutları Değiştirir)</label>
+                            @* IMPORTANT: Use a different name for new images to distinguish on the backend *@
                             <input type="file" name="NewImageFiles" id="imageInput" class="form-control" accept="image/*" multiple/>
                             <div class="form-text">Yeni görseller yüklerseniz, mevcut görsellerin tümü silinir ve yenileri kaydedilir.</div>
                         </div>
@@ -108,9 +111,44 @@
                         <div id="imagePreviewContainer" class="d-flex flex-wrap gap-2 mt-2">
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="CategoryId" class="form-label">Kategori</label>
+                            @* Ensure ViewBag.Categories is populated correctly in the controller *@
+                            <select id="CategoryId" name="CategoryId" class="form-select" required>
+                                <option value="">-- Kategori Seçin --</option>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
+                                    {
+                                        <option value="@cat.Id" selected="@(cat.Id == product.CategoryId)">@cat.Name</option>
+                                    }
+                                }
+                            </select>
+                            @* <span asp-validation-for="CategoryId" class="text-danger"></span> *@
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Quantity" class="form-label">Stok Adedi</label>
+                            <input id="Quantity" name="Quantity" type="number" class="form-control" value="@product.Quantity" required/>
+                            @* <span asp-validation-for="Quantity" class="text-danger"></span> *@
+                        </div>
+
+                        <hr/>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ürün Özellikleri</label>
+                            <div id="featuresContainer" class="border p-3 rounded bg-light">
+                                <p class="text-muted" id="featuresPlaceholder">Lütfen bir kategori seçin veya mevcut kategori için özellikler yükleniyor...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="d-flex justify-content-end mt-4">
+                <div class="d-flex justify-content-end mt-4 gap-2">
+                    @* Optional: Add a delete button *@
+                    @* <button type="button" class="btn btn-outline-danger btn-lg">Ürünü Sil</button> *@
                     <button type="submit" class="btn btn-primary btn-lg px-4">
                         <i class="bi bi-check-circle me-2"></i> Değişiklikleri Kaydet
                     </button>
@@ -121,28 +159,24 @@
 </div>
 
 <script>
+    // --- Image Preview Functionality (Keep as is) ---
     document.getElementById('imageInput').addEventListener('change', function() {
         const container = document.getElementById('imagePreviewContainer');
-        container.innerHTML = '';
-
+        container.innerHTML = ''; // Clear previous previews
         if (this.files) {
             Array.from(this.files).forEach(file => {
                 if (!file.type.startsWith('image/')) return;
-
                 const reader = new FileReader();
-
                 reader.onload = function(e) {
                     const previewDiv = document.createElement('div');
-                    previewDiv.className = 'position-relative';
-
+                    previewDiv.className = 'position-relative d-inline-block';
                     const img = document.createElement('img');
                     img.src = e.target.result;
+                    img.alt = "Yeni Resim Önizleme";
                     img.className = 'img-thumbnail';
                     img.style.width = '100px';
                     img.style.height = '100px';
                     img.style.objectFit = 'cover';
-                    img.alt = 'Yeni Resim Önizleme';
-
                     previewDiv.appendChild(img);
                     container.appendChild(previewDiv);
                 }
@@ -150,5 +184,78 @@
             });
         }
     });
-</script>
 
+    // --- Category-Defined Features Functionality ---
+    const categorySelect = document.getElementById('CategoryId'); // Corrected ID
+    const featuresContainer = document.getElementById('featuresContainer');
+    const featuresPlaceholder = document.getElementById('featuresPlaceholder');
+
+    // Parse the data passed from the backend
+    const categoryFeaturesMap = JSON.parse('@Html.Raw(categoryFeaturesJson)');
+    const existingFeatureValues = @Html.Raw(product.Features);
+    const initialCategoryId = '@initialCategoryId'; // Get initial category ID
+
+    // Function to update the feature inputs based on selected category
+    function updateFeatureInputs() {
+        const selectedCategoryId = categorySelect.value;
+        const featureKeys = categoryFeaturesMap[selectedCategoryId] || []; // Get feature keys
+
+        // Clear previous features
+        featuresContainer.innerHTML = '';
+
+        if (featureKeys.length > 0) {
+            // Hide placeholder if it exists and features are found
+            if(featuresPlaceholder) featuresPlaceholder.style.display = 'none';
+
+            // Generate input fields for each feature key
+            featureKeys.forEach(key => {
+                const featureDiv = document.createElement('div');
+                featureDiv.className = 'mb-3'; // Margin between feature inputs
+
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.textContent = key; // Feature key as label
+                const inputId = `featureInput_${key.replace(/[^a-zA-Z0-9]/g, '_')}`; // Create safe ID
+                label.htmlFor = inputId;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.id = inputId;
+                // ** IMPORTANT: Set name for model binding **
+                input.name = `FeatureValues[${key}]`;
+                input.required = true; // Make feature values required
+
+                // ** Pre-fill with existing value if available **
+                if (existingFeatureValues && existingFeatureValues.hasOwnProperty(key)) {
+                    input.value = existingFeatureValues[key];
+                }
+
+                featureDiv.appendChild(label);
+                featureDiv.appendChild(input);
+                featuresContainer.appendChild(featureDiv);
+            });
+        } else {
+            // Show placeholder text if no category selected or category has no features
+            const placeholderText = selectedCategoryId
+                ? 'Bu kategori için tanımlanmış özellik bulunmamaktadır.'
+                : 'Lütfen ürün için bir kategori seçin.';
+            // Re-create or update placeholder
+            featuresContainer.innerHTML = `<p class="text-muted" id="featuresPlaceholder">${placeholderText}</p>`;
+        }
+    }
+
+    // Add event listener to the category dropdown
+    categorySelect.addEventListener('change', updateFeatureInputs);
+
+    // ** Initial call on page load **
+    // Use the initialCategoryId passed from the server to load the correct features initially
+    // Ensure the dropdown reflects this initial value as well (done via 'selected' attribute in Razor)
+    if (initialCategoryId && categorySelect.value !== initialCategoryId) {
+        // If JS loads before dropdown fully renders, manually set value (usually not needed with 'selected')
+        categorySelect.value = initialCategoryId;
+    }
+    updateFeatureInputs(); // Load features for the initial/current category
+
+
+</script>

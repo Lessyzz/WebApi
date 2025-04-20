@@ -10,5 +10,6 @@ public class AddProductDto
     public float Discount { get; set; }
     public int Quantity { get; set; }
 
+    public Dictionary<string, string> FeatureValues { get; set; } = new Dictionary<string, string>();
     public string ProductSellerId { get; set; }
 }

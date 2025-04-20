@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -10,9 +11,11 @@ using WebApi.Data;
 namespace WebApi.Data.migrations
 {
     [DbContext(typeof(EfContext))]
-    partial class EfContextModelSnapshot : ModelSnapshot
+    [Migration("20250420094619_CategoryFeatures")]
+    partial class CategoryFeatures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.14");
@@ -324,10 +327,6 @@ namespace WebApi.Data.migrations
 
                     b.Property<float>("Discount")
                         .HasColumnType("REAL");
-
-                    b.Property<string>("Features")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Images")
                         .IsRequired()
