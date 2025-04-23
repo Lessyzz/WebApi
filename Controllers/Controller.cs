@@ -74,16 +74,36 @@ namespace WebApi.Controllers
             var category = categories.FirstOrDefault(c => c.Id == id);
             if (category == null) return NotFound();
 
+            // Get parent category features too
+            List<string> allFeatures = new List<string>();
+            if (!string.IsNullOrEmpty(category.Features))
+            {
+                allFeatures.AddRange(category.Features.Split(',').Select(f => f.Trim()));
+            }
+
+            // Add parent category features if they exist
+            if (category.ParentCategoryId.HasValue)
+            {
+                var parentCategory = categories.FirstOrDefault(c => c.Id == category.ParentCategoryId.Value);
+                if (parentCategory != null && !string.IsNullOrEmpty(parentCategory.Features))
+                {
+                    allFeatures.AddRange(parentCategory.Features.Split(',').Select(f => f.Trim()));
+                }
+            }
+
             var products = await _productDatabaseController.GetProductsByCategoryId(id);
-            
+            var childCategories = categories.Where(c => c.ParentCategoryId == category.Id).ToList();
+
             ViewBag.Products = products;
             ViewBag.Category = category;
-            
+            ViewBag.ChildCategories = childCategories;
+    
+            // Pass unique features to SetFeatures
+            category.Features = string.Join(",", allFeatures.Distinct());
             SetFeatures(category, products);
-            
+    
             return View();
         }
-
         [HttpGet("/Orders")]
         public async Task<IActionResult> Orders()
         {
@@ -98,38 +118,43 @@ namespace WebApi.Controllers
         private void SetFeatures(Category category, List<Product> products)
         {
             Dictionary<string, List<string>> featureOptions = new Dictionary<string, List<string>>();
-    
+            List<string> allFeatures = new List<string>();
+
+            // Get features from the current category
             if (!string.IsNullOrEmpty(category.Features))
             {
-                var features = category.Features.Split(',').Select(f => f.Trim()).ToArray();
-        
-                foreach (var feature in features)
+                var categoryFeatures = category.Features.Split(',').Select(f => f.Trim()).ToArray();
+                allFeatures.AddRange(categoryFeatures);
+
+                // Initialize feature options dictionary
+                foreach (var feature in allFeatures)
                 {
                     featureOptions[feature] = new List<string>();
                 }
-        
-                foreach (var product in products)
+            }
+
+            // Process product features
+            foreach (var product in products)
+            {
+                try
                 {
-                    try
+                    var productFeatures = JsonSerializer.Deserialize<Dictionary<string, string>>(product.Features);
+                    foreach (var feature in allFeatures)
                     {
-                        var productFeatures = JsonSerializer.Deserialize<Dictionary<string, string>>(product.Features);
-                
-                        foreach (var feature in features)
+                        if (productFeatures.ContainsKey(feature) && !featureOptions[feature].Contains(productFeatures[feature]))
                         {
-                            if (productFeatures.ContainsKey(feature) && !featureOptions[feature].Contains(productFeatures[feature]))
-                            {
-                                featureOptions[feature].Add(productFeatures[feature]);
-                            }
+                            featureOptions[feature].Add(productFeatures[feature]);
                         }
                     }
-                    catch (JsonException)
-                    {
-                        continue;
-                    }
+                }
+                catch (JsonException)
+                {
+                    continue;
                 }
             }
-    
+
             ViewBag.FeatureOptions = featureOptions;
+            ViewBag.AllFeatures = allFeatures;
         }
     }
 }

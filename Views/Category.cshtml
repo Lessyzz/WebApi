@@ -23,7 +23,17 @@
                 </ol>
             </nav>
             <h2 class="mb-0">@ViewBag.Category.Name</h2>
-            @* <p class="text-muted">@ViewBag.Category.Description</p> *@
+
+            <!-- Child Categories as Chips -->
+            <div class="d-flex flex-wrap gap-2 mt-3">
+                @foreach (var childCategory in ViewBag.ChildCategories)
+                {
+                    <a href="/category/@childCategory.Id"
+                       class="btn btn-sm btn-outline-primary">
+                        @childCategory.Name
+                    </a>
+                }
+            </div>
         </div>
     </div>
 

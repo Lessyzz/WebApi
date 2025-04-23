@@ -78,11 +78,11 @@ public class SellerController(
     public async Task<IActionResult> AddProduct()
     {
         var categories = await categoryDatabaseController.GetCategories();
-        var flatCategories = FlattenCategories(categories);
+        var flatCategories = flattenCategories(categories);
         
         ViewBag.Categories = flatCategories;
 
-        ViewBag.CategoryFeaturesMap = categories.ToDictionary(category => category.Id, category => category.Features.Split(','));
+        ViewBag.CategoryFeaturesMap = getCategoryFeatures(categories);
 
         return View();
     }
@@ -95,15 +95,15 @@ public class SellerController(
         ViewBag.Product = product;
         
         var categories = await categoryDatabaseController.GetCategories();
-        var flatCategories = FlattenCategories(categories);
+        var flatCategories = flattenCategories(categories);
         
         ViewBag.Categories = flatCategories;
-        ViewBag.CategoryFeaturesMap = categories.ToDictionary(category => category.Id, category => category.Features.Split(','));
+        ViewBag.CategoryFeaturesMap = getCategoryFeatures(categories);
         
         return View();
     }
 
-    private List<(int Id, string Name)> FlattenCategories(List<Category> categories, int? parentId = null, int level = 0)
+    private List<(int Id, string Name)> flattenCategories(List<Category> categories, int? parentId = null, int level = 0)
     {
         var result = new List<(int, string)>();
 
@@ -114,10 +114,45 @@ public class SellerController(
             var indent = new string('-', level * 2);
             result.Add((child.Id, $"{indent} {child.Name}"));
 
-            result.AddRange(FlattenCategories(categories, child.Id, level + 1));
+            result.AddRange(flattenCategories(categories, child.Id, level + 1));
         }
 
         return result;
     }
     
+    private Dictionary<int, IEnumerable<string>> getCategoryFeatures(List<Category> categories)
+    {
+        var categoryDictionary = categories.ToDictionary(c => c.Id);
+        var categoryFeaturesMap = new Dictionary<int, IEnumerable<string>>();
+
+        foreach (var category in categories)
+        {
+            var allFeatures = new List<string>(category.Features?.Split(',') ?? Array.Empty<string>());
+        
+            if (category.ParentCategoryId.HasValue && 
+                categoryDictionary.TryGetValue(category.ParentCategoryId.Value, out var parentCategory))
+            {
+                var currentParentId = category.ParentCategoryId;
+                var processedParents = new HashSet<int> { category.Id };
+            
+                while (currentParentId.HasValue && 
+                       !processedParents.Contains(currentParentId.Value) && 
+                       categoryDictionary.TryGetValue(currentParentId.Value, out var currentParent))
+                {
+                    processedParents.Add(currentParentId.Value);
+                
+                    if (!string.IsNullOrEmpty(currentParent.Features))
+                    {
+                        allFeatures.AddRange(currentParent.Features.Split(','));
+                    }
+                
+                    currentParentId = currentParent.ParentCategoryId;
+                }
+            }
+        
+            categoryFeaturesMap[category.Id] = allFeatures.Where(f => !string.IsNullOrWhiteSpace(f)).Distinct();
+        }
+
+        return categoryFeaturesMap;
+    }
 }

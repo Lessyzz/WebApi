@@ -285,7 +285,32 @@ namespace WebApi.Data
 
         public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
         {
-            var products = await context.Products.Where(Product => Product.CategoryId == categoryId).ToListAsync();
+            // First, find all child category IDs recursively
+            var allCategoryIds = new HashSet<int> { categoryId };
+            var categoriesToProcess = new Queue<int>();
+            categoriesToProcess.Enqueue(categoryId);
+    
+            while (categoriesToProcess.Count > 0)
+            {
+                var currentCategoryId = categoriesToProcess.Dequeue();
+                var childCategories = await context.Categories
+                    .Where(c => c.ParentCategoryId == currentCategoryId)
+                    .Select(c => c.Id)
+                    .ToListAsync();
+        
+                foreach (var childId in childCategories)
+                {
+                    if (allCategoryIds.Add(childId))
+                    {
+                        categoriesToProcess.Enqueue(childId);
+                    }
+                }
+            }
+    
+            var products = await context.Products
+                .Where(product => allCategoryIds.Contains(product.CategoryId))
+                .ToListAsync();
+    
             return products;
         }
 
