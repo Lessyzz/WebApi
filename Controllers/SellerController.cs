@@ -111,7 +111,7 @@ public class SellerController(
 
         foreach (var child in children)
         {
-            var indent = new string('•', level * 2);
+            var indent = new string('-', level * 2);
             result.Add((child.Id, $"{indent} {child.Name}"));
 
             result.AddRange(flattenCategories(categories, child.Id, level + 1));
