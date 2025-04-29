@@ -61,13 +61,12 @@
                         <div class="mb-3">
                             <label class="form-label">Kategori</label>
                             <select name="CategoryId" id="categorySelect" class="form-select" required>
-                                <option value="" disabled>-- Kategori Seçin --</option>
+                                <option value="">-- Kategori Seçin --</option>
                                 @if (ViewBag.Categories != null)
                                 {
                                     foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
                                     {
-                                        // If cat.name includes ---- and more - set option value disabled
-                                        if (cat.Name.Contains("••••"))
+                                        if (cat.Name.Contains("-"))
                                         {
                                             <option value="@cat.Id">@cat.Name</option>
                                         }
@@ -75,7 +74,6 @@
                                         {
                                             <option value="@cat.Id" disabled>@cat.Name</option>
                                         }
-                                        //<option value="@cat.Id">@cat.Name</option>
                                     }
                                 }
                             </select>
