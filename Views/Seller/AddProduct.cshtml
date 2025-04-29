@@ -66,7 +66,14 @@
                                 {
                                     foreach (var cat in (List<(int Id, string Name)>)ViewBag.Categories)
                                     {
-                                        <option value="@cat.Id">@cat.Name</option>
+                                        if (cat.Name.Contains("-"))
+                                        {
+                                            <option value="@cat.Id">@cat.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@cat.Id" disabled>@cat.Name</option>
+                                        }
                                     }
                                 }
                             </select>
