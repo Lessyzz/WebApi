@@ -54,14 +54,14 @@
                                     </div>
                                     <div class="col-12">
                                         <label for="phone" class="form-label">Telefon</label>
-                                        <input type="tel" class="form-control" id="phone" placeholder="05XX XXX XX XX" required>
+                                        <input type="tel" class="form-control" id="phone" placeholder="5XXXXXXXXX" required>
                                     </div>
                                     <div class="col-12">
                                         <label for="address" class="form-label">Adres</label>
                                         <textarea class="form-control" id="address" rows="3" placeholder="Adres bilgilerinizi giriniz" required></textarea>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="province" class="form-label">İlçe</label>
+                                        <label for="province" class="form-label">İl </label>
                                         <input type="text" class="form-control" id="province" placeholder="İl" required>
                                     </div>
                                     <div class="col-md-4">
@@ -96,7 +96,7 @@
                                     <div class="col-12">
                                         <label for="cardNumber" class="form-label">Kredi Kartı Numarası</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                                            <input type="text" class="form-control" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
                                             <span class="input-group-text">
                                                 <i class="bi bi-credit-card"></i>
                                             </span>
@@ -223,7 +223,53 @@
         
         // Continue to payment step
         continueBtn.addEventListener('click', function() {
-            // Simple validation - in a real app you would do more thorough validation
+
+            const formValues = getAllFormValues();
+
+            const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            const phoneRegex = /^\d{10}$/; // Example format: 5555555555
+            const postalCodeRegex = /^\d{5}$/; // Example: 12345
+            
+            if (formValues.FirstName.length < 1) {
+                showToast('Lütfen adınızı giriniz.', false);
+                return;
+            }
+
+            if (formValues.LastName.length < 1) {
+                showToast('Lütfen soyadınızı giriniz.', false);
+                return;
+            }
+
+            if (!emailRegex.test(formValues.Email)) {
+                showToast('Geçersiz e-posta adresi.', false);
+                return;
+            }
+
+            if (!phoneRegex.test(formValues.Phone)) {
+                showToast('Geçersiz telefon numarası.', false);
+                return;
+            }
+
+            if (formValues.Address.length < 1) {
+                showToast('Lütfen adresinizi giriniz.', false);
+                return;
+            }
+
+            if (formValues.Province.length < 1) {
+                showToast('Lütfen il bilgisini giriniz.', false);
+                return;
+            }
+
+            if (formValues.District.length < 1) {
+                showToast('Lütfen ilçe bilgisini giriniz.', false);
+                return;
+            }
+
+            if (!postalCodeRegex.test(formValues.PostalCode)) {
+                showToast('Geçersiz posta kodu.', false);
+                return;
+            }
+
             const requiredFields = document.querySelectorAll('#addressForm input[required], #addressForm select[required], #addressForm textarea[required]');
             let isValid = true;
             
@@ -251,8 +297,47 @@
         });
     });
 
+
+
     function buyAllBasketProducts() {
         const formValues = getAllFormValues();
+
+        const cardNumberRegex = /^\d{4}-\d{4}-\d{4}-\d{4}$/; // Example format: 1234-5678-9012-3456
+        const cvvRegex = /^\d{3}$/; // Example format: 123
+        const nameOnCardRegex = /^[a-zA-Z\s]+$/; // Example: John Doe
+
+        const expirationMonthRegex = /^(0[1-9]|1[0-2])$/; // Example: 01 to 12
+        const expirationYearRegex = /^\d{4}$/; // Example: 2025
+
+        const expirationYear = parseInt(formValues.ExpirationYear, 10);
+        const expirationMonth = parseInt(formValues.ExpirationMonth, 10);
+
+
+        if (formValues.NameOnCard.length < 1) {
+            showToast('Lütfen kart üzerindeki ismi giriniz.', false);
+            return;
+        }
+
+        if (!cardNumberRegex.test(formValues.CardNumber)) {
+            showToast('Geçersiz kredi kartı numarası.', false);
+            return;
+        }
+
+        if (!expirationMonthRegex.test(formValues.ExpirationMonth)) {
+            showToast('Geçersiz son kullanma ayı.', false);
+            return;
+        }
+
+        if (!expirationYearRegex.test(formValues.ExpirationYear)) {
+            showToast('Geçersiz son kullanma yılı.', false);
+            return;
+        }
+
+        if (!cvvRegex.test(formValues.Cvv)) {
+            showToast('Geçersiz CVV.', false);
+            return;
+        }
+        
         fetch('/Product/BuyAllBasketProducts', {
             method: 'POST',
             headers: {
@@ -298,4 +383,5 @@
         };
         return valueForm;
     }
+    
 </script>
