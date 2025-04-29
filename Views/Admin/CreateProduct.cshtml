@@ -1,0 +1,137 @@
+@model WebApi.Models.Product
+@{
+    ViewData["Title"] = "Create Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Create Product</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/Admin/Products">Products</a></li>
+        <li class="breadcrumb-item active">Create Product</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="bi bi-box-seam me-1"></i>
+            Product Information
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateProduct" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Product Name</label>
+                            <input asp-for="Name" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Price" class="form-control" type="number" step="0.01" min="0" required />
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Category</label>
+                            <select asp-for="CategoryId" class="form-select" required>
+                                <option value="">Select Category</option>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ProductSellerId" class="form-label">Seller</label>
+                            <select asp-for="ProductSellerId" class="form-select" required>
+                                <option value="">Select Seller</option>
+                                @foreach (var seller in ViewBag.Sellers)
+                                {
+                                    <option value="@seller.Id">@seller.Username</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ProductSellerId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Quantity" class="form-label">Quantity in Stock</label>
+                            <input asp-for="Quantity" class="form-control" type="number" min="0" required />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Discount" class="form-label">Discount (%)</label>
+                            <input asp-for="Discount" class="form-control" type="number" min="0" max="100" />
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Images" class="form-label">Images (comma-separated URLs)</label>
+                    <input asp-for="Images" class="form-control" placeholder="http://example.com/image1.jpg, http://example.com/image2.jpg" />
+                    <span asp-validation-for="Images" class="text-danger"></span>
+                    <div class="form-text">Enter image URLs separated by commas</div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Features" class="form-label">Features (comma-separated)</label>
+                    <textarea asp-for="Features" class="form-control" rows="3" placeholder="Feature 1, Feature 2, Feature 3"></textarea>
+                    <span asp-validation-for="Features" class="text-danger"></span>
+                    <div class="form-text">Enter product features separated by commas</div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Products" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Preview image when URL is entered
+        $(document).ready(function() {
+            $('#Images').on('blur', function() {
+                const imageUrls = $(this).val().split(',').map(url => url.trim()).filter(url => url);
+                const previewContainer = $('#imagePreview');
+                
+                previewContainer.empty();
+                
+                if (imageUrls.length > 0) {
+                    imageUrls.forEach(url => {
+                        previewContainer.append(`<img src="${url}" class="img-thumbnail me-2 mb-2" style="max-height: 100px;" />`);
+                    });
+                }
+            });
+        });
+    </script>
+}

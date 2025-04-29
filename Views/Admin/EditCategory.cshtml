@@ -1,0 +1,61 @@
+@model WebApi.Models.Category
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Edit Category</h1>
+        <a href="/Admin/Categories" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditCategory" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="Features" class="form-label">Features</label>
+                    <textarea asp-for="Features" class="form-control" rows="3" placeholder="Enter comma-separated features"></textarea>
+                    <span asp-validation-for="Features" class="text-danger"></span>
+                    <small class="form-text text-muted">Enter comma-separated features for this category.</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="ParentCategoryId" class="form-label">Parent Category</label>
+                    <select asp-for="ParentCategoryId" class="form-select">
+                        <option value="">-- None --</option>
+                        @foreach (var category in ViewBag.ParentCategories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+                    <small class="form-text text-muted">Select a parent category if this is a subcategory.</small>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Update Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Add any client-side validation or enhancements here
+        });
+    </script>
+}

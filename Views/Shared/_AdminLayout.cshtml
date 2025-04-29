@@ -1,0 +1,165 @@
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Admin Panel";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E-Commerce Admin</title>
+    <link rel="shortcut icon" href="/assets/logo.webp" type="image/webp">
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/bootstrap-icons.css">
+    <script  src="/assets/bootstrap.bundle.min.js" defer></script>
+    <script  src="/assets/jquery.min.js" defer></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/Admin/Dashboard" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">E-Commerce Admin</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard" class="nav-link align-middle px-0 text-white">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Products" class="nav-link px-0 align-middle text-white">
+                            <i class="fs-4 bi-box"></i> <span class="ms-1 d-none d-sm-inline">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Categories" class="nav-link px-0 align-middle text-white">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Users" class="nav-link px-0 align-middle text-white">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Orders" class="nav-link px-0 align-middle text-white">
+                            <i class="fs-4 bi-cart3"></i> <span class="ms-1 d-none d-sm-inline">Orders</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fs-4 bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">@User.Identity.Name</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="/Admin/Profile">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="post" action="/Account/Logout">
+                                <button type="submit" class="dropdown-item">Sign out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="col py-3">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+
+<style>
+    /* Admin Panel Custom CSS */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .sidebar {
+        min-height: 100vh;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Card hover effects */
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Custom styling for forms */
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    /* Dashboard stat cards */
+    .stat-card {
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .stat-card i {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .stat-card h3 {
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+
+    .stat-card p {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    /* Custom table styles */
+    .admin-table th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .admin-table tbody tr:hover {
+        background-color: rgba(0,0,0,0.075);
+    }
+
+    /* Action buttons */
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background-color: white;
+    }
+    
+</style>
+</html>

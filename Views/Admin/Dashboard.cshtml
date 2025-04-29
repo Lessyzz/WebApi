@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">@ViewBag.ProductCount</h3>
+                            <p class="mb-0">Products</p>
+                        </div>
+                        <i class="bi bi-box fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">@ViewBag.CategoryCount</h3>
+                            <p class="mb-0">Categories</p>
+                        </div>
+                        <i class="bi bi-grid fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">@ViewBag.UserCount</h3>
+                            <p class="mb-0">Users</p>
+                        </div>
+                        <i class="bi bi-people fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">@ViewBag.OrderCount</h3>
+                            <p class="mb-0">Orders</p>
+                        </div>
+                        <i class="bi bi-cart3 fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Recent Orders</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover admin-table">
+                            <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Product</th>
+                                <th>User ID</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if (ViewBag.RecentOrders != null && ViewBag.RecentOrders.Count > 0)
+                            {
+                                @foreach (var order in ViewBag.RecentOrders)
+                                {
+                                    <tr>
+                                        <td>@order.PaymentId</td>
+                                        <td>@order.Product.Name</td>
+                                        <td>@order.UserId</td>
+                                        <td>@order.Quantity</td>
+                                        <td>$@order.TotalPrice.ToString("F2")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center">No recent orders found.</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end mt-3">
+                        <a href="/Admin/Orders" class="btn btn-sm btn-primary">View All Orders</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Info -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Quick Info</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Admin Access</h6>
+                        <p class="text-muted">You're logged in as: <strong>@User.Identity.Name</strong></p>
+                    </div>
+                    <div>
+                        <h6>System Info</h6>
+                        <p class="text-muted">Date: @DateTime.Now.ToShortDateString()</p>
+                        <p class="text-muted">Time: @DateTime.Now.ToShortTimeString()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/Admin/Products/Create" class="btn btn-outline-primary">Add New Product</a>
+                        <a href="/Admin/Categories/Create" class="btn btn-outline-success">Add New Category</a>
+                        <a href="/Admin/Users/Create" class="btn btn-outline-info">Add New User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
