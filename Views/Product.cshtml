@@ -1,4 +1,5 @@
-﻿@model WebApi.Models.Product
+﻿@using Newtonsoft.Json
+@model WebApi.Models.Product
 @{
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -44,7 +45,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 }
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6" style="display: flex; flex-direction: column;">
             <h4>@Model.Name</h4>
             <div class="d-flex align-items-center mt-3">
                 <div class="me-2">
@@ -71,30 +72,23 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             <div class="mt-1 text-primary small">
                 <span>Satıcı: </span>  @Model.ProductSeller.Username
             </div>
+
             <div class="mt-5">
-                <h6 class="text-primary">Renk Seçenekleri</h6>
-                <div class="d-flex">
-                    <button class="btn btn-danger rounded-circle me-2 d-flex justify-content-center align-items-center"
-                            style="width: 40px; height: 40px;">
-                        <i class="bi bi-check"></i>
-                    </button>
-                    <button class="btn btn-primary rounded-circle me-2" style="width: 40px; height: 40px;"
-                            disabled></button>
-                    <button class="btn btn-success rounded-circle me-2" style="width: 40px; height: 40px;"></button>
-                    <button class="btn btn-warning rounded-circle me-2" style="width: 40px; height: 40px;"></button>
-                </div>
+                @if (!string.IsNullOrEmpty(Model.Features))
+                {
+                    var featuresDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(Model.Features);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var feature = featuresDict!.ElementAt(i);
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <span>@feature.Key: @feature.Value</span>
+                        </div>
+                    }
+                }
             </div>
-            <div class="mt-4">
-                <h6 class="text-primary">Boy Seçenekleri</h6>
-                <div class="d-flex">
-                    <button class="btn btn-primary me-2 d-flex justify-content-center align-items-center">S</button>
-                    <button
-                        class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center">M</button>
-                    <button class="btn btn-outline-primary me-2 d-flex justify-content-center align-items-center"
-                            disabled>L</button>
-                </div>
-            </div>
-            <div class="d-flex align-items-center mt-5">
+            
+            <div class="d-flex align-items-end mt-5" style="flex-grow: 1;">
                 <div class="d-flex align-items-center me-3">
                     <button class="btn btn-outline-secondary rounded-circle" onclick="remove()">
                         <i class="bi bi-dash"></i>
