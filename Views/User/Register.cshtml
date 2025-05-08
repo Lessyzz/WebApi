@@ -100,6 +100,7 @@
             alert('Telefon numarası geçersiz. Lütfen 10 haneli bir numara girin.');
             return;
         }
+        numberInput.value = '0' + numberInput.value;
 
         if (!emailRegex.test(emailInput.value)) {
             event.preventDefault();

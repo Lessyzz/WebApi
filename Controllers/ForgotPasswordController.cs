@@ -36,6 +36,7 @@ namespace WebApi.Controllers
         [HttpPost("/ForgotPassword/verify-code")]
         public IActionResult VerifyCode([FromBody] VerifyCodeRequest request)
         {
+            request.Number = "0" + request.Number;
             var user = context.Users.FirstOrDefault(u => u.Number == request.Number && u.ResetCode == request.Code);
             if (user == null || user.ResetCodeExpires < DateTime.Now)
                 return BadRequest("Kod geçersiz veya süresi dolmuş");

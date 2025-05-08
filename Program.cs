@@ -26,7 +26,6 @@ builder.Services.AddScoped<JWTTokenSystem>();
 builder.Services.AddScoped<UserDatabaseController>();
 builder.Services.AddScoped<ProductDatabaseController>();
 builder.Services.AddScoped<CategoryDatabaseController>();
-builder.Services.AddScoped<SellerDatabaseController>();
 
 builder.Services.AddDbContext<EfContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -12,7 +12,6 @@ namespace WebApi.Controllers;
 
 public class SellerController(
     ProductDatabaseController productDatabaseController,
-    SellerDatabaseController sellerDatabaseController,
     CategoryDatabaseController categoryDatabaseController
     ) : Microsoft.AspNetCore.Mvc.Controller
 {
@@ -37,33 +36,6 @@ public class SellerController(
     public IActionResult Login()
     {
         return View();
-    }
-
-
-    [HttpPost]
-    [Route("/Seller/Register")]
-    public async Task<IActionResult> RegisterPOST([FromForm]RegisterDto registerDto)
-    {
-        var registerResult = await sellerDatabaseController.Register(registerDto);
-
-        // Failed
-        if (registerResult.Code == 400) return new JsonResult(new { message = registerResult });
-
-        // Success
-        return Redirect("/");
-    }
-
-    
-    [HttpPost]
-    [Route("/Seller/Login")]
-    public async Task<IActionResult> LoginPOST([FromForm]LoginDto loginDto)
-    {
-        var User = await sellerDatabaseController.Login(loginDto);
-
-        if (User == null) return new JsonResult(new { message = "Hatali Giris!" });
-
-        // return new Response(User);
-        return Redirect("/");
     }
 
     [HttpGet]

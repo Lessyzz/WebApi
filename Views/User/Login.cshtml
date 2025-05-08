@@ -85,6 +85,7 @@
                 alert('Lütfen geçerli bir telefon numarası girin.');
                 return;
             }
+            numberInput.value = 0 + numberInput.value;
 
             if (passwordInput.value.length < 8) {
                 event.preventDefault();
