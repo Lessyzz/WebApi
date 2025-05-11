@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DatabaseController;
 using WebApi.ServiceExtensions;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddScoped<JWTTokenSystem>();
 builder.Services.AddScoped<UserDatabaseController>();
 builder.Services.AddScoped<ProductDatabaseController>();
 builder.Services.AddScoped<CategoryDatabaseController>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 builder.Services.AddDbContext<EfContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

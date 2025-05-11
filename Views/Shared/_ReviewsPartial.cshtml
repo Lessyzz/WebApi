@@ -1,0 +1,139 @@
+@model WebApi.Dto.ReviewStatisticsViewModel
+
+<div class="row">
+    <div class="col-12 col-lg-6 text-center">
+        <h2>@Model.AverageRating.ToString("0.0")</h2>
+        <div>
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i <= Math.Floor(Model.AverageRating))
+                {
+                    <i class="bi bi-star-fill text-warning"></i>
+                }
+                else if (i == Math.Ceiling(Model.AverageRating) && Model.AverageRating % 1 != 0)
+                {
+                    <i class="bi bi-star-half text-warning"></i>
+                }
+                else
+                {
+                    <i class="bi bi-star text-warning"></i>
+                }
+            }
+        </div>
+        <h6 class="small">@Model.TotalReviews Değerlendirme</h6>
+    </div>
+    <div class="col-12 col-lg-6">
+        @for (int i = 5; i >= 1; i--)
+        {
+            <div class="d-flex align-items-center mb-2">
+                <span class="me-2">@i</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <div class="progress flex-grow-1">
+                    <div class="progress-bar" role="progressbar"
+                         style="width: @(Model.RatingPercentages.ContainsKey(i) ? Model.RatingPercentages[i] : 0)%"
+                         aria-valuenow="@(Model.RatingPercentages.ContainsKey(i) ? Model.RatingPercentages[i] : 0)"
+                         aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="ms-2">@(Model.RatingPercentages.ContainsKey(i) ? $"{Model.RatingPercentages[i]}%" : "0%")</span>
+            </div>
+        }
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="mt-4">
+        <h4>Write a Review</h4>
+        <form action="/Review/AddReview" method="post">
+            <input type="hidden" name="productId" value="@ViewContext.RouteData.Values["id"]" />
+
+            <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star5"><i class="bi bi-star-fill"></i></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star4"><i class="bi bi-star-fill"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3"><i class="bi bi-star-fill"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2"><i class="bi bi-star-fill"></i></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1"><i class="bi bi-star-fill"></i></label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="comment" class="form-label">Your Review</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="alert alert-info mt-4">
+        Please <a asp-controller="Account" asp-action="Login">log in</a> to write a review.
+    </div>
+}
+
+
+<div class="mt-4">
+    @foreach (var review in Model.Reviews)
+    {
+        <hr>
+        <div class="d-flex mb-2">
+            <img src="@review.UserProfilePicture" alt="" class="rounded-circle me-3"
+                 style="width: 50px; height: 50px;">
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>@review.UserName</strong>
+                        <div class="text-muted small">@review.ReviewDate.ToString("dd MMMM yyyy")</div>
+                    </div>
+                    <div>
+                        <span>@review.Rating</span>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                </div>
+                <p>
+                    @review.Comment
+                </p>
+            </div>
+        </div>
+    }
+</div>
+
+
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        padding: 0 0.1em;
+        font-size: 1.5rem;
+    }
+
+    .rating label i {
+        color: #ccc;
+    }
+
+    .rating input:checked ~ label i {
+        color: #ffb300;
+    }
+
+    .rating label:hover i,
+    .rating label:hover ~ label i {
+        color: #ffb300;
+    }
+</style>

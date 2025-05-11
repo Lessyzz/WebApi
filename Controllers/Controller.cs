@@ -6,10 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DatabaseController;
 using WebApi.Models;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
-    public class Controller(UserDatabaseController _userDatabaseController, ProductDatabaseController _productDatabaseController, CategoryDatabaseController _categoryDatabaseController, EfContext _context) : Microsoft.AspNetCore.Mvc.Controller
+    public class Controller(
+        UserDatabaseController _userDatabaseController,
+        ProductDatabaseController _productDatabaseController,
+        CategoryDatabaseController _categoryDatabaseController,
+        EfContext _context,
+        IReviewService reviewService
+        ) : Microsoft.AspNetCore.Mvc.Controller
     {
         [HttpGet]
         [Route("/")]
@@ -36,9 +43,20 @@ namespace WebApi.Controllers
         [Route("/Product/{id}")]
         public async Task<IActionResult> Product(string id)
         {
-            var product = await _productDatabaseController.GetProductById(id);
-            if (product == null) return NotFound();
-            return View(product);
+            try
+            {
+                var product = await _productDatabaseController.GetProductById(id);
+                
+                var reviewStatistics = await reviewService.GetProductReviewsAsync(id);
+            
+                ViewBag.ReviewStatistics = reviewStatistics;
+                
+                return View(product);
+            }
+            catch (Exception e)
+            {
+                return Redirect("/");
+            }
         }
         
         [HttpGet]
