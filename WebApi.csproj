@@ -31,6 +31,28 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Asd\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\03TusluTelefon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\04-HuaweiTelefon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\05-SamsungTelefon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\06-AppleTelefon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\10BulasıkMakinesi.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\11CamasırMakinesi.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\12Buzdolabı.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\13DerinDondurucu.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\14Televizyon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\16DizUstuPc.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\17MasaUstu.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\19Monitor.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\20KlavyeMouse.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\22RobotSupurge.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\23CalısmaKoltuğu.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\24Utu.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\25KurutmaMakinesi.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\26Kulaklık.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\27Mikrofon.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\28Xiaomi.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\29FotografMakinesi.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\data\30Hoparlor.json" />
     </ItemGroup>
 
 </Project>

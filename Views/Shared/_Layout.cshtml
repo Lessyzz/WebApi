@@ -19,6 +19,79 @@
             <h4 class="mb-0">KTUN Market</h4>
         </a>
 
+        <!-- Top-level categories next to logo -->
+        <div class="d-flex flex-grow-1">
+            <ul class="navbar-nav ms-3">
+                <!-- Telefon -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/category/1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Telefon
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/category/2">Akıllı Telefon</a></li>
+                        <li><a class="dropdown-item" href="/category/3">Tuşlu Telefon</a></li>
+                    </ul>
+                </li>
+
+                <!-- Beyaz Eşya -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/category/7" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Beyaz Eşya
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Yıkama - Kurutma</li>
+                        <li><a class="dropdown-item" href="/category/10">Bulaşık Makinesi</a></li>
+                        <li><a class="dropdown-item" href="/category/11">Çamaşır Makinesi</a></li>
+                        <li><a class="dropdown-item" href="/category/25">Kurutma Makinesi</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-header">Soğutma - Dondurma</li>
+                        <li><a class="dropdown-item" href="/category/12">Buzdolabı</a></li>
+                        <li><a class="dropdown-item" href="/category/13">Derin Dondurucu</a></li>
+                    </ul>
+                </li>
+
+                <!-- Televizyon -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/category/14">Televizyon</a>
+                </li>
+
+                <!-- Bilgisayar -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/category/15" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Bilgisayar
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/category/16">Dizüstü</a></li>
+                        <li><a class="dropdown-item" href="/category/17">Masaüstü</a></li>
+                        <li class="dropdown-header">Çevre Bileşenleri</li>
+                        <li><a class="dropdown-item" href="/category/19">Monitör</a></li>
+                        <li><a class="dropdown-item" href="/category/20">Klavye - Mouse</a></li>
+                        <li><a class="dropdown-item" href="/category/26">Kulaklık</a></li>
+                        <li><a class="dropdown-item" href="/category/27">Mikrofon</a></li>
+                        <li><a class="dropdown-item" href="/category/30">Hoparlör</a></li>
+                    </ul>
+                </li>
+
+                <!-- Ev Gereçleri -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/category/21" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ev Gereçleri
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/category/22">Robot Süpürge</a></li>
+                        <li><a class="dropdown-item" href="/category/23">Çalışma Koltuğu</a></li>
+                        <li><a class="dropdown-item" href="/category/24">Ütü</a></li>
+                    </ul>
+                </li>
+
+                <!-- Fotoğraf Makinesi -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/category/29">Fotoğraf Makinesi</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right-side buttons -->
         <div class="ms-auto d-flex">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
@@ -27,18 +100,10 @@
                         <i class="bi bi-person"></i> @User.Claims.First(c => c.Type == "usr").Value
                     </button>
                     <div class="dropdown-menu dropdown-menu-end p-3 shadow" aria-labelledby="profile-dropdown" style="width: max-content">
-                        <a href="/Seller" class="btn">
-                            <i class="bi bi-shop-window"></i>  Satıcı Sayfası
-                        </a>
-                        <div>
-                            <a href="/Orders" class="btn">
-                                <i class="bi bi-cart-check-fill"></i>  Siparişlerim
-                            </a>
-                        </div>
+                        <a href="/Seller" class="btn"><i class="bi bi-shop-window"></i> Satıcı Sayfası</a>
+                        <a href="/Orders" class="btn"><i class="bi bi-cart-check-fill"></i> Siparişlerim</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/User/Logout" class="btn">
-                            <i class="bi bi-box-arrow-in-left"></i> Çıkış Yap
-                        </a>
+                        <a href="/User/Logout" class="btn"><i class="bi bi-box-arrow-in-left"></i> Çıkış Yap</a>
                     </div>
                 </div>
             }
@@ -60,9 +125,7 @@
                             <i class="bi bi-basket display-4 text-muted"></i>
                             <p class="mt-2">Sepetiniz boş</p>
                         </div>
-                        <div class="basket-items-list d-none">
-                            <!-- Items will be loaded here dynamically -->
-                        </div>
+                        <div class="basket-items-list d-none"></div>
                     </div>
                     <div class="dropdown-divider basket-footer d-none"></div>
                     <div class="d-flex justify-content-between align-items-center basket-summary d-none">
@@ -80,6 +143,8 @@
         </div>
     </div>
 </nav>
+
+
 
 
 <div class="container mt-4">

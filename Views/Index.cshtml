@@ -1,6 +1,18 @@
 ﻿@using WebApi.Models
 @{
     ViewData["Title"] = "Ana Sayfa";
+    var categories = ViewBag.Categories as List<Category>; 
+    var products = ViewBag.Products as List<Product>;     
+    
+    var iconMap = new Dictionary<string, string>
+    {
+        ["Telefon"] = "bi-phone",
+        ["Beyaz Eşya"] = "bi-house",
+        ["Televizyon"] = "bi-tv",
+        ["Bilgisayar"] = "bi-pc",
+        ["Ev Gereçleri"] = "bi-house-heart",
+        ["FotoğrafMakinesi"] = "bi-camera"
+    };
 }
 
 @{
@@ -26,99 +38,23 @@
 
     <!-- Categories with Images -->
     <div class="row mb-5">
-        <div class="col-12">
-            <h4 class="section-title mb-4">Kategoriler</h4>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/2" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-laptop text-primary" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Bilgisayarlar</h6>
-                        </div>
+        <section class="container my-5">
+            <h2 class="mb-5 text-center fw-bold">Kategorilere Göz At</h2>
+            <div class="row g-4 justify-content-center">
+                @foreach (var category in categories)
+                {
+                    var icon = iconMap.ContainsKey(category.Name) ? iconMap[category.Name] : "bi-box";
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="/category/@category.Id" class="text-decoration-none">
+                            <div class="tile-wrapper rounded-4 text-center py-5 px-2 shadow-sm hover-tile">
+                                <i class="@icon display-3 text-primary mb-3"></i>
+                                <h5 class="fw-bold text-dark">@category.Name</h5>
+                            </div>
+                        </a>
                     </div>
-                </div>
-            </a>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/5" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-phone text-success" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Akıllı Telefonlar</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/23" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-motherboard text-danger" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Bilgisayar Parçaları</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/33" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-tv text-warning" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Televizyonlar</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/26" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-keyboard text-info" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Klavyeler</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    
-        <div class="col-6 col-md-4 col-lg-2 mb-4">
-            <a href="/category/13" style="text-decoration: none">
-                <div class="category-card shadow-sm rounded h-100">
-                    <div class="card text-center h-100">
-                        <div class="p-3">
-                            <i class="bi bi-paint-bucket text-secondary" style="font-size: 2.5rem;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Süpürgeler</h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+                }
+            </div>
+        </section>
     </div>
 
     <!-- Featured Products Section -->
@@ -132,7 +68,7 @@
 
     <!-- Featured Products Row -->
     <div class="row">
-        @foreach (var product in ((List<Product>)ViewBag.Products).Take(4))
+        @foreach (var product in products.OrderByDescending(p => p.Discount).Take(4))
         {
             <div class="col-6 col-md-3 mb-4">
                 <div class="card product-card shadow-sm h-100">
@@ -169,5 +105,17 @@
 <style>
     .category-card{
      cursor: pointer;   
+    }
+</style>
+
+<style>
+    .hover-tile {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #fff;
+    }
+
+    .hover-tile:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
     }
 </style>

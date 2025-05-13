@@ -23,19 +23,14 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            ViewBag.Products = await _productDatabaseController.GetProducts();
-            var categories = await _categoryDatabaseController.GetCategories();
+            var parentCategories = await _context.Categories
+                .Where(c => c.ParentCategoryId == null)
+                .ToListAsync();
+;           ViewBag.Categories = parentCategories;
 
-            var groupedCategories = categories
-                .Where(c => c.ParentCategoryId == null) // Ana kategoriler
-                .Select(category => new
-                {
-                    Category = category,
-                    Subcategories = categories.Where(c => c.ParentCategoryId == category.Id).ToList() // Alt kategoriler
-                })
-                .ToList();
-
-            ViewBag.GroupedCategories = groupedCategories;
+            var products = await _context.Products.ToListAsync();
+            ViewBag.Products = products;
+            
             return View();
         }
         
