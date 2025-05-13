@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var error = Context.Request.Query["error"];
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,6 +44,11 @@
             <div class="brand">
                 <h2>Giriş Yap</h2>
                 <p class="text-muted">Lütfen Bilgilerinizi Girin</p>
+                
+                @if (error == "1")
+                {
+                    <p class="text-danger">Yanlış Kullanıcı Adı veya Şifre!</p>
+                }
             </div>
 
             <form method="post" action="">

@@ -61,7 +61,16 @@ namespace WebApi.Controllers
         [Route("/User/Login")]
         public async Task<IActionResult> LoginPOST([FromForm]LoginDto loginDto)
         {
-            var token = await _userDatabaseController.Login(loginDto);
+            string token = "";
+            try
+            {
+                token = await _userDatabaseController.Login(loginDto);
+            }
+            catch 
+            {
+                return Redirect("/User/Login?error=1");
+            }
+            
 
             Response.Cookies.Append("jwtToken", token, new CookieOptions
             {
