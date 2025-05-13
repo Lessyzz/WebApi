@@ -97,11 +97,25 @@
             {
                 <div class="dropdown">
                     <button class="btn text-primary position-relative me-2" id="profile-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                        <i class="bi bi-person"></i> @User.Claims.First(c => c.Type == "usr").Value
+                        <i class="bi bi-person"></i> @User.Claims.First(c => c.Type == "usr").Value 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <span class="text-danger">- Yönetici</span>   
+                        }
                     </button>
                     <div class="dropdown-menu dropdown-menu-end p-3 shadow" aria-labelledby="profile-dropdown" style="width: max-content">
-                        <a href="/Seller" class="btn"><i class="bi bi-shop-window"></i> Satıcı Sayfası</a>
-                        <a href="/Orders" class="btn"><i class="bi bi-cart-check-fill"></i> Siparişlerim</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div>
+                                <a href="/admin" class="btn text-danger"><i class="bi bi-shield-lock mr-1"></i>Yönetici Sayfası</a>
+                            </div>
+                        }
+                        <div>
+                            <a href="/Seller" class="btn"><i class="bi bi-shop-window"></i> Satıcı Sayfası</a>
+                        </div>
+                        <div>
+                            <a href="/Orders" class="btn"><i class="bi bi-cart-check-fill"></i> Siparişlerim</a>
+                        </div>
                         <div class="dropdown-divider"></div>
                         <a href="/User/Logout" class="btn"><i class="bi bi-box-arrow-in-left"></i> Çıkış Yap</a>
                     </div>

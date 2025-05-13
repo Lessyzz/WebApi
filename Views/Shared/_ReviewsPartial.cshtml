@@ -43,12 +43,12 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div class="mt-4">
-        <h4>Write a Review</h4>
+        <h4>Bir paun verin</h4>
         <form action="/Review/AddReview" method="post">
             <input type="hidden" name="productId" value="@ViewContext.RouteData.Values["id"]" />
 
             <div class="mb-3">
-                <label class="form-label">Rating</label>
+                <label class="form-label">Puan</label>
                 <div class="rating">
                     <input type="radio" id="star5" name="rating" value="5" />
                     <label for="star5"><i class="bi bi-star-fill"></i></label>
@@ -64,18 +64,17 @@
             </div>
 
             <div class="mb-3">
-                <label for="comment" class="form-label">Your Review</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit Review</button>
+            <button type="submit" class="btn btn-primary">Değerlendir</button>
         </form>
     </div>
 }
 else
 {
     <div class="alert alert-info mt-4">
-        Please <a asp-controller="Account" asp-action="Login">log in</a> to write a review.
+        Ürünü Değerlendirmek için lütfen <a asp-controller="Account" asp-action="Login">giriş yapın</a>
     </div>
 }
 

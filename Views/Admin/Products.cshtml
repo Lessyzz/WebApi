@@ -1,16 +1,14 @@
 @model IEnumerable<WebApi.Models.Product>
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Ürünler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<title>DİJİKON - Admin Ürünler</title>
-
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Products</h1>
+        <h1>Ürünler</h1>
         <a href="/Admin/Products/Create" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add New Product
+            <i class="bi bi-plus-circle"></i> Yeni Ürün Ekle
         </a>
     </div>
     
@@ -21,14 +19,14 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Discounted</th>
-                            <th>Stock</th>
-                            <th>Seller</th>
-                            <th>Actions</th>
+                            <th>Görsel</th>
+                            <th>İsim</th>
+                            <th>Kategori</th>
+                            <th>Fiyat</th>
+                            <th>İndirim</th>
+                            <th>Stok</th>
+                            <th>Satıcı</th>
+                            <th>İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,12 +42,12 @@
                                     }
                                     else
                                     {
-                                        <span class="badge bg-secondary">No Image</span>
+                                        <span class="badge bg-secondary">Yok</span>
                                     }
                                 </td>
                                 <td>@product.Name</td>
                                 <td>@product.Category?.Name</td>
-                                <td>$@product.Price.ToString("F2")</td>
+                                <td>@product.Price.ToString("F2")₺</td>
                                 <td>
                                     @if (product.Discount > 0)
                                     {
@@ -57,31 +55,31 @@
                                     }
                                     else
                                     {
-                                        <span class="text-muted">No discount</span>
+                                        <span class="text-muted">Yok</span>
                                     }
                                 </td>
                                 <td>
                                     @if (product.Quantity > 10)
                                     {
-                                        <span class="badge bg-success">@product.Quantity in stock</span>
+                                        <span class="badge bg-success">@product.Quantity</span>
                                     }
                                     else if (product.Quantity > 0)
                                     {
-                                        <span class="badge bg-warning text-dark">@product.Quantity in stock</span>
+                                        <span class="badge bg-warning text-dark">@product.Quantity</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger">Out of stock</span>
+                                        <span class="badge bg-danger">Tükendi</span>
                                     }
                                 </td>
                                 <td>@product.ProductSeller?.Username</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="/Admin/Products/Edit/@product.Id" class="btn btn-sm btn-outline-primary">
-                                            <i class="bi bi-pencil"></i> Edit
+                                            <i class="bi bi-pencil"></i> Düzenle
                                         </a>
                                         <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal@(product.Id.Replace("-", ""))" style="margin-left: 5px;">
-                                            <i class="bi bi-trash"></i> Delete
+                                            <i class="bi bi-trash"></i> Sil
                                         </button>
                                     </div>
                                     
@@ -90,16 +88,16 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel@(product.Id.Replace("-", ""))">Confirm Delete</h5>
+                                                    <h5 class="modal-title" id="deleteModalLabel@(product.Id.Replace("-", ""))">Onayla</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Are you sure you want to delete the product <strong>@product.Name</strong>? This action cannot be undone.
+                                                    <strong>@product.Name</strong> isimli ürünü silmek istediğinizden emin misiniz?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
                                                     <form action="/Admin/Products/Delete/@product.Id" method="post">
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="submit" class="btn btn-danger">Sil</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -111,7 +109,6 @@
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="9" class="text-center">No products found.</td>
                             </tr>
                         }
                     </tbody>

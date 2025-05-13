@@ -1,16 +1,14 @@
 @model WebApi.Models.Category
 @{
-    ViewData["Title"] = "Edit Category";
+    ViewData["Title"] = "Kategori Düzenle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<title>DİJİKON - Admin Kategori Düzenle</title>
-
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Edit Category</h1>
+        <h1>Kategori Düzenle</h1>
         <a href="/Admin/Categories" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Back to List
+            <i class="bi bi-arrow-left"></i> Geri Dön
         </a>
     </div>
     
@@ -21,33 +19,31 @@
                 <input type="hidden" asp-for="Id" />
                 
                 <div class="mb-3">
-                    <label asp-for="Name" class="form-label">Name</label>
+                    <label asp-for="Name" class="form-label">İsim</label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 
                 <div class="mb-3">
-                    <label asp-for="Features" class="form-label">Features</label>
-                    <textarea asp-for="Features" class="form-control" rows="3" placeholder="Enter comma-separated features"></textarea>
+                    <label asp-for="Features" class="form-label">Özellikler</label>
+                    <textarea asp-for="Features" class="form-control" rows="3" placeholder=""></textarea>
                     <span asp-validation-for="Features" class="text-danger"></span>
-                    <small class="form-text text-muted">Enter comma-separated features for this category.</small>
                 </div>
                 
                 <div class="mb-3">
-                    <label asp-for="ParentCategoryId" class="form-label">Parent Category</label>
+                    <label asp-for="ParentCategoryId" class="form-label">Üst Kategori</label>
                     <select asp-for="ParentCategoryId" class="form-select">
-                        <option value="">-- None --</option>
+                        <option value="">-- Hiçbiri --</option>
                         @foreach (var category in ViewBag.ParentCategories)
                         {
                             <option value="@category.Id">@category.Name</option>
                         }
                     </select>
                     <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
-                    <small class="form-text text-muted">Select a parent category if this is a subcategory.</small>
                 </div>
                 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Update Category</button>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
                 </div>
             </form>
         </div>

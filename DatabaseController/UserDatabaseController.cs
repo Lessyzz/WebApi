@@ -40,7 +40,7 @@ namespace WebApi.DatabaseController
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
-            return await jWtTokenSystem.GenerateRefreshTokenAsync(user.Id,user.Username);
+            return await jWtTokenSystem.GenerateRefreshTokenAsync(user.Id,user.Username,user.Roles);
         }
         
         public async Task<string> Login(LoginDto _us)
@@ -49,7 +49,7 @@ namespace WebApi.DatabaseController
             
             if (entity == null) throw new Exception($"Wrong username or password");
             
-            return await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id,entity.Username);
+            return await jWtTokenSystem.GenerateRefreshTokenAsync(entity.Id,entity.Username,entity.Roles);
         } 
         
         public async Task<Response> GetAccessToken(string tokenJti, string userId)

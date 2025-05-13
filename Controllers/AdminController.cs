@@ -8,9 +8,10 @@ using WebApi.Models;
 namespace WebApi.Controllers;
 
 [Route("Admin")]
-public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Controller
+[Authorize(Roles = "Admin")]
+public class AdminController(EfContext context,JWTTokenSystem jWtTokenSystem) : Microsoft.AspNetCore.Mvc.Controller
 {
-    [HttpGet("Dashboard")]
+    [HttpGet("")]
     public async Task<IActionResult> Dashboard()
     {
         // Get counts for dashboard
@@ -28,13 +29,6 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
         
         return View();
     }
-
-    [HttpGet("Login")]
-    public IActionResult Login()
-    {
-        return View();
-    }
-    
 
     #region Category Management
     [HttpGet("Categories")]

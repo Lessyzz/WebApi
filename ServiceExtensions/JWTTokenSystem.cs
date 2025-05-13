@@ -31,7 +31,7 @@ namespace WebApi.Data
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<string> GenerateRefreshTokenAsync(string userId, string userName)
+        public async Task<string> GenerateRefreshTokenAsync(string userId, string userName, string roles)
         {
             var tokenJti = Guid.NewGuid().ToString();
             var validUntil = DateTime.UtcNow.AddMonths(3);
@@ -40,9 +40,14 @@ namespace WebApi.Data
             {
                 new("jti", tokenJti),
                 new("sid", userId),
-                new("rol", "RefreshToken"),
                 new("usr", userName)
             };
+            
+            foreach (var role in roles.Split(','))
+            {
+                claims.Add(new Claim("rol", role.Trim()));
+            }
+            
             var token = GenerateJwt(claims, validUntil);
             
             //Boşver
