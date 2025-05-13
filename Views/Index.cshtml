@@ -23,13 +23,25 @@
 
 <div class="container-fluid py-4">
     <!-- Hero Section with Categories -->
+    <!-- Updated Hero Section with Search Box -->
     <div class="row mb-5">
         <div class="col-12">
-            <div class="hero-section position-relative" style="height: 300px; border-radius: 12px; overflow: hidden; border: #0a58ca 1px solid;">
+            <div class="hero-section position-relative" style="height: 300px; border-radius: 12px; border: #0a58ca 1px solid;">
                 <div class="container h-100 d-flex align-items-center">
-                    <div class="">
+                    <div class="w-100">
                         <h1 class="display-5 fw-bold">Teknolojinin Adresi</h1>
                         <p class="lead">En yeni teknoloji ürünleri ve fırsatlar sizleri bekliyor</p>
+
+                        <!-- Search Box -->
+                        <div class="mt-4">
+                            <div class="position-relative">
+                                <input type="text" id="productSearch" class="form-control form-control-lg"
+                                       placeholder="Ürün ara..." autocomplete="off">
+                                <div id="searchResults" class="position-absolute w-100 bg-white shadow-lg rounded-bottom border mt-1 d-none"
+                                     style="max-height: 350px; overflow-y: auto; z-index: 1000;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,3 +131,124 @@
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
     }
 </style>
+
+
+
+<!-- JavaScript for Search Functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('productSearch');
+    const searchResults = document.getElementById('searchResults');
+    
+    let debounceTimer;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            searchResults.classList.add('d-none');
+            return;
+        }
+        
+        debounceTimer = setTimeout(() => {
+            fetchSearchResults(query);
+        }, 300);
+    });
+    
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.add('d-none');
+        }
+    });
+    
+    function fetchSearchResults(query) {
+        fetch(`/Search/GetSearchResults?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                displaySearchResults(data);
+            })
+            .catch(error => console.error('Error fetching search results:', error));
+    }
+    
+    function displaySearchResults(results) {
+        searchResults.innerHTML = '';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="p-3 text-muted">Sonuç bulunamadı</div>';
+            searchResults.classList.remove('d-none');
+            return;
+        }
+        
+        const productResults = results.products || [];
+        const categoryResults = results.categories || [];
+        
+        // Display products
+        if (productResults.length > 0) {
+            const productsHeader = document.createElement('div');
+            productsHeader.className = 'p-2 bg-light fw-bold';
+            productsHeader.textContent = 'Ürünler';
+            searchResults.appendChild(productsHeader);
+            
+            productResults.forEach(product => {
+                const resultItem = createProductResultItem(product);
+                searchResults.appendChild(resultItem);
+            });
+        }
+        
+        // Display categories
+        if (categoryResults.length > 0) {
+            const categoriesHeader = document.createElement('div');
+            categoriesHeader.className = 'p-2 bg-light fw-bold';
+            categoriesHeader.textContent = 'Kategoriler';
+            searchResults.appendChild(categoriesHeader);
+            
+            categoryResults.forEach(category => {
+                const resultItem = createCategoryResultItem(category);
+                searchResults.appendChild(resultItem);
+            });
+        }
+        
+        searchResults.classList.remove('d-none');
+    }
+    
+    function createProductResultItem(product) {
+        const firstImage = product.images.split(',')[0];
+        
+        const resultItem = document.createElement('a');
+        resultItem.href = `/Product/${product.id}`;
+        resultItem.className = 'product-result d-flex align-items-center p-2 text-decoration-none text-dark border-bottom';
+        
+        resultItem.innerHTML = `
+            <div class="me-3" style="width: 50px; height: 50px; overflow: hidden;">
+                <img src="${firstImage}" alt="${product.name}" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="flex-grow-1">
+                <div class="fw-semibold">${product.name}</div>
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted small">${product.category.name}</div>
+                    <div class="text-primary fw-bold">${product.discountedPrice.toFixed(2)} TL</div>
+                </div>
+            </div>
+        `;
+        
+        return resultItem;
+    }
+    
+    function createCategoryResultItem(category) {
+        const resultItem = document.createElement('a');
+        resultItem.href = `/Category/${category.id}`;
+        resultItem.className = 'category-result d-flex align-items-center p-2 text-decoration-none text-dark border-bottom';
+        
+        resultItem.innerHTML = `
+            <div class="me-3">
+                <i class="bi bi-tag-fill text-secondary"></i>
+            </div>
+            <div>${category.name}</div>
+        `;
+        
+        return resultItem;
+    }
+});
+</script>
