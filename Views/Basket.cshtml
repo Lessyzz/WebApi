@@ -93,9 +93,10 @@
             <div class="card-body">
                 <h6>Promosyon Kodu</h6>
                 <div class="input-group mt-2">
-                    <input type="text" class="form-control" placeholder="Kodunuzu girin">
-                    <button class="btn btn-outline-secondary" type="button">Uygula</button>
+                    <input type="text" class="form-control" id="promoInput" placeholder="Kodunuzu girin">
+                    <button class="btn btn-outline-secondary" type="button" onclick="applyPromo()">Uygula</button>
                 </div>
+                <div id="promoMessage" class="mt-2 text-danger" style="display: none;"></div>
             </div>
         </div>
 
@@ -345,4 +346,54 @@
             }
         });
     });
+</script>
+<script>
+    function getOriginalTotal() {
+        const totalText = document.getElementById("total").innerText.trim();
+        const numberPart = totalText.replace("₺", "").replace(".", "").replace(",", "."); 
+        return parseFloat(numberPart);
+    }
+
+    function applyPromo() {
+        const code = document.getElementById("promoInput").value.trim();
+        const message = document.getElementById("promoMessage");
+        const originalTotal = getOriginalTotal();
+
+        if (!code) {
+            message.style.display = "block";
+            message.innerText = "Lütfen bir kod girin.";
+            return;
+        }
+
+        fetch('/promocode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ promoCode: code })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.discountPercent > 0) {
+                const discountAmount = originalTotal * (data.discountPercent / 100);
+                const discountedTotal = originalTotal - discountAmount;
+
+                document.getElementById("total").innerText = `${discountedTotal.toFixed(2).replace(".", ",")} ₺`;
+                message.classList.remove("text-danger");
+                message.classList.add("text-success");
+                message.innerText = `İndirim uygulandı: %${data.discountPercent} → -${discountAmount.toFixed(2).replace(".", ",")} ₺`;
+                message.style.display = "block";
+            } else {
+                document.getElementById("total").innerText = `${originalTotal.toFixed(2).replace(".", ",")} ₺`;
+                message.classList.remove("text-success");
+                message.classList.add("text-danger");
+                message.innerText = "Geçersiz veya süresi dolmuş kod.";
+                message.style.display = "block";
+            }
+        })
+        .catch(() => {
+            message.innerText = "Bir hata oluştu.";
+            message.style.display = "block";
+        });
+    }
 </script>

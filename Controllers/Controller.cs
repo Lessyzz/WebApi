@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DatabaseController;
+using WebApi.Dto;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -170,5 +171,24 @@ namespace WebApi.Controllers
             ViewBag.FeatureOptions = featureOptions;
             ViewBag.AllFeatures = allFeatures;
         }
+        [HttpPost("/promocode")]
+        public IActionResult ApplyPromo([FromBody] PromoRequestDto request)
+        {
+            var promos = new Dictionary<string, double>
+            {
+                { "KOMRAD10", 10 },  // %10 indirim
+                { "VONNEX20", 20 },  // %20 indirim
+                { "BEDAVA100", 100 } // %100 indirim 😎
+            };
+
+            var code = request.PromoCode?.Trim().ToUpper() ?? "";
+            promos.TryGetValue(code, out double percent);
+
+            return Ok(new { discountPercent = percent }); // 0 ise geçersiz
+        }
+
+        }
+
     }
-}
+    
+
