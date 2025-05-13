@@ -52,15 +52,10 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
     }
 
     [HttpPost("Categories/Create")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateCategory(Category category)
     {
-        if (ModelState.IsValid)
-        {
-            context.Categories.Add(category);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Categories));
-        }
+        context.Categories.Add(category);
+        await context.SaveChangesAsync();
         ViewBag.ParentCategories = context.Categories.ToList();
         return View(category);
     }
@@ -78,7 +73,6 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
     }
 
     [HttpPost("Categories/Edit/{id}")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditCategory(int id, Category category)
     {
         if (id != category.Id)
@@ -86,32 +80,13 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
             return NotFound();
         }
 
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                context.Update(category);
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(category.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Categories));
-        }
+        context.Update(category);
+        await context.SaveChangesAsync();
         ViewBag.ParentCategories = context.Categories.Where(c => c.Id != id).ToList();
         return View(category);
     }
 
     [HttpPost("Categories/Delete/{id}")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteCategory(int id)
     {
         var category = await context.Categories.FindAsync(id);
@@ -149,18 +124,14 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
     }
 
     [HttpPost("Products/Create")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateProduct(Product product)
     {
-        if (ModelState.IsValid)
-        {
-            product.Id = Guid.NewGuid().ToString();
-            context.Products.Add(product);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Products));
-        }
+        product.Id = Guid.NewGuid().ToString();
+        context.Products.Add(product);
+        await context.SaveChangesAsync();
         ViewBag.Categories = context.Categories.ToList();
         ViewBag.Sellers = context.Users.Where(u => u.Roles.Contains("Seller")).ToList();
+        // return products edit pag
         return View(product);
     }
 
@@ -172,47 +143,41 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
         {
             return NotFound();
         }
+        ViewBag.ProductId = id;
         ViewBag.Categories = context.Categories.ToList();
         ViewBag.Sellers = context.Users.Where(u => u.Roles.Contains("Seller")).ToList();
+        ViewBag.Name = product.Name;
+        ViewBag.Description = product.Description;
+        ViewBag.Price = product.Price;
+        ViewBag.Images = product.Images;
+        
         return View(product);
     }
 
     [HttpPost("Products/Edit/{id}")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditProduct(string id, Product product)
+    public async Task<IActionResult> EditProduct([FromForm] Product product)
     {
-        if (id != product.Id)
-        {
-            return NotFound();
-        }
+        Product mainProduct = await context.Products.FindAsync(product.Id);
 
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                context.Update(product);
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(product.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Products));
-        }
+        if (product.Name != mainProduct.Name) mainProduct.Name = product.Name;
+        if (product.Description != mainProduct.Description) mainProduct.Description = product.Description;
+        if (product.Price != mainProduct.Price) mainProduct.Price = product.Price;
+        if (product.Images != mainProduct.Images) mainProduct.Images = product.Images;
+        if (product.CategoryId != mainProduct.CategoryId) mainProduct.CategoryId = product.CategoryId;
+
+        await context.SaveChangesAsync();
+        
+        ViewBag.ProductId = mainProduct.Id;
+        ViewBag.Name = mainProduct.Name;
+        ViewBag.Description = mainProduct.Description;
+        ViewBag.Price = mainProduct.Price;
+        ViewBag.Images = mainProduct.Images;
         ViewBag.Categories = context.Categories.ToList();
         ViewBag.Sellers = context.Users.Where(u => u.Roles.Contains("Seller")).ToList();
         return View(product);
     }
 
     [HttpPost("Products/Delete/{id}")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteProduct(string id)
     {
         var product = await context.Products.FindAsync(id);
@@ -257,7 +222,6 @@ public class AdminController(EfContext context) : Microsoft.AspNetCore.Mvc.Contr
     }
 
     [HttpPost("Users/Delete/{id}")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteUser(string id)
     {
         var user = await context.Users.FindAsync(id);
