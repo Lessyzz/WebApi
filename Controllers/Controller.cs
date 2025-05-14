@@ -176,9 +176,9 @@ namespace WebApi.Controllers
         {
             var promos = new Dictionary<string, double>
             {
-                { "KOMRAD10", 10 },  // %10 indirim
-                { "VONNEX20", 20 },  // %20 indirim
-                { "BEDAVA100", 100 } // %100 indirim 😎
+                { "KTÜN10", 10 },  
+                { "MYO20", 20 },  
+                { "BEDAVA100", 100 } 
             };
 
             var code = request.PromoCode?.Trim().ToUpper() ?? "";
@@ -186,7 +186,63 @@ namespace WebApi.Controllers
 
             return Ok(new { discountPercent = percent }); // 0 ise geçersiz
         }
+        [HttpGet]
+        [Route("/about")]
+        [AllowAnonymous]
+        public async Task<IActionResult> About()
+        {
+            return View();
+        }
 
+        [HttpGet]
+        [Route("/sss")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Sss()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        [Route("/communication")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Communication()
+        {
+            return View();
+        }
+        
+        
+        [HttpGet]
+        [Route("/refund")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Refund()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        [Route("/cargo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Cargo()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        [Route("/security")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Security()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        [Route("/terms")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Terms()
+        {
+            return View();
+        }
+        
         }
 
     }
