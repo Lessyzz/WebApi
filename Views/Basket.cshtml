@@ -350,14 +350,13 @@
 <script>
     function getOriginalTotal() {
         const totalText = document.getElementById("total").innerText.trim();
-        const numberPart = totalText.replace("₺", "").replace(".", "").replace(",", "."); 
+        const numberPart = totalText.replace("₺", "").replace(".", "").replace(",", ".");
         return parseFloat(numberPart);
     }
 
     function applyPromo() {
         const code = document.getElementById("promoInput").value.trim();
         const message = document.getElementById("promoMessage");
-        const originalTotal = getOriginalTotal();
 
         if (!code) {
             message.style.display = "block";
@@ -367,13 +366,13 @@
 
         fetch('/promocode', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ promoCode: code })
         })
         .then(res => res.json())
         .then(data => {
+            const originalTotal = getOriginalTotal();
+
             if (data.discountPercent > 0) {
                 const discountAmount = originalTotal * (data.discountPercent / 100);
                 const discountedTotal = originalTotal - discountAmount;
@@ -383,12 +382,19 @@
                 message.classList.add("text-success");
                 message.innerText = `İndirim uygulandı: %${data.discountPercent} → -${discountAmount.toFixed(2).replace(".", ",")} ₺`;
                 message.style.display = "block";
+
+                // 🎯 Local Storage'a kaydet
+                localStorage.setItem("promoCode", code);
+                localStorage.setItem("discountPercent", data.discountPercent);
             } else {
                 document.getElementById("total").innerText = `${originalTotal.toFixed(2).replace(".", ",")} ₺`;
                 message.classList.remove("text-success");
                 message.classList.add("text-danger");
                 message.innerText = "Geçersiz veya süresi dolmuş kod.";
                 message.style.display = "block";
+
+                localStorage.removeItem("promoCode");
+                localStorage.removeItem("discountPercent");
             }
         })
         .catch(() => {
@@ -396,4 +402,27 @@
             message.style.display = "block";
         });
     }
+
+    // 📦 Sayfa yüklendiğinde Local Storage'dan promosyonu uygula
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedCode = localStorage.getItem("promoCode");
+        const savedPercent = parseFloat(localStorage.getItem("discountPercent"));
+
+        if (savedCode && savedPercent > 0) {
+            const input = document.getElementById("promoInput");
+            const total = getOriginalTotal();
+            const discount = total * (savedPercent / 100);
+            const discountedTotal = total - discount;
+
+            input.value = savedCode;
+            document.getElementById("total").innerText = `${discountedTotal.toFixed(2).replace(".", ",")} ₺`;
+
+            const msg = document.getElementById("promoMessage");
+            msg.classList.remove("text-danger");
+            msg.classList.add("text-success");
+            msg.innerText = `Önceki promosyon tekrar uygulandı: %${savedPercent} → -${discount.toFixed(2).replace(".", ",")} ₺`;
+            msg.style.display = "block";
+        }
+    });
 </script>
+

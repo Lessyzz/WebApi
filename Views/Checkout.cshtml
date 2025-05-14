@@ -1,5 +1,5 @@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <title>DİJİKON - Ödeme</title>
@@ -41,121 +41,121 @@
                     <div class="tab-content">
                         <!-- Address form -->
                         <div class="tab-pane fade show active" id="address-form">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="firstName" class="form-label">Ad</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="Adınız" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="lastName" class="form-label">Soyad</label>
-                                        <input type="text" class="form-control" id="lastName" placeholder="Soyadınız" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="email" class="form-label">E-posta</label>
-                                        <input type="email" class="form-control" id="email" placeholder="ornek@email.com" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="phone" class="form-label">Telefon</label>
-                                        <input type="tel" class="form-control" id="phone" placeholder="5XXXXXXXXX" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="address" class="form-label">Adres</label>
-                                        <textarea class="form-control" id="address" rows="3" placeholder="Adres bilgilerinizi giriniz" required></textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="province" class="form-label">İl </label>
-                                        <input type="text" class="form-control" id="province" placeholder="İl" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="district" class="form-label">İlçe</label>
-                                        <input type="text" class="form-control" id="district" placeholder="İlçe" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="postalCode" class="form-label">Posta Kodu</label>
-                                        <input type="text" class="form-control" id="postalCode" placeholder="34000" required>
-                                    </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">Ad</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="Adınız" required>
                                 </div>
-
-                                <hr class="my-4">
-
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" class="form-check-input" id="sameShipping">
-                                    <label class="form-check-label" for="sameShipping">Fatura adresi teslimat adresi ile aynı</label>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Soyad</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Soyadınız" required>
                                 </div>
+                                <div class="col-12">
+                                    <label for="email" class="form-label">E-posta</label>
+                                    <input type="email" class="form-control" id="email" placeholder="ornek@email.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="phone" class="form-label">Telefon</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="5XXXXXXXXX" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Adres</label>
+                                    <textarea class="form-control" id="address" rows="3" placeholder="Adres bilgilerinizi giriniz" required></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="province" class="form-label">İl </label>
+                                    <input type="text" class="form-control" id="province" placeholder="İl" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="district" class="form-label">İlçe</label>
+                                    <input type="text" class="form-control" id="district" placeholder="İlçe" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="postalCode" class="form-label">Posta Kodu</label>
+                                    <input type="text" class="form-control" id="postalCode" placeholder="34000" required>
+                                </div>
+                            </div>
 
-                                <button class="btn btn-primary float-end" type="button" id="continueToPayment">
-                                    Ödeme Bilgilerine Devam Et <i class="bi bi-arrow-right"></i>
-                                </button>
+                            <hr class="my-4">
+
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="sameShipping">
+                                <label class="form-check-label" for="sameShipping">Fatura adresi teslimat adresi ile aynı</label>
+                            </div>
+
+                            <button class="btn btn-primary float-end" type="button" id="continueToPayment">
+                                Ödeme Bilgilerine Devam Et <i class="bi bi-arrow-right"></i>
+                            </button>
                         </div>
 
                         <!-- Payment form -->
                         <div class="tab-pane fade" id="payment-form">
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <label for="nameOnCard" class="form-label">Kart Üzerindeki İsim</label>
-                                        <input type="text" class="form-control" id="nameOnCard" placeholder="Kart üzerindeki isim" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="cardNumber" class="form-label">Kredi Kartı Numarası</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
-                                            <span class="input-group-text">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="nameOnCard" class="form-label">Kart Üzerindeki İsim</label>
+                                    <input type="text" class="form-control" id="nameOnCard" placeholder="Kart üzerindeki isim" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cardNumber" class="form-label">Kredi Kartı Numarası</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                                        <span class="input-group-text">
                                                 <i class="bi bi-credit-card"></i>
                                             </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="expirationMonth" class="form-label">Son Kul. Ay</label>
-                                        <select class="form-select" id="expirationMonth" required>
-                                            <option value="">Ay</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                            <option value="07">07</option>
-                                            <option value="08">08</option>
-                                            <option value="09">09</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="expirationYear" class="form-label">Son Kul. Yıl</label>
-                                        <select class="form-select" id="expirationYear" required>
-                                            <option value="">Yıl</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                            <option value="2027">2027</option>
-                                            <option value="2028">2028</option>
-                                            <option value="2029">2029</option>
-                                            <option value="2030">2030</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="cvv" class="form-label">CVV</label>
-                                        <input type="text" class="form-control" id="cvv" placeholder="XXX" required>
                                     </div>
                                 </div>
-
-                                <hr class="my-4">
-
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" class="form-check-input" id="saveCardInfo">
-                                    <label class="form-check-label" for="saveCardInfo">Kart bilgilerimi güvenli bir şekilde kaydet</label>
+                                <div class="col-md-4">
+                                    <label for="expirationMonth" class="form-label">Son Kul. Ay</label>
+                                    <select class="form-select" id="expirationMonth" required>
+                                        <option value="">Ay</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
                                 </div>
+                                <div class="col-md-4">
+                                    <label for="expirationYear" class="form-label">Son Kul. Yıl</label>
+                                    <select class="form-select" id="expirationYear" required>
+                                        <option value="">Yıl</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="XXX" required>
+                                </div>
+                            </div>
 
-                                <button class="btn btn-secondary me-2" type="button" id="backToAddress">
-                                    <i class="bi bi-arrow-left"></i> Adres Bilgilerine Dön
-                                </button>
+                            <hr class="my-4">
 
-                                @* <a href="/Success"> *@
-                                    <button class="btn btn-success float-end" onclick="buyAllBasketProducts()">
-                                        <i class="bi bi-lock"></i> Ödemeyi Tamamla
-                                    </button>
-                                @* </a> *@
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="saveCardInfo">
+                                <label class="form-check-label" for="saveCardInfo">Kart bilgilerimi güvenli bir şekilde kaydet</label>
+                            </div>
+
+                            <button class="btn btn-secondary me-2" type="button" id="backToAddress">
+                                <i class="bi bi-arrow-left"></i> Adres Bilgilerine Dön
+                            </button>
+
+                            @* <a href="/Success"> *@
+                            <button class="btn btn-success float-end" onclick="buyAllBasketProducts()">
+                                <i class="bi bi-lock"></i> Ödemeyi Tamamla
+                            </button>
+                            @* </a> *@
                         </div>
                     </div>
                 </div>
@@ -163,10 +163,10 @@
 
             <!-- Order Summary -->
             @{
-                decimal subtotal = 0;
-                decimal shipping = 29.90M;
-                decimal tax = 0;
-                decimal total = 0;
+            decimal subtotal = 0;
+            decimal shipping = 29.90M;
+            decimal tax = 0;
+            decimal total = 0;
             }
             <div class="card mt-4 shadow">
                 <div class="card-header bg-secondary text-white">
@@ -175,22 +175,22 @@
                 <div class="card-body">
                     @if (ViewBag.BasketProducts != null)
                     {
-                        subtotal = 0;
-                        foreach (var item in ViewBag.BasketProducts)
-                        {
-                            double discountedPrice = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
-                            subtotal += (decimal)(discountedPrice * item.Quantity);
-                        }
-
-                        shipping = 29.90M;
-                        if (subtotal > 500)
-                        {
-                            shipping = 0;
-                        }
-                        tax = subtotal * 0.18M; // %18 KDV
-                        total = subtotal + shipping + tax;
+                    subtotal = 0;
+                    foreach (var item in ViewBag.BasketProducts)
+                    {
+                    double discountedPrice = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
+                    subtotal += (decimal)(discountedPrice * item.Quantity);
                     }
-                    
+
+                    shipping = 29.90M;
+                    if (subtotal > 500)
+                    {
+                    shipping = 0;
+                    }
+                    tax = subtotal * 0.18M; // %18 KDV
+                    total = subtotal + shipping + tax;
+                    }
+
                     <div class="d-flex justify-content-between mb-2">
                         <span>Ara Toplam</span>
                         <span>@String.Format("{0:N2} ₺", subtotal)</span>
@@ -206,7 +206,10 @@
                     <hr>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Toplam</span>
-                        <span>@String.Format("{0:N2} ₺", total)</span>
+                        <span id="total">@String.Format("{0:N2} ₺", total)</span>
+                    </div>
+                    <div id="promoInfo" class="text-success mt-2" style="display: none;">
+                        <small><i class="bi bi-tag-fill me-1"></i><span id="promoText"></span></small>
                     </div>
                 </div>
             </div>
@@ -222,7 +225,7 @@
         const continueBtn = document.getElementById('continueToPayment');
         const backBtn = document.getElementById('backToAddress');
         const progressBar = document.getElementById('progressBar');
-        
+
         // Continue to payment step
         continueBtn.addEventListener('click', function() {
 
@@ -231,7 +234,7 @@
             const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
             const phoneRegex = /^\d{10}$/; // Example format: 5555555555
             const postalCodeRegex = /^\d{5}$/; // Example: 12345
-            
+
             if (formValues.FirstName.length < 1) {
                 showToast('Lütfen adınızı giriniz.', false);
                 return;
@@ -274,7 +277,7 @@
 
             const requiredFields = document.querySelectorAll('#addressForm input[required], #addressForm select[required], #addressForm textarea[required]');
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 if (!field.value) {
                     isValid = false;
@@ -283,23 +286,24 @@
                     field.classList.remove('is-invalid');
                 }
             });
-            
+
             if (isValid) {
                 paymentTab.click();
                 progressBar.style.width = '100%';
                 progressBar.textContent = 'Adım 2/2';
             }
         });
-        
+
         // Back to address step
         backBtn.addEventListener('click', function() {
             addressTab.click();
             progressBar.style.width = '50%';
             progressBar.textContent = 'Adım 1/2';
         });
+
+        // Apply saved promo code if exists
+        applySavedPromo();
     });
-
-
 
     function buyAllBasketProducts() {
         const formValues = getAllFormValues();
@@ -339,7 +343,16 @@
             showToast('Geçersiz CVV.', false);
             return;
         }
-        
+
+        // Track whether discount was applied
+        const promoUsed = localStorage.getItem("promoCode") ? true : false;
+        const discountPercent = parseFloat(localStorage.getItem("discountPercent") || "0");
+
+        // Mark that we used the promo code (for Success page)
+        if (promoUsed) {
+            localStorage.setItem("promoUsed", "true");
+        }
+
         fetch('/Product/BuyAllBasketProducts', {
             method: 'POST',
             headers: {
@@ -348,23 +361,23 @@
             },
             body: JSON.stringify(formValues)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            loadBasketItems();
-            showToast('Ödeme başarıyla tamamlandı!', true);
-            setTimeout(() => {
-                window.location.href = '/Success';
-            }, 500);
-        })
-        .catch(error => {
-            console.error('Error adding product to basket:', error);
-            showToast('Bir Hata Oluştu.', false);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                loadBasketItems();
+                showToast('Ödeme başarıyla tamamlandı!', true);
+                setTimeout(() => {
+                    window.location.href = '/Success';
+                }, 500);
+            })
+            .catch(error => {
+                console.error('Error adding product to basket:', error);
+                showToast('Bir Hata Oluştu.', false);
+            });
     }
 
     function getAllFormValues() {
@@ -381,9 +394,39 @@
             CardNumber: document.getElementById('cardNumber').value,
             ExpirationMonth: document.getElementById('expirationMonth').value,
             ExpirationYear: document.getElementById('expirationYear').value,
-            Cvv: document.getElementById('cvv').value,
+            Cvv: document.getElementById('cvv').value.trim()
         };
         return valueForm;
     }
-    
+
+    function applySavedPromo() {
+        const savedCode = localStorage.getItem("promoCode");
+        const savedPercent = parseFloat(localStorage.getItem("discountPercent") || "0");
+
+        if (!savedCode || savedPercent <= 0) return;
+
+        const totalElement = document.getElementById("total");
+        if (!totalElement) return;
+
+        // Get the original total price without discount
+        const totalText = totalElement.innerText;
+        const totalValue = parseFloat(totalText.replace("₺", "").replace(".", "").replace(",", "."));
+
+        if (isNaN(totalValue)) return;
+
+        // Calculate the discounted price
+        const discountAmount = totalValue * (savedPercent / 100);
+        const discountedTotal = totalValue - discountAmount;
+
+        // Update the displayed total with discount
+        totalElement.innerText = `${discountedTotal.toFixed(2).replace(".", ",")} ₺`;
+
+        // Show promo info
+        const promoInfo = document.getElementById("promoInfo");
+        const promoText = document.getElementById("promoText");
+        if (promoInfo && promoText) {
+            promoText.innerText = `Promosyon kodu uygulandı: %${savedPercent} (${savedCode})`;
+            promoInfo.style.display = "block";
+        }
+    }
 </script>
