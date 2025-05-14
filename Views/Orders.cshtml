@@ -79,3 +79,32 @@
         </div>
     </div>
 </div>
+<script>
+    function applySavedPromo() {
+        const savedPercent = parseFloat(localStorage.getItem("discountPercent"));
+        const promoUsed = localStorage.getItem("promoUsed") === "true";
+
+        if (!promoUsed || isNaN(savedPercent)) return;
+
+        const totalElement = document.getElementById("total");
+        if (!totalElement) return;
+
+        const totalText = totalElement.innerText.trim();
+        const original = parseFloat(totalText.replace("₺", "").replace(".", "").replace(",", "."));
+        if (isNaN(original)) return;
+
+        const discountAmount = original * (savedPercent / 100);
+        const discountedTotal = original - discountAmount;
+
+        totalElement.innerText = `${discountedTotal.toFixed(2).replace(".", ",")} ₺`;
+
+        // İstersen yanına promosyon etiketi de koyabiliriz
+        const promoLabel = document.getElementById("promoLabel");
+        if (promoLabel) {
+            promoLabel.innerText = `(Promosyon: %${savedPercent})`;
+            promoLabel.style.color = "green";
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", applySavedPromo);
+</script>
