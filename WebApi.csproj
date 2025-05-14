@@ -55,4 +55,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\data\30Hoparlor.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="wwwroot\images\products\m_samsung-qn990c-98-qe98qn990ctxtk-98qn990ctxtk-1.jpg" />
+      <Content Remove="wwwroot\images\products\m_philips-77oled808-6.jpg" />
+      <Content Remove="wwwroot\images\products\m_philips-77oled808-4.jpg" />
+      <Content Remove="wwwroot\images\products\m_lg-oled97m39la-9.jpg" />
+      <Content Remove="wwwroot\images\products\m_lg-oled83g45lw-4.jpg" />
+    </ItemGroup>
+
 </Project>
