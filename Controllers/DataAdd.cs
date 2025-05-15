@@ -63,6 +63,24 @@ namespace WebApi.Controllers
             return new OkResult();
         }
         
+
+            [HttpPost("randomize-createdat")]
+            public async Task<IActionResult> RandomizeCreatedAtAsync()
+            {
+                var products = await context.Products.ToListAsync();
+                var now = DateTime.UtcNow;
+                var threeMonthsAgo = now.AddMonths(-3);
+                var rng = new Random();
+
+                foreach (var product in products)
+                {
+                    var randomTicks = (long)(rng.NextDouble() * (now - threeMonthsAgo).Ticks);
+                    product.CreatedAt = threeMonthsAgo.AddTicks(randomTicks);
+                }
+
+                await context.SaveChangesAsync();
+                return Ok(new { message = "CreatedAt fields randomized for all products." });
+            }
         
     }
 

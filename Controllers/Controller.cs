@@ -44,8 +44,14 @@ namespace WebApi.Controllers
                 var product = await _productDatabaseController.GetProductById(id);
                 
                 var reviewStatistics = await reviewService.GetProductReviewsAsync(id);
-            
+                
+                // Benzer Ürünler
+                var relatedProducts = await _context.Products.Where(x => x.CategoryId == product.CategoryId).Take(4).ToListAsync();
+                
                 ViewBag.ReviewStatistics = reviewStatistics;
+                
+                // Benzer Ürünler
+                ViewBag.RelatedProducts = relatedProducts;
                 
                 return View(product);
             }

@@ -88,6 +88,18 @@
                             }
                         }
                     }
+                    @* *@
+                    @* <hr> *@
+                    @* *@
+                    @* <!-- Time Filter --> *@
+                    @* <div class="mb-4"> *@
+                    @*     <h6 class="fw-bold mb-3">Eklenme Tarihi</h6> *@
+                    @*     <div id="timeRange"></div> *@
+                    @*     <div class="d-flex justify-content-between mt-2"> *@
+                    @*         <span id="timeMin"></span> *@
+                    @*         <span id="timeMax"></span> *@
+                    @*     </div> *@
+                    @* </div> *@
                 </div>
             </div>
         </div>
@@ -108,6 +120,8 @@
                                 <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
                                 <option value="name-asc">İsim: A-Z</option>
                                 <option value="name-desc">İsim: Z-A</option>
+                                @* <option value="date-desc">En Yeni</option> *@
+                                @* <option value="date-asc">En Eski</option> *@
                             </select>
                         </div>
                     </div>
@@ -120,6 +134,8 @@
                 {
                     <div class="col-6 col-md-4 col-lg-3 mb-4 product-item"
                          data-price="@product.GetDiscountedPrice()"
+                         data-created="@product.CreatedAt.Ticks"
+                         data-created-date="@product.CreatedAt.ToString("yyyy-MM-dd")"
                          data-features='@product.Features'>
                         <div class="card product-card shadow-sm h-100">
                             <div class="product-image-container" style="height: 180px; padding: 15px; position: relative;">
@@ -218,6 +234,18 @@
                 }
             }
         }
+        @* *@
+        @* <hr> *@
+        @* *@
+        @* <!-- Time Filter for Mobile --> *@
+        @* <div class="mb-4"> *@
+        @*     <h6 class="fw-bold mb-3">Eklenme Tarihi</h6> *@
+        @*     <div id="mobileTimeRange"></div> *@
+        @*     <div class="d-flex justify-content-between mt-2"> *@
+        @*         <span id="mobileTimeMin"></span> *@
+        @*         <span id="mobileTimeMax"></span> *@
+        @*     </div> *@
+        @* </div> *@
 
         <!-- Apply Filters Button for Mobile -->
         <div class="d-grid gap-2 mt-4">
@@ -302,11 +330,92 @@
             });
         }
 
+        // Initialize time range slider
+        const timeRange = document.getElementById('timeRange');
+        const mobileTimeRange = document.getElementById('mobileTimeRange');
+        const timeMin = document.getElementById('timeMin');
+        const timeMax = document.getElementById('timeMax');
+        const mobileTimeMin = document.getElementById('mobileTimeMin');
+        const mobileTimeMax = document.getElementById('mobileTimeMax');
+
+        // Get min and max dates from products
+        let createdDates = Array.from(products).map(p => parseInt(p.dataset.created));
+        let minDate = Math.min(...createdDates);
+        let maxDate = Math.max(...createdDates);
+
+        // Helper function to format dates
+        function formatDate(ticks) {
+            // Convert ticks to date
+            // .NET ticks are 100-nanosecond intervals that have elapsed since 12:00:00 midnight, January 1, 0001 (0:00:00 UTC on January 1, 0001, in the Gregorian calendar)
+            // JavaScript uses milliseconds since January 1, 1970
+            const ticksTo1970 = 621355968000000000; // .NET ticks for January 1, 1970
+            const ticksPerMillisecond = 10000;
+
+            const milliseconds = (ticks - ticksTo1970) / ticksPerMillisecond;
+            const date = new Date(milliseconds);
+
+            return date.toLocaleDateString();
+        }
+
+        // Setup time sliders
+        if (timeRange) {
+            noUiSlider.create(timeRange, {
+                start: [minDate, maxDate],
+                connect: true,
+                range: {
+                    'min': minDate,
+                    'max': maxDate
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+
+            timeRange.noUiSlider.on('update', function(values) {
+                timeMin.textContent = formatDate(parseInt(values[0]));
+                timeMax.textContent = formatDate(parseInt(values[1]));
+            });
+        }
+
+        if (mobileTimeRange) {
+            noUiSlider.create(mobileTimeRange, {
+                start: [minDate, maxDate],
+                connect: true,
+                range: {
+                    'min': minDate,
+                    'max': maxDate
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+
+            mobileTimeRange.noUiSlider.on('update', function(values) {
+                mobileTimeMin.textContent = formatDate(parseInt(values[0]));
+                mobileTimeMax.textContent = formatDate(parseInt(values[1]));
+            });
+        }
+
+        // Sync desktop and mobile time sliders
+        if (timeRange && mobileTimeRange) {
+            timeRange.noUiSlider.on('change', function(values) {
+                mobileTimeRange.noUiSlider.set(values);
+            });
+
+            mobileTimeRange.noUiSlider.on('change', function(values) {
+                timeRange.noUiSlider.set(values);
+            });
+        }
+
         // Apply filters function
         function applyFilters() {
             let priceValues = priceRange && priceRange.noUiSlider ? priceRange.noUiSlider.get() : mobileSlider.noUiSlider.get();
             let minPriceFilter = parseInt(priceValues[0]);
             let maxPriceFilter = parseInt(priceValues[1]);
+
+            let timeValues = timeRange && timeRange.noUiSlider ? timeRange.noUiSlider.get() : mobileTimeRange.noUiSlider.get();
+            let minTimeFilter = parseInt(timeValues[0]);
+            let maxTimeFilter = parseInt(timeValues[1]);
 
             // Get all checked feature filters
             let checkedFilters = {};
@@ -324,10 +433,14 @@
             let visibleProducts = 0;
             products.forEach(product => {
                 let price = parseFloat(product.dataset.price);
+                let createdDate = parseInt(product.dataset.created);
                 let features = JSON.parse(product.dataset.features);
 
                 // Check price range
                 let passesPrice = price >= minPriceFilter && price <= maxPriceFilter;
+
+                // Check date range
+                let passesTime = createdDate >= minTimeFilter && createdDate <= maxTimeFilter;
 
                 // Check if product passes all active feature filters
                 let passesFeatures = true;
@@ -341,7 +454,7 @@
                 }
 
                 // Show or hide product
-                if (passesPrice && passesFeatures) {
+                if (passesPrice && passesFeatures && passesTime) {
                     product.classList.remove('d-none');
                     visibleProducts++;
                 } else {
@@ -367,6 +480,14 @@
             }
             if (mobileSlider && mobileSlider.noUiSlider) {
                 mobileSlider.noUiSlider.set([minPrice, maxPrice]);
+            }
+
+            // Reset time slider
+            if (timeRange && timeRange.noUiSlider) {
+                timeRange.noUiSlider.set([minDate, maxDate]);
+            }
+            if (mobileTimeRange && mobileTimeRange.noUiSlider) {
+                mobileTimeRange.noUiSlider.set([minDate, maxDate]);
             }
 
             // Uncheck all feature filters
@@ -401,6 +522,14 @@
 
         if (mobileSlider && mobileSlider.noUiSlider) {
             mobileSlider.noUiSlider.on('change', applyFilters);
+        }
+
+        if (timeRange && timeRange.noUiSlider) {
+            timeRange.noUiSlider.on('change', applyFilters);
+        }
+
+        if (mobileTimeRange && mobileTimeRange.noUiSlider) {
+            mobileTimeRange.noUiSlider.on('change', applyFilters);
         }
 
         // Sync between desktop and mobile filters
@@ -452,6 +581,10 @@
                             return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
                         case 'name-desc':
                             return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
+                        case 'date-desc':
+                            return parseInt(b.dataset.created) - parseInt(a.dataset.created);
+                        case 'date-asc':
+                            return parseInt(a.dataset.created) - parseInt(b.dataset.created);
                         default:
                             return 0;
                     }
@@ -518,8 +651,8 @@
 
     /* Add spacing at bottom for mobile to account for fixed filter button */
     @@media (max-width: 991.98px) {
-    body {
-        padding-bottom: 60px;
-    }
+        body {
+            padding-bottom: 60px;
+        }
     }
 </style>

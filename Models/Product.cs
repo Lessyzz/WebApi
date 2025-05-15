@@ -29,4 +29,6 @@ public class Product
     }
     
     public string Features { get; set; }
+    
+    public DateTime? CreatedAt { get; set; }
 }
