@@ -607,4 +607,78 @@
         bsToast.show();
     }
 </script>
+
+<!-- Authentication Required Modal -->
+<div class="modal fade" id="authRequiredModal" tabindex="-1" aria-labelledby="authRequiredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authRequiredModalLabel">Giriş Gerekli</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="authRequiredMessage">Bu işlemi gerçekleştirmek için giriş yapmanız gerekmektedir.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <a href="/User/Login" class="btn btn-primary" id="loginRedirectBtn">Giriş Yap</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to check authentication and show dialog if needed
+        window.requireAuthentication = function(action, message) {
+            const isAuthenticated = @(User.Identity?.IsAuthenticated.ToString().ToLower() ?? "false");
+
+            if (!isAuthenticated) {
+                // Show modal with custom message if provided
+                const authModal = new bootstrap.Modal(document.getElementById('authRequiredModal'));
+                if (message) {
+                    document.getElementById('authRequiredMessage').textContent = message;
+                }
+                authModal.show();
+
+                // No automatic redirection - user must explicitly click "Giriş Yap" button
+                return false;
+            }
+
+            return true;
+        };
+
+        // Add event listeners to actions that require authentication
+        document.addEventListener('click', function(event) {
+            // For "Add to Cart" buttons that require login
+            if (event.target.matches('.add-to-cart-auth-required') ||
+                event.target.closest('.add-to-cart-auth-required')) {
+                event.preventDefault();
+                requireAuthentication('add-to-cart', 'Sepete ürün eklemek için giriş yapmanız gerekmektedir.');
+            }
+
+            // For wishlist actions
+            if (event.target.matches('.wishlist-auth-required') ||
+                event.target.closest('.wishlist-auth-required')) {
+                event.preventDefault();
+                requireAuthentication('wishlist', 'İstek listesini kullanmak için giriş yapmanız gerekmektedir.');
+            }
+
+            // For checkout actions
+            if (event.target.matches('.checkout-auth-required') ||
+                event.target.closest('.checkout-auth-required')) {
+                event.preventDefault();
+                requireAuthentication('checkout', 'Ödeme işlemine geçmek için giriş yapmanız gerekmektedir.');
+            }
+        });
+
+        // Special handling for the "Add to Basket" function
+        const originalAddToBasket = window.addToBasket;
+        window.addToBasket = function(productId) {
+            if (requireAuthentication('add-to-cart', 'Sepete ürün eklemek için giriş yapmanız gerekmektedir.')) {
+                originalAddToBasket(productId);
+            }
+        };
+    });
+</script>
 </html>
