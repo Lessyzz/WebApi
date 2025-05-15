@@ -38,8 +38,8 @@
     </div>
 
     <div class="row">
-        <!-- Filters Sidebar -->
-        <div class="col-lg-3 mb-4">
+        <!-- Filters Sidebar - Hidden on mobile -->
+        <div class="col-lg-3 mb-4 d-none d-lg-block">
             <div class="card shadow-sm">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Filtreler</h5>
@@ -88,19 +88,12 @@
                             }
                         }
                     }
-
-                    <!-- Mobile Filter Toggle Button -->
-                    <div class="filter-toggle-container d-lg-none position-fixed bottom-0 start-0 w-100 bg-white border-top p-2 z-3">
-                        <button class="filter-toggle btn btn-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
-                            <i class="bi bi-funnel me-2"></i> Filtreleri Göster
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Product Listing -->
-        <div class="col-lg-9">
+        <div class="col-12 col-lg-9">
             <!-- Sort Options -->
             <div class="row mb-4">
                 <div class="col-12">
@@ -111,7 +104,7 @@
                         <div class="d-flex">
                             <select id="sortOptions" class="form-select form-select-sm">
                                 <option value="default">Önerilen Sıralama</option>
-                                <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                                <option value="price-asc">Fiyat: Düşüktan Yükseğe</option>
                                 <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
                                 <option value="name-asc">İsim: A-Z</option>
                                 <option value="name-desc">İsim: Z-A</option>
@@ -168,6 +161,13 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Mobile Filter Button (Only visible on small screens) -->
+<div class="filter-toggle-container d-lg-none position-fixed bottom-0 start-0 w-100 bg-white border-top p-2">
+    <button class="filter-toggle btn btn-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
+        <i class="bi bi-funnel me-2"></i> Filtreleri Göster
+    </button>
 </div>
 
 <!-- Mobile Filter Offcanvas -->
@@ -304,13 +304,13 @@
 
         // Apply filters function
         function applyFilters() {
-            let priceValues = priceRange.noUiSlider.get();
+            let priceValues = priceRange && priceRange.noUiSlider ? priceRange.noUiSlider.get() : mobileSlider.noUiSlider.get();
             let minPriceFilter = parseInt(priceValues[0]);
             let maxPriceFilter = parseInt(priceValues[1]);
 
             // Get all checked feature filters
             let checkedFilters = {};
-            document.querySelectorAll('.feature-filter:checked').forEach(checkbox => {
+            document.querySelectorAll('.feature-filter:checked, .mobile-feature-filter:checked').forEach(checkbox => {
                 let feature = checkbox.dataset.feature;
                 let value = checkbox.dataset.value;
 
@@ -362,10 +362,10 @@
         // Clear filters function
         function clearFilters() {
             // Reset price slider
-            if (priceRange.noUiSlider) {
+            if (priceRange && priceRange.noUiSlider) {
                 priceRange.noUiSlider.set([minPrice, maxPrice]);
             }
-            if (mobileSlider.noUiSlider) {
+            if (mobileSlider && mobileSlider.noUiSlider) {
                 mobileSlider.noUiSlider.set([minPrice, maxPrice]);
             }
 
@@ -385,16 +385,25 @@
         }
 
         // Add event listeners
-        document.getElementById('clearFilters').addEventListener('click', clearFilters);
-        document.getElementById('mobileClearFilters').addEventListener('click', clearFilters);
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', clearFilters);
+        }
 
-        if (priceRange) {
+        const mobileClearFiltersBtn = document.getElementById('mobileClearFilters');
+        if (mobileClearFiltersBtn) {
+            mobileClearFiltersBtn.addEventListener('click', clearFilters);
+        }
+
+        if (priceRange && priceRange.noUiSlider) {
             priceRange.noUiSlider.on('change', applyFilters);
         }
-        if (mobileSlider) {
+
+        if (mobileSlider && mobileSlider.noUiSlider) {
             mobileSlider.noUiSlider.on('change', applyFilters);
         }
 
+        // Sync between desktop and mobile filters
         document.querySelectorAll('.feature-filter').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const feature = this.dataset.feature;
@@ -416,58 +425,43 @@
                     desktopCheckbox.checked = this.checked;
                 }
                 applyFilters();
-            });
-        });
-        
-        // Sync mobile and desktop filters
-        document.querySelectorAll('.feature-filter').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const feature = this.dataset.feature;
-                const value = this.dataset.value;
-                const mobileCheckbox = document.querySelector(`.mobile-feature-filter[data-feature="${feature}"][data-value="${value}"]`);
-                if (mobileCheckbox) {
-                    mobileCheckbox.checked = this.checked;
-                }
-            });
-        });
 
-        document.querySelectorAll('.mobile-feature-filter').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const feature = this.dataset.feature;
-                const value = this.dataset.value;
-                const desktopCheckbox = document.querySelector(`.feature-filter[data-feature="${feature}"][data-value="${value}"]`);
-                if (desktopCheckbox) {
-                    desktopCheckbox.checked = this.checked;
-                }
+                // Optional: close offcanvas when applying filters on mobile
+                // const bsOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('filterOffcanvas'));
+                // if (bsOffcanvas) {
+                //     bsOffcanvas.hide();
+                // }
             });
         });
 
         // Sort functionality
-        document.getElementById('sortOptions').addEventListener('change', function() {
-            const sortValue = this.value;
-            const productItems = Array.from(document.querySelectorAll('.product-item'));
-            const container = document.getElementById('productsContainer');
+        const sortOptions = document.getElementById('sortOptions');
+        if (sortOptions) {
+            sortOptions.addEventListener('change', function() {
+                const sortValue = this.value;
+                const productItems = Array.from(document.querySelectorAll('.product-item'));
+                const container = document.getElementById('productsContainer');
 
-            productItems.sort((a, b) => {
-                switch(sortValue) {
-                    case 'price-asc':
-                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
-                    case 'price-desc':
-                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
-                    case 'name-asc':
-                        return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
-                    case 'name-desc':
-                        return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
-                    default:
-                        return 0;
-                }
+                productItems.sort((a, b) => {
+                    switch(sortValue) {
+                        case 'price-asc':
+                            return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                        case 'price-desc':
+                            return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                        case 'name-asc':
+                            return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
+                        case 'name-desc':
+                            return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Clear container and append sorted items
+                container.innerHTML = '';
+                productItems.forEach(item => container.appendChild(item));
             });
-
-            // Clear container and append sorted items
-            container.innerHTML = '';
-            productItems.forEach(item => container.appendChild(item));
-        });
-        
+        }
     });
 </script>
 
@@ -487,11 +481,9 @@
         overflow-y: auto;
     }
 
-    @@media (max-width: 991.98px) {
     .filter-toggle-container {
         box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075);
         z-index: 1030;
-    }
     }
 
     .discount-badge {
@@ -513,7 +505,6 @@
         background: #fff;
         box-shadow: 0 0 0 1px #0d6efd;
         border: none;
-
         width: 20px !important;
         height: 20px !important;
         right: -9px !important;
@@ -523,5 +514,12 @@
     .noUi-handle:before,
     .noUi-handle:after {
         display: none;
+    }
+
+    /* Add spacing at bottom for mobile to account for fixed filter button */
+    @@media (max-width: 991.98px) {
+    body {
+        padding-bottom: 60px;
+    }
     }
 </style>
